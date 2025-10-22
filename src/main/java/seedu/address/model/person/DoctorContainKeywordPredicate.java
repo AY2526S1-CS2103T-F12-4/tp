@@ -1,4 +1,11 @@
 package seedu.address.model.person;
 
-public class DoctorContainKeywordPredicate {
+import java.util.function.Predicate;
+
+public class DoctorContainKeywordPredicate implements Predicate<Person>{
+
+    public boolean test(Person person) {
+        return true;
+    }
+
 }
