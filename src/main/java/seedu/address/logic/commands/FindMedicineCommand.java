@@ -2,10 +2,14 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.logic.Messages;
+import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.model.Model;
 import seedu.address.model.person.MedicineContainsKeywordsPredicate;
+
+import java.util.logging.Logger;
 
 /**
  * Finds and lists all persons in address book whose medicines contain any of the specified keywords.
@@ -22,12 +26,15 @@ public class FindMedicineCommand extends Command {
 
     private final MedicineContainsKeywordsPredicate predicate;
 
+    private static final Logger logger = LogsCenter.getLogger(FindMedicineCommand.class);
+
     public FindMedicineCommand(MedicineContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
     @Override
     public CommandResult execute(Model model) {
+        logger.fine("[FindMedicineCommand] Filtering suing keywords(medicines): " + predicate);
         requireNonNull(model);
         model.updateFilteredPersonList(predicate);
         return new CommandResult(
