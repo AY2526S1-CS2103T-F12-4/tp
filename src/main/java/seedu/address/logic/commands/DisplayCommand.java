@@ -18,8 +18,6 @@ import seedu.address.model.person.Person;
  */
 public class DisplayCommand extends Command {
 
-    private static final Logger logger = LogsCenter.getLogger(DisplayCommand.class);
-
     public static final String COMMAND_WORD = "display";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -30,6 +28,8 @@ public class DisplayCommand extends Command {
 
     public static final String MESSAGE_DISPLAY_PERSON_SUCCESS = "Visit dates for %1$s:\n%2$s";
     public static final String MESSAGE_NO_VISITS = "No visits recorded for %1$s";
+
+    private static final Logger logger = LogsCenter.getLogger(DisplayCommand.class);
 
     private final Index targetIndex;
 
@@ -46,7 +46,7 @@ public class DisplayCommand extends Command {
         requireNonNull(model);
         assert model != null : "Model should not be null";
         logger.info("Executing DisplayCommand for index: " + targetIndex.getOneBased());
-        
+
         List<Person> lastShownList = model.getFilteredPersonList();
         assert lastShownList != null : "Filtered person list should not be null";
 
@@ -73,7 +73,7 @@ public class DisplayCommand extends Command {
                 .orElse("");
 
         assert !visitDates.isEmpty() : "Visit dates string should not be empty when there are visits";
-        logger.info("Successfully displayed " + personToDisplay.getDayList().getVisitCount() 
+        logger.info("Successfully displayed " + personToDisplay.getDayList().getVisitCount()
                 + " visit dates for person: " + personToDisplay.getName());
         return new CommandResult(String.format(MESSAGE_DISPLAY_PERSON_SUCCESS,
                 personToDisplay.getName(), visitDates));

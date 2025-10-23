@@ -19,8 +19,6 @@ import seedu.address.model.person.Person;
  */
 public class LogCommand extends Command {
 
-    private static final Logger logger = LogsCenter.getLogger(LogCommand.class);
-
     public static final String COMMAND_WORD = "log";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -31,6 +29,8 @@ public class LogCommand extends Command {
 
     public static final String MESSAGE_LOG_PERSON_SUCCESS = "Logged visit for person: %1$s";
     public static final String MESSAGE_ALREADY_LOGGED_TODAY = "Visit already logged for today";
+
+    private static final Logger logger = LogsCenter.getLogger(LogCommand.class);
 
     private final Index targetIndex;
 
@@ -43,7 +43,7 @@ public class LogCommand extends Command {
         requireNonNull(model);
         assert model != null : "Model should not be null";
         logger.info("Executing LogCommand for index: " + targetIndex.getOneBased());
-        
+
         List<Person> lastShownList = model.getFilteredPersonList();
         assert lastShownList != null : "Filtered person list should not be null";
 
@@ -81,7 +81,7 @@ public class LogCommand extends Command {
         assert person != null : "Person should not be null";
         assert visitDate != null : "Visit date should not be null";
         assert !person.getDayList().hasVisitDate(visitDate) : "Person should not already have this visit date";
-        
+
         Person updatedPerson = new Person(
                 person.getName(),
                 person.getPhone(),
@@ -92,7 +92,7 @@ public class LogCommand extends Command {
                 person.getMedicines(),
                 person.getDayList().addVisitDate(visitDate)
         );
-        
+
         assert updatedPerson.getDayList().hasVisitDate(visitDate) : "Updated person should have the new visit date";
         return updatedPerson;
     }
