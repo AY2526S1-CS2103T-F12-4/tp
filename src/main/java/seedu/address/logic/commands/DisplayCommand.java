@@ -58,7 +58,7 @@ public class DisplayCommand extends Command {
                 .reduce((date1, date2) -> date1 + "\n" + date2)
                 .orElse("");
 
-        return new CommandResult(String.format(MESSAGE_DISPLAY_PERSON_SUCCESS, 
+        return new CommandResult(String.format(MESSAGE_DISPLAY_PERSON_SUCCESS,
                 personToDisplay.getName(), visitDates));
     }
 
