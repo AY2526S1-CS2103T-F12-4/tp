@@ -35,6 +35,11 @@ public class FindMedicineCommand extends Command {
     public CommandResult execute(Model model) {
         logger.fine("[FindMedicineCommand] Filtering suing keywords(medicines): " + predicate);
         requireNonNull(model);
+
+        // use assertions for checking null person list and null address book object
+        assert model.getFilteredPersonList() != null : "Filtered person list cannot be null";
+        assert model.getAddressBook() != null : "Address book cannot be null";
+
         model.updateFilteredPersonList(predicate);
         return new CommandResult(
                 String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, model.getFilteredPersonList().size()));
