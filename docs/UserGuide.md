@@ -174,6 +174,19 @@ Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
 
+### Locating patients by medicines taken: `findmed`
+
+* The search is case-insensitive. e.g `paracetamol` will match `Paracetamol`
+* if more than one medicine specified, it should be space-sperated like `findmed medA medB`
+* The order of the keywords does not matter. e.g. `paracetamol ibuprofen` and `ibuprofen paracetamol`
+  will fetch patients who take both these medicines
+* Only full words will be matched e.g. `ibu` will not match `ibuprofen`
+* patients matching at least one keyword will be returned (i.e. `OR` search).
+  e.g. `paracetamol` will return patients who take paracetamol even if they take other medicines
+
+Examples:
+* `findmed paracetamol` 
+* `findmed paracetamol ibuprofen`
 
 ### Deleting a patient : `delete`
 
@@ -239,6 +252,7 @@ Action | Format, Examples
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/Doctor] [med/MEDICINE]…​ [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**Filter by Medicines** | `findmed MEDICINE [MORE_MEDICINE]`<br> e.g., `findmed Paracetamol Ibuprofen`
 **List** | `list`
 **Help** | `help`
 **View medicines** | `med INDEX`
