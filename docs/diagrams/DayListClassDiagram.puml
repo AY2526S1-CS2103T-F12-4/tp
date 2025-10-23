@@ -1,0 +1,120 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
+
+package "DayList Feature" {
+    class DayList {
+        -List<LocalDate> visitDates
+        +DayList()
+        +DayList(List<LocalDate> dates)
+        +getVisitDates(): List<LocalDate>
+        +getVisitCount(): int
+        +getMostRecentVisit(): LocalDate
+        +getEarliestVisit(): LocalDate
+        +addVisitDate(LocalDate date): DayList
+        +removeVisitDate(LocalDate date): DayList
+        +equals(Object other): boolean
+        +hashCode(): int
+        +toString(): String
+    }
+
+    class Person {
+        -Name name
+        -Phone phone
+        -Email email
+        -Address address
+        -Doctor doctor
+        -Set<Tag> tags
+        -Set<Medicine> medicines
+        -DayList dayList
+        +getDayList(): DayList
+        +equals(Object other): boolean
+        +hashCode(): int
+        +toString(): String
+    }
+
+    class LogCommand {
+        -Index targetIndex
+        +execute(Model model): CommandResult
+        +equals(Object other): boolean
+    }
+
+    class DisplayCommand {
+        -Index targetIndex
+        +execute(Model model): CommandResult
+        +equals(Object other): boolean
+    }
+
+    class LogCommandParser {
+        +parse(String args): LogCommand
+    }
+
+    class DisplayCommandParser {
+        +parse(String args): DisplayCommand
+    }
+
+    class JsonAdaptedDayList {
+        -List<String> visitDates
+        +JsonAdaptedDayList(List<String> visitDates)
+        +JsonAdaptedDayList(DayList source)
+        +toModelType(): DayList
+    }
+
+    class JsonAdaptedPerson {
+        -JsonAdaptedDayList dayList
+        +toModelType(): Person
+    }
+}
+
+package "External Dependencies" {
+    class LocalDate {
+        +now(): LocalDate
+        +parse(String text): LocalDate
+        +toString(): String
+        +format(DateTimeFormatter formatter): String
+    }
+
+    class Index {
+        -int zeroBasedIndex
+        +getZeroBased(): int
+    }
+
+    class Model {
+        +getFilteredPersonList(): List<Person>
+        +setPerson(Person target, Person editedPerson): void
+    }
+}
+
+Person *--> DayList : contains
+LogCommand --> Index : uses
+DisplayCommand --> Index : uses
+LogCommandParser --> LogCommand : creates
+DisplayCommandParser --> DisplayCommand : creates
+JsonAdaptedPerson *--> JsonAdaptedDayList : contains
+JsonAdaptedDayList --> DayList : converts to/from
+DayList --> LocalDate : manages
+LogCommand --> Model : interacts with
+DisplayCommand --> Model : interacts with
+
+note right of DayList
+  Manages a sorted, unique list
+  of visit dates for a person.
+  Immutable operations return
+  new instances.
+end note
+
+note right of LogCommand
+  Adds today's date to a person's
+  DayList. Prevents duplicate
+  entries for the same day.
+end note
+
+note right of DisplayCommand
+  Shows formatted visit history
+  for a person with bullet points
+  and readable date format.
+end note
+
+@enduml

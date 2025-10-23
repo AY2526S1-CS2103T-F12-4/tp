@@ -1,0 +1,110 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor LOGIC_COLOR_T4
+skinparam classBackgroundColor LOGIC_COLOR
+
+actor User
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":LogCommandParser" as LogCommandParser LOGIC_COLOR
+participant ":DisplayCommandParser" as DisplayCommandParser LOGIC_COLOR
+participant ":LogCommand" as LogCommand LOGIC_COLOR
+participant ":DisplayCommand" as DisplayCommand LOGIC_COLOR
+participant ":ModelManager" as ModelManager MODEL_COLOR
+participant ":Person" as Person MODEL_COLOR
+participant ":DayList" as DayList MODEL_COLOR
+
+== Log Command ==
+User -> LogicManager: log 1
+activate LogicManager
+
+LogicManager -> AddressBookParser: parseCommand("log 1")
+activate AddressBookParser
+
+AddressBookParser -> LogCommandParser: parse("1")
+activate LogCommandParser
+
+LogCommandParser -> LogCommand: new LogCommand(index)
+activate LogCommand
+LogCommandParser --> AddressBookParser: LogCommand
+deactivate LogCommandParser
+
+AddressBookParser --> LogicManager: LogCommand
+deactivate AddressBookParser
+
+LogicManager -> LogCommand: execute(model)
+activate LogCommand
+
+LogCommand -> ModelManager: getFilteredPersonList()
+activate ModelManager
+ModelManager --> LogCommand: List<Person>
+deactivate ModelManager
+
+LogCommand -> Person: getDayList()
+activate Person
+Person -> DayList: getVisitDates()
+activate DayList
+DayList --> Person: List<LocalDate>
+deactivate DayList
+Person --> LogCommand: DayList
+deactivate Person
+
+LogCommand -> DayList: addVisitDate(LocalDate.now())
+activate DayList
+DayList --> LogCommand: DayList
+deactivate DayList
+
+LogCommand -> ModelManager: setPerson(oldPerson, newPerson)
+activate ModelManager
+ModelManager --> LogCommand: void
+deactivate ModelManager
+
+LogCommand --> LogicManager: CommandResult
+deactivate LogCommand
+
+LogicManager --> User: "Logged visit for person: John Doe"
+deactivate LogicManager
+
+== Display Command ==
+User -> LogicManager: display 1
+activate LogicManager
+
+LogicManager -> AddressBookParser: parseCommand("display 1")
+activate AddressBookParser
+
+AddressBookParser -> DisplayCommandParser: parse("1")
+activate DisplayCommandParser
+
+DisplayCommandParser -> DisplayCommand: new DisplayCommand(index)
+activate DisplayCommand
+DisplayCommandParser --> AddressBookParser: DisplayCommand
+deactivate DisplayCommandParser
+
+AddressBookParser --> LogicManager: DisplayCommand
+deactivate AddressBookParser
+
+LogicManager -> DisplayCommand: execute(model)
+activate DisplayCommand
+
+DisplayCommand -> ModelManager: getFilteredPersonList()
+activate ModelManager
+ModelManager --> DisplayCommand: List<Person>
+deactivate ModelManager
+
+DisplayCommand -> Person: getDayList()
+activate Person
+Person -> DayList: getVisitDates()
+activate DayList
+DayList --> Person: List<LocalDate>
+deactivate DayList
+Person --> DisplayCommand: DayList
+deactivate Person
+
+DisplayCommand --> LogicManager: CommandResult
+deactivate DisplayCommand
+
+LogicManager --> User: "Visit dates for John Doe:\n• Dec 19, 2024\n• Dec 20, 2024"
+deactivate LogicManager
+
+@enduml
