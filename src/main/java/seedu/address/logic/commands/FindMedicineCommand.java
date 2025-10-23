@@ -16,6 +16,8 @@ import seedu.address.model.person.MedicineContainsKeywordsPredicate;
  */
 public class FindMedicineCommand extends Command {
 
+    private static final Logger logger = LogsCenter.getLogger(FindMedicineCommand.class);
+
     public static final String COMMAND_WORD = "findmed";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose medicines contain any of "
@@ -24,8 +26,6 @@ public class FindMedicineCommand extends Command {
             + "Example: " + COMMAND_WORD + " paracetamol ibuprofen";
 
     private final MedicineContainsKeywordsPredicate predicate;
-
-    private static final Logger logger = LogsCenter.getLogger(FindMedicineCommand.class);
 
     public FindMedicineCommand(MedicineContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
