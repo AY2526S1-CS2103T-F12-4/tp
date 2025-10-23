@@ -22,6 +22,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.visit.DayList;
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -57,8 +58,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Set<Medicine> medicineList = ParserUtil.parseMedicines(argMultimap.getAllValues(PREFIX_MEDICINE));
+        DayList dayList = new DayList();
 
-        Person person = new Person(name, phone, email, address, doctor, tagList, medicineList);
+        Person person = new Person(name, phone, email, address, doctor, tagList, medicineList, dayList);
 
         return new AddCommand(person);
     }

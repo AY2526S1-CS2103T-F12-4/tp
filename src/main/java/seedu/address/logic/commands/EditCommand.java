@@ -108,7 +108,8 @@ public class EditCommand extends Command {
         Set<Medicine> updatedMedicines = personToEdit.getMedicines(); // Medicines are preserved during edit
 
         return new Person(updatedName, updatedPhone,
-                          updatedEmail, updatedAddress, updatedDoctor, updatedTags, updatedMedicines);
+                          updatedEmail, updatedAddress, updatedDoctor, updatedTags, updatedMedicines,
+                          personToEdit.getDayList());
 
     }
 

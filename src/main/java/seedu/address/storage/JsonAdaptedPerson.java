@@ -18,6 +18,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.visit.DayList;
 
 /**
  * Jackson-friendly version of {@link Person}.
@@ -33,6 +34,7 @@ class JsonAdaptedPerson {
     private final String doctor;
     private final List<JsonAdaptedTag> tags = new ArrayList<>();
     private final List<JsonAdaptedMedicine> medicines = new ArrayList<>();
+    private final JsonAdaptedDayList dayList;
 
     /**
      * Constructs a {@code JsonAdaptedPerson} with the given person details.
@@ -41,7 +43,8 @@ class JsonAdaptedPerson {
     public JsonAdaptedPerson(@JsonProperty("name") String name, @JsonProperty("phone") String phone,
                              @JsonProperty("email") String email, @JsonProperty("address") String address,
                              @JsonProperty("doctor") String doctor, @JsonProperty("tags") List<JsonAdaptedTag> tags,
-                             @JsonProperty("medicines") List<JsonAdaptedMedicine> medicines) {
+                             @JsonProperty("medicines") List<JsonAdaptedMedicine> medicines,
+                             @JsonProperty("dayList") JsonAdaptedDayList dayList) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -53,6 +56,7 @@ class JsonAdaptedPerson {
         if (medicines != null) {
             this.medicines.addAll(medicines);
         }
+        this.dayList = dayList;
     }
 
     /**
@@ -70,6 +74,7 @@ class JsonAdaptedPerson {
         medicines.addAll(source.getMedicines().stream()
                 .map(JsonAdaptedMedicine::new)
                 .collect(Collectors.toList()));
+        dayList = new JsonAdaptedDayList(source.getDayList());
     }
 
     /**
@@ -125,7 +130,11 @@ class JsonAdaptedPerson {
         final Doctor modelDoctor = new Doctor(doctor);
         final Set<Tag> modelTags = new HashSet<>(personTags);
         final Set<Medicine> modelMedicines = new HashSet<>(personMedicines);
-        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelDoctor, modelTags, modelMedicines);
+
+        final DayList modelDayList = (dayList == null) ? new DayList() : dayList.toModelType();
+
+        return new Person(modelName, modelPhone, modelEmail, modelAddress, modelDoctor,
+                modelTags, modelMedicines, modelDayList);
     }
 
 }
