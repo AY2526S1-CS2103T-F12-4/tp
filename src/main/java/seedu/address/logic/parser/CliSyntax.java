@@ -13,5 +13,6 @@ public class CliSyntax {
     public static final Prefix PREFIX_DOCTOR = new Prefix("d/");
     public static final Prefix PREFIX_TAG = new Prefix("t/");
     public static final Prefix PREFIX_MEDICINE = new Prefix("med/");
+    public static final Prefix PREFIX_INDEX = new Prefix("i/");
 
 }
