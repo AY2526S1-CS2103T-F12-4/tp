@@ -44,6 +44,8 @@ Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
 Person *--> DayList
+Person *--> Doctor
+Person *--> "*" Medicines
 
 Person -[hidden]up--> I
 UniquePersonList -[hidden]right-> I
