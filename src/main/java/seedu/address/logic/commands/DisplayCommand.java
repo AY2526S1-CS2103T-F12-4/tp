@@ -44,9 +44,11 @@ public class DisplayCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        assert model != null : "Model should not be null";
         logger.info("Executing DisplayCommand for index: " + targetIndex.getOneBased());
         
         List<Person> lastShownList = model.getFilteredPersonList();
+        assert lastShownList != null : "Filtered person list should not be null";
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             logger.warning("Invalid person index: " + targetIndex.getOneBased());
@@ -54,6 +56,8 @@ public class DisplayCommand extends Command {
         }
 
         Person personToDisplay = lastShownList.get(targetIndex.getZeroBased());
+        assert personToDisplay != null : "Person to display should not be null";
+        assert personToDisplay.getDayList() != null : "Person's DayList should not be null";
         logger.info("Displaying visit dates for person: " + personToDisplay.getName());
 
         if (personToDisplay.getDayList().getVisitCount() == 0) {
@@ -62,11 +66,13 @@ public class DisplayCommand extends Command {
         }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+        assert formatter != null : "DateTimeFormatter should not be null";
         String visitDates = personToDisplay.getDayList().getVisitDates().stream()
                 .map(date -> "• " + date.format(formatter))
                 .reduce((date1, date2) -> date1 + "\n" + date2)
                 .orElse("");
 
+        assert !visitDates.isEmpty() : "Visit dates string should not be empty when there are visits";
         logger.info("Successfully displayed " + personToDisplay.getDayList().getVisitCount() 
                 + " visit dates for person: " + personToDisplay.getName());
         return new CommandResult(String.format(MESSAGE_DISPLAY_PERSON_SUCCESS,

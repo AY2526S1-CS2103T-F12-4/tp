@@ -41,9 +41,11 @@ public class LogCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        assert model != null : "Model should not be null";
         logger.info("Executing LogCommand for index: " + targetIndex.getOneBased());
         
         List<Person> lastShownList = model.getFilteredPersonList();
+        assert lastShownList != null : "Filtered person list should not be null";
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             logger.warning("Invalid person index: " + targetIndex.getOneBased());
@@ -51,7 +53,9 @@ public class LogCommand extends Command {
         }
 
         Person personToLog = lastShownList.get(targetIndex.getZeroBased());
+        assert personToLog != null : "Person to log should not be null";
         LocalDate today = LocalDate.now();
+        assert today != null : "Today's date should not be null";
         logger.info("Logging visit for person: " + personToLog.getName() + " on date: " + today);
 
         // Check if today's date is already logged
@@ -62,6 +66,8 @@ public class LogCommand extends Command {
 
         // Create a new person with today's date added to their DayList
         Person updatedPerson = createPersonWithNewVisitDate(personToLog, today);
+        assert updatedPerson != null : "Updated person should not be null";
+        assert updatedPerson.getDayList().hasVisitDate(today) : "Updated person should have today's date in DayList";
         model.setPerson(personToLog, updatedPerson);
         logger.info("Successfully logged visit for person: " + updatedPerson.getName());
 
@@ -72,7 +78,11 @@ public class LogCommand extends Command {
      * Creates a new Person with the given visit date added to their DayList.
      */
     private Person createPersonWithNewVisitDate(Person person, LocalDate visitDate) {
-        return new Person(
+        assert person != null : "Person should not be null";
+        assert visitDate != null : "Visit date should not be null";
+        assert !person.getDayList().hasVisitDate(visitDate) : "Person should not already have this visit date";
+        
+        Person updatedPerson = new Person(
                 person.getName(),
                 person.getPhone(),
                 person.getEmail(),
@@ -82,6 +92,9 @@ public class LogCommand extends Command {
                 person.getMedicines(),
                 person.getDayList().addVisitDate(visitDate)
         );
+        
+        assert updatedPerson.getDayList().hasVisitDate(visitDate) : "Updated person should have the new visit date";
+        return updatedPerson;
     }
 
     @Override
