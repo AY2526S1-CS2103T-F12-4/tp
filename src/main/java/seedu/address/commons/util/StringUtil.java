@@ -65,4 +65,32 @@ public class StringUtil {
             return false;
         }
     }
+
+    /**
+     * Formats a phone number string with consistent spacing.
+     * Removes all non-digit characters and formats based on length.
+     * <br>examples:<pre>
+     *       formatPhoneNumber("87438807") == "8743-8807"
+     *       formatPhoneNumber("1234567890") == "123-456-7890"
+     *       formatPhoneNumber("+65 8743 8807") == "8743-8807"
+     *       </pre>
+     * @param phoneNumber cannot be null
+     * @return formatted phone number string
+     */
+    public static String formatPhoneNumber(String phoneNumber) {
+        requireNonNull(phoneNumber);
+
+        // Remove all non-digits
+        String digits = phoneNumber.replaceAll("\\D", "");
+
+        // Format based on length
+        if (digits.length() == 8) {
+            return digits.substring(0, 4) + "-" + digits.substring(4);
+        } else if (digits.length() == 10) {
+            return digits.substring(0, 3) + "-" + digits.substring(3, 6) + "-" + digits.substring(6);
+        }
+
+        // Return original if doesn't match expected format
+        return phoneNumber;
+    }
 }
