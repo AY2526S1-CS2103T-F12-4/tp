@@ -1,21 +1,22 @@
 package seedu.address.model.person;
 
-import seedu.address.commons.util.StringUtil;
-import seedu.address.commons.util.ToStringBuilder;
-
 import java.util.List;
 import java.util.function.Predicate;
+
+import seedu.address.commons.util.StringUtil;
+import seedu.address.commons.util.ToStringBuilder;
 
 /**
  * Tests that a {@code Person}'s {@code Doctor} matches any of the keywords received.
  */
-public class DoctorContainsKeywordsPredicate implements Predicate<Person>{
+public class DoctorContainsKeywordsPredicate implements Predicate<Person> {
     private final List<String> keywords;
 
     public DoctorContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
+    @Override
     public boolean test(Person person) {
         // The current implementation returns all patients
         // with doctor names whose part can be found in the
