@@ -33,6 +33,9 @@ public class ResultDisplay extends UiPart<Region> {
         requireNonNull(feedbackToUser);
         resultDisplay.setText(feedbackToUser);
 
+        // Dynamically adjust height based on content length
+        adjustHeightForContent(feedbackToUser);
+
         // Set status based on feedback content
         if (feedbackToUser.toLowerCase().contains("error")
                 || feedbackToUser.toLowerCase().contains("invalid")
@@ -46,6 +49,34 @@ public class ResultDisplay extends UiPart<Region> {
         } else {
             setInfoStatus();
         }
+    }
+
+    /**
+     * Adjusts the height of the result display based on content length.
+     */
+    private void adjustHeightForContent(String content) {
+        // Ultra-aggressive approach - force large height
+        String[] lines = content.split("\n");
+        int totalLines = 0;
+
+        for (String line : lines) {
+            // Be very conservative - assume 40 characters per display line
+            int displayLines = Math.max(1, (line.length() + 39) / 40);
+            totalLines += displayLines;
+        }
+
+        // Force much larger height - be extremely generous
+        int targetLines = Math.max(5, Math.min(15, totalLines + 2)); // Add buffer
+
+        // Set very large height to ensure no scrolling
+        double lineHeight = 22; // Even larger line height
+        double targetHeight = targetLines * lineHeight;
+
+        // Apply ultra-aggressive height settings
+        resultDisplay.setPrefRowCount(targetLines);
+        resultDisplay.setMinHeight(targetHeight);
+        resultDisplay.setMaxHeight(targetHeight + 40); // Much more extra space
+        resultDisplay.setPrefHeight(targetHeight);
     }
 
     private void setSuccessStatus() {
