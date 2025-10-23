@@ -4,7 +4,9 @@ import static java.util.Objects.requireNonNull;
 
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -15,6 +17,8 @@ import seedu.address.model.person.Person;
  * Displays the visit dates (DayList) for a person in the address book.
  */
 public class DisplayCommand extends Command {
+
+    private static final Logger logger = LogsCenter.getLogger(DisplayCommand.class);
 
     public static final String COMMAND_WORD = "display";
 
@@ -40,15 +44,20 @@ public class DisplayCommand extends Command {
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);
+        logger.info("Executing DisplayCommand for index: " + targetIndex.getOneBased());
+        
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            logger.warning("Invalid person index: " + targetIndex.getOneBased());
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
         Person personToDisplay = lastShownList.get(targetIndex.getZeroBased());
+        logger.info("Displaying visit dates for person: " + personToDisplay.getName());
 
         if (personToDisplay.getDayList().getVisitCount() == 0) {
+            logger.info("No visits found for person: " + personToDisplay.getName());
             return new CommandResult(String.format(MESSAGE_NO_VISITS, personToDisplay.getName()));
         }
 
@@ -58,6 +67,8 @@ public class DisplayCommand extends Command {
                 .reduce((date1, date2) -> date1 + "\n" + date2)
                 .orElse("");
 
+        logger.info("Successfully displayed " + personToDisplay.getDayList().getVisitCount() 
+                + " visit dates for person: " + personToDisplay.getName());
         return new CommandResult(String.format(MESSAGE_DISPLAY_PERSON_SUCCESS,
                 personToDisplay.getName(), visitDates));
     }
