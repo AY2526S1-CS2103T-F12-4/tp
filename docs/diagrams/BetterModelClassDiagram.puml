@@ -12,9 +12,10 @@ UniqueTagList -[hidden]down- UniquePersonList
 
 UniqueTagList -right-> "*" Tag
 UniquePersonList -right-> Person
-UniqueMedicineList -right-> "*" Person
+UniqueMedicineList -right-> "*" Medicine
 
 Person -up-> "*" Tag
+Person -up-> "*" Medicine
 
 Person *--> Name
 Person *--> Phone
