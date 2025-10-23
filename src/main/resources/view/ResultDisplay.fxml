@@ -9,11 +9,12 @@
 
 <StackPane fx:id="placeHolder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/17"
     xmlns:fx="http://javafx.com/fxml/1">
-  <VBox spacing="5">
+  <VBox spacing="5" minHeight="100" prefHeight="150" maxHeight="300">
     <HBox alignment="CENTER_LEFT" spacing="10">
-      <Circle fx:id="statusIndicator" radius="6" styleClass="status-indicator"/>
+      <Circle fx:id="statusIndicator" radius="5" styleClass="status-indicator"/>
       <Label fx:id="statusLabel" text="Ready" styleClass="status-label"/>
     </HBox>
-    <TextArea fx:id="resultDisplay" editable="false" styleClass="result-display"/>
+    <TextArea fx:id="resultDisplay" editable="false" styleClass="result-display" 
+              wrapText="true" prefRowCount="6" minHeight="80" VBox.vgrow="ALWAYS"/>
   </VBox>
 </StackPane>
