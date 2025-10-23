@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -114,8 +115,12 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Builds a Person with the current values and today's date in the DayList.
+     */
     public Person build() {
-        return new Person(name, phone, email, address, doctor, tags, medicines, new DayList());
+        return new Person(name, phone, email, address, doctor, tags, medicines,
+                new DayList().addVisitDate(LocalDate.now()));
     }
 
 }

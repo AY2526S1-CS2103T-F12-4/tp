@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -58,7 +59,7 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Set<Medicine> medicineList = ParserUtil.parseMedicines(argMultimap.getAllValues(PREFIX_MEDICINE));
-        DayList dayList = new DayList();
+        DayList dayList = new DayList().addVisitDate(LocalDate.now());
 
         Person person = new Person(name, phone, email, address, doctor, tagList, medicineList, dayList);
 

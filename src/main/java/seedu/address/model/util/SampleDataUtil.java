@@ -1,5 +1,6 @@
 package seedu.address.model.util;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -27,22 +28,28 @@ public class SampleDataUtil {
         return new Person[] {
             new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
                 new Address("Blk 30 Geylang Street 29, #06-40"), SAMPLE_DOCTOR,
-                getTagSet("friends"), getMedicineSet("Paracetamol", "Ibuprofen"), new DayList()),
+                getTagSet("friends"), getMedicineSet("Paracetamol", "Ibuprofen"),
+                new DayList().addVisitDate(LocalDate.now())),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                 new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"), SAMPLE_DOCTOR,
-                getTagSet("colleagues", "friends"), getMedicineSet("Aspirin"), new DayList()),
+                getTagSet("colleagues", "friends"), getMedicineSet("Aspirin"),
+                new DayList().addVisitDate(LocalDate.now())),
             new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
                 new Address("Blk 11 Ang Mo Kio Street 74, #11-04"), SAMPLE_DOCTOR,
-                getTagSet("neighbours"), getMedicineSet("Vitamin C", "Calcium", "Iron Supplement"), new DayList()),
+                getTagSet("neighbours"), getMedicineSet("Vitamin C", "Calcium", "Iron Supplement"),
+                new DayList().addVisitDate(LocalDate.now())),
             new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                 new Address("Blk 436 Serangoon Gardens Street 26, #16-43"), SAMPLE_DOCTOR,
-                getTagSet("family"), getMedicineSet(), new DayList()),
+                getTagSet("family"), getMedicineSet(),
+                new DayList().addVisitDate(LocalDate.now())),
             new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
                 new Address("Blk 47 Tampines Street 20, #17-35"), SAMPLE_DOCTOR,
-                getTagSet("classmates"), getMedicineSet("Amoxicillin", "Cough Syrup"), new DayList()),
+                getTagSet("classmates"), getMedicineSet("Amoxicillin", "Cough Syrup"),
+                new DayList().addVisitDate(LocalDate.now())),
             new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                 new Address("Blk 45 Aljunied Street 85, #11-31"), SAMPLE_DOCTOR,
-                getTagSet("colleagues"), getMedicineSet("Blood Pressure Medication"), new DayList())
+                getTagSet("colleagues"), getMedicineSet("Blood Pressure Medication"),
+                new DayList().addVisitDate(LocalDate.now()))
         };
     }
 
