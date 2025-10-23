@@ -100,6 +100,7 @@ public class PersonTest {
                 + ", doctor=" + ALICE.getDoctor()
                 + ", tags=" + ALICE.getTags()
                 + ", medicines=" + ALICE.getMedicines()
+                + ", dayList=" + ALICE.getDayList()
                 + "}";
         assertEquals(expected, ALICE.toString());
     }

@@ -10,6 +10,7 @@ import java.util.Set;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.medicine.Medicine;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.visit.DayList;
 
 /**
  * Represents a Person in the address book.
@@ -27,13 +28,14 @@ public class Person {
     private final Doctor doctor;
     private final Set<Tag> tags = new HashSet<>();
     private final Set<Medicine> medicines = new HashSet<>();
+    private final DayList dayList;
 
     /**
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email,
-                  Address address, Doctor doctor, Set<Tag> tags, Set<Medicine> medicines) {
-        requireAllNonNull(name, phone, email, address, tags, medicines);
+                  Address address, Doctor doctor, Set<Tag> tags, Set<Medicine> medicines, DayList dayList) {
+        requireAllNonNull(name, phone, email, address, tags, medicines, dayList);
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -41,6 +43,7 @@ public class Person {
         this.doctor = doctor;
         this.tags.addAll(tags);
         this.medicines.addAll(medicines);
+        this.dayList = dayList;
     }
 
     public Name getName() {
@@ -80,6 +83,13 @@ public class Person {
     }
 
     /**
+     * Returns the DayList containing visit dates.
+     */
+    public DayList getDayList() {
+        return dayList;
+    }
+
+    /**
      * Returns true if both persons have the same name.
      * This defines a weaker notion of equality between two persons.
      */
@@ -114,13 +124,14 @@ public class Person {
                 && address.equals(otherPerson.address)
                 && doctor.equals(otherPerson.doctor)
                 && tags.equals(otherPerson.tags)
-                && medicines.equals(otherPerson.medicines);
+                && medicines.equals(otherPerson.medicines)
+                && dayList.equals(otherPerson.dayList);
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags, medicines);
+        return Objects.hash(name, phone, email, address, tags, medicines, dayList);
     }
 
     @Override
@@ -133,6 +144,7 @@ public class Person {
                 .add("doctor", doctor)
                 .add("tags", tags)
                 .add("medicines", medicines)
+                .add("dayList", dayList)
                 .toString();
     }
 

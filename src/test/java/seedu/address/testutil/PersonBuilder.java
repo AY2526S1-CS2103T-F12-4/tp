@@ -1,5 +1,6 @@
 package seedu.address.testutil;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
+import seedu.address.model.visit.DayList;
 
 /**
  * A utility class to help with building Person objects.
@@ -113,8 +115,12 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Builds a Person with the current values and today's date in the DayList.
+     */
     public Person build() {
-        return new Person(name, phone, email, address, doctor, tags, medicines);
+        return new Person(name, phone, email, address, doctor, tags, medicines,
+                new DayList().addVisitDate(LocalDate.now()));
     }
 
 }

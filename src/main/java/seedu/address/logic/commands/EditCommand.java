@@ -110,7 +110,8 @@ public class EditCommand extends Command {
         Set<Medicine> updatedMedicines = editPersonDescriptor.getMedicines().orElse(personToEdit.getMedicines());
 
         return new Person(updatedName, updatedPhone,
-                          updatedEmail, updatedAddress, updatedDoctor, updatedTags, updatedMedicines);
+                          updatedEmail, updatedAddress, updatedDoctor, updatedTags, updatedMedicines,
+                          personToEdit.getDayList());
 
     }
 

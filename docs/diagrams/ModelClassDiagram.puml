@@ -19,6 +19,7 @@ Class Email
 Class Name
 Class Phone
 Class Tag
+Class DayList
 
 Class I #FFFFFF
 }
@@ -42,6 +43,7 @@ Person *--> Phone
 Person *--> Email
 Person *--> Address
 Person *--> "*" Tag
+Person *--> DayList
 Person *--> Doctor
 Person *--> "*" Medicines
 

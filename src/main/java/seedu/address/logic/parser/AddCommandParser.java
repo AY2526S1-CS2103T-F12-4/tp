@@ -9,6 +9,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
+import java.time.LocalDate;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -22,6 +23,7 @@ import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.visit.DayList;
 
 /**
  * Parses input arguments and creates a new AddCommand object
@@ -57,8 +59,9 @@ public class AddCommandParser implements Parser<AddCommand> {
         }
         Set<Tag> tagList = ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG));
         Set<Medicine> medicineList = ParserUtil.parseMedicines(argMultimap.getAllValues(PREFIX_MEDICINE));
+        DayList dayList = new DayList().addVisitDate(LocalDate.now());
 
-        Person person = new Person(name, phone, email, address, doctor, tagList, medicineList);
+        Person person = new Person(name, phone, email, address, doctor, tagList, medicineList, dayList);
 
         return new AddCommand(person);
     }
