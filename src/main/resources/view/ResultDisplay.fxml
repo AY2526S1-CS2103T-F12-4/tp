@@ -14,7 +14,7 @@
       <Circle fx:id="statusIndicator" radius="5" styleClass="status-indicator"/>
       <Label fx:id="statusLabel" text="Ready" styleClass="status-label"/>
     </HBox>
-    <TextArea fx:id="resultDisplay" editable="false" styleClass="result-display" 
+    <TextArea fx:id="resultDisplay" editable="false" styleClass="result-display"
               wrapText="true" prefRowCount="6" minHeight="80" VBox.vgrow="ALWAYS"/>
   </VBox>
 </StackPane>
