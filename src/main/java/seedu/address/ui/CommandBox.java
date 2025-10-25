@@ -84,6 +84,18 @@ public class CommandBox extends UiPart<Region> {
             commandHint.setText("Clear all patients: clear");
         } else if (text.startsWith("exit")) {
             commandHint.setText("Exit the application: exit");
+        } else if (text.startsWith("view")) {
+            commandHint.setText("View patient details: view INDEX");
+        } else if (text.startsWith("med")) {
+            commandHint.setText("View patient medicines: med INDEX");
+        } else if (text.startsWith("findmed")) {
+            commandHint.setText("Find by medicine: findmed KEYWORD [MORE_KEYWORDS]");
+        } else if (text.startsWith("doc")) {
+            commandHint.setText("Find by doctor: doc KEYWORD [MORE_KEYWORDS]");
+        } else if (text.startsWith("log")) {
+            commandHint.setText("Log visit date: log INDEX");
+        } else if (text.startsWith("display")) {
+            commandHint.setText("Display visit history: display INDEX");
         } else {
             commandHint.setText("Unknown command. Type 'help' for available commands");
         }
