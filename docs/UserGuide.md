@@ -185,7 +185,7 @@ Examples:
   e.g. `paracetamol` will return patients who take paracetamol even if they take other medicines
 
 Examples:
-* `findmed paracetamol` 
+* `findmed paracetamol`
 * `findmed paracetamol ibuprofen`
 
 ### Deleting a patient : `delete`
