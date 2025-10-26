@@ -74,5 +74,4 @@ deactivate FindMedicineCommand
 
 [<--LogicManager
 deactivate LogicManager
-
 @enduml
