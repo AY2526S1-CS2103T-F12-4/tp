@@ -72,7 +72,7 @@ deactivate CommandResult
 FindMedicineCommand --> LogicManager : r
 deactivate FindMedicineCommand
 
-[<-- LogicManager
+[<--LogicManager
 deactivate LogicManager
 
 @enduml
