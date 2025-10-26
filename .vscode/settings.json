@@ -1,24 +1,4 @@
 {
-    "java.format.settings.url": "",
-    "java.format.settings.profile": "",
-    "java.saveActions.organizeImports": false,
-    "java.completion.importOrder": [
-        "java",
-        "javax",
-        "org",
-        "com",
-        "seedu"
-    ],
-    "java.format.enabled": false,
-    "editor.formatOnSave": false,
-    "editor.codeActionsOnSave": {
-        "source.organizeImports": false
-    },
-    "java.import.gradle.enabled": false,
-    "java.import.maven.enabled": false,
-    "java.autobuild.enabled": false,
-    "java.maxConcurrentBuilds": 1,
-    "files.associations": {
-        "**/Tag.java": "plaintext"
-    }
+    "plantuml.java": "C:\\Program Files\\Microsoft\\jdk-17.0.12.7-hotspot\\bin\\java.exe",
+    "plantuml.server": "https://www.plantuml.com/plantuml"
 }

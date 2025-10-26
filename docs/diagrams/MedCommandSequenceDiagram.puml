@@ -1,0 +1,73 @@
+@startuml
+!include style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor LOGIC_COLOR_T4
+skinparam classBackgroundColor LOGIC_COLOR
+
+actor User
+participant ":MainWindow" as MainWindow UI_COLOR
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":MedCommandParser" as MedCommandParser LOGIC_COLOR
+participant ":MedCommand" as MedCommand LOGIC_COLOR
+participant ":Model" as Model MODEL_COLOR
+participant ":Person" as Person MODEL_COLOR
+
+User -> MainWindow: types "med 1"
+activate MainWindow
+
+MainWindow -> LogicManager: execute("med 1")
+activate LogicManager
+
+LogicManager -> AddressBookParser: parseCommand("med 1")
+activate AddressBookParser
+
+AddressBookParser -> MedCommandParser: parse("1")
+activate MedCommandParser
+
+MedCommandParser -> MedCommand: new MedCommand(index)
+activate MedCommand
+MedCommandParser --> AddressBookParser: MedCommand
+deactivate MedCommandParser
+
+AddressBookParser --> LogicManager: MedCommand
+deactivate AddressBookParser
+
+LogicManager -> MedCommand: execute(model)
+activate MedCommand
+
+MedCommand -> Model: getFilteredPersonList()
+activate Model
+Model --> MedCommand: List<Person>
+deactivate Model
+
+MedCommand -> Person: getMedicines()
+activate Person
+Person --> MedCommand: Set<Medicine>
+deactivate Person
+
+MedCommand --> LogicManager: CommandResult
+deactivate MedCommand
+
+LogicManager --> MainWindow: CommandResult
+deactivate LogicManager
+
+MainWindow --> User: displays medicine list
+deactivate MainWindow
+
+note right of MedCommand
+  MedCommand retrieves the person
+  at the specified index and
+  displays their medicines.
+  If no medicines exist, shows
+  "No medicines recorded" message.
+end note
+
+note right of Person
+  Person contains a Set<Medicine>
+  that stores all medicines
+  prescribed to the patient.
+end note
+
+@enduml
+
