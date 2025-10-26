@@ -1,0 +1,77 @@
+@startuml
+!include style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":AddressBookParser" as AddressBookParser LOGIC_COLOR
+participant ":FindMedicineCommandParser" as FindMedicineCommandParser LOGIC_COLOR
+participant "f:FindMedicineCommand" as FindMedicineCommand LOGIC_COLOR
+participant "r:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+participant ":MedicineContainsKeywordsPredicate" as Predicate MODEL_COLOR
+end box
+
+[-> LogicManager : execute("findmed panadol")
+activate LogicManager
+
+LogicManager -> AddressBookParser : parseCommand("findmed panadol")
+activate AddressBookParser
+
+create FindMedicineCommandParser
+AddressBookParser -> FindMedicineCommandParser
+activate FindMedicineCommandParser
+
+FindMedicineCommandParser --> AddressBookParser
+deactivate FindMedicineCommandParser
+
+AddressBookParser -> FindMedicineCommandParser : parse("panadol")
+activate FindMedicineCommandParser
+
+create Predicate
+FindMedicineCommandParser -> Predicate
+activate Predicate
+
+Predicate --> FindMedicineCommandParser :
+deactivate Predicate
+
+create FindMedicineCommand
+FindMedicineCommandParser -> FindMedicineCommand
+
+
+activate FindMedicineCommand
+
+FindMedicineCommand --> FindMedicineCommandParser :
+deactivate FindMedicineCommand
+
+FindMedicineCommandParser --> AddressBookParser : f
+deactivate FindMedicineCommandParser
+
+AddressBookParser --> LogicManager : f
+deactivate AddressBookParser
+
+LogicManager -> FindMedicineCommand : execute(m)
+activate FindMedicineCommand
+
+FindMedicineCommand -> Model : updateFilteredPersonList()
+activate Model
+
+Model --> FindMedicineCommand
+deactivate Model
+
+create CommandResult
+FindMedicineCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> FindMedicineCommand
+deactivate CommandResult
+
+FindMedicineCommand --> LogicManager : r
+deactivate FindMedicineCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
