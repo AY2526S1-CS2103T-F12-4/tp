@@ -5,7 +5,7 @@ title: User Guide
 
 CLInic is a **desktop app for managing patients, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CLInic can get your patient management tasks done faster than traditional GUI apps.
 
-![Ui](images/Ui-Current.png)
+![Ui](images/UI-Current.png)
 
 ## Table of Contents
 - [Quick start](#quick-start)
@@ -39,20 +39,20 @@ CLInic is a **desktop app for managing patients, optimized for use via a Command
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui-Current.png)
+   ![Ui](images/UI-Current.png)
 
 1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-   * `list` : Lists all contacts.
+  * `list` : Lists all contacts.
 
-   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a patient named `John Doe` to the Address Book.
+  * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a patient named `John Doe` to the Address Book.
 
-   * `delete 3` : Deletes the 3rd contact shown in the current list.
+  * `delete 3` : Deletes the 3rd contact shown in the current list.
 
-   * `clear` : Deletes all contacts.
+  * `clear` : Deletes all contacts.
 
-   * `exit` : Exits the app.
+  * `exit` : Exits the app.
 
 1. Refer to the [Features](#features) below for details of each command.
 
@@ -95,15 +95,20 @@ Format: `help`
 
 Adds a patient to the address book.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DOCTOR] [med/MEDICINE]…​ [t/TAG]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A patient can have any number of tags (including 0)
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
+A patient can have any number of tags/medicines (including 0).
+
+Color legend: 🔴 allergy, 🔵 normal, 🟢 medicine — tags and medicines are colour-coded in the UI to improve readability.
+
+To create a red allergy tag, use `t/allergy` when adding a patient. Any tag starting with "allergy" will appear red in the interface.
 </div>
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/James William`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 med/Paracetamol med/Aspirin t/criminal`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/friend med/Paracetamol med/Aspirin`
 
 ### Listing all patients : `list`
 
@@ -148,9 +153,9 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/Doctor] [med/MED
 * Edits the patient at the specified `INDEX`. The index refers to the index number shown in the displayed patient list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the patient will be removed i.e adding of tags is not cumulative.
-* You can remove all the patient’s tags by typing `t/` without
-    specifying any tags after it.
+* When editing tags/medicines, the existing tags/medicines of the patient will be removed i.e adding of these fields is not cumulative.
+* You can remove all the patient’s tags/medicines by typing `t/` or `med/` without
+  specifying any tags after it.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st patient to be `91234567` and `johndoe@example.com` respectively.
@@ -185,7 +190,7 @@ Examples:
   e.g. `paracetamol` will return patients who take paracetamol even if they take other medicines
 
 Examples:
-* `findmed paracetamol` 
+* `findmed paracetamol`
 * `findmed paracetamol ibuprofen`
 
 ### Deleting a patient : `delete`
@@ -247,10 +252,10 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]…​` <br> e.g., `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/James William`
+**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/Doctor] [t/TAG]…​ [med/MEDICINE]…​` <br> e.g., `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/friend med/Paracetamol med/Aspirin`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/Doctor] [med/MEDICINE]…​ [t/TAG]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/Doctor] [t/TAG]…​ [med/MEDICINE]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Filter by Medicines** | `findmed MEDICINE [MORE_MEDICINE]`<br> e.g., `findmed Paracetamol Ibuprofen`
 **List** | `list`
