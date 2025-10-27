@@ -8,6 +8,7 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.Messages;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.medicine.Medicine;
 import seedu.address.model.person.Address;
@@ -46,6 +47,9 @@ public class ParserUtil {
     public static Name parseName(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
+        if (trimmedName.contains("  ")) {
+            throw new ParseException("Name: " + Messages.MESSAGE_CONSECUTIVE_SPACES);
+        }
         if (!Name.isValidName(trimmedName)) {
             throw new ParseException(Name.MESSAGE_CONSTRAINTS);
         }
@@ -76,6 +80,9 @@ public class ParserUtil {
     public static Address parseAddress(String address) throws ParseException {
         requireNonNull(address);
         String trimmedAddress = address.trim();
+        if (trimmedAddress.contains("  ")) {
+            throw new ParseException("Address: " + Messages.MESSAGE_CONSECUTIVE_SPACES);
+        }
         if (!Address.isValidAddress(trimmedAddress)) {
             throw new ParseException(Address.MESSAGE_CONSTRAINTS);
         }
@@ -83,7 +90,7 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code String doctor} into an {@code Doctor}.
+     * Parses a {@code String doctor} into a {@code Doctor}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws ParseException if the given {@code doctor} is invalid.
@@ -91,6 +98,9 @@ public class ParserUtil {
     public static Doctor parseDoctor(String doctor) throws ParseException {
         requireNonNull(doctor);
         String trimmedDoctor = doctor.trim();
+        if (trimmedDoctor.contains("  ")) {
+            throw new ParseException("Doctor: " + Messages.MESSAGE_CONSECUTIVE_SPACES);
+        }
         if (!Doctor.isValidDoctor(trimmedDoctor)) {
             throw new ParseException(Doctor.MESSAGE_CONSTRAINTS);
         }
@@ -148,6 +158,9 @@ public class ParserUtil {
     public static Medicine parseMedicine(String medicine) throws ParseException {
         requireNonNull(medicine);
         String trimmedMedicine = medicine.trim();
+        if (trimmedMedicine.contains("  ")) {
+            throw new ParseException("Medicine: " + Messages.MESSAGE_CONSECUTIVE_SPACES);
+        }
         if (!Medicine.isValidMedicineName(trimmedMedicine)) {
             throw new ParseException(Medicine.MESSAGE_CONSTRAINTS);
         }

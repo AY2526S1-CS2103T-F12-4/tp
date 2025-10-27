@@ -39,4 +39,14 @@ public class AppUtil {
             throw new IllegalArgumentException(errorMessage);
         }
     }
+
+    /**
+     * Checks if the given string contains consecutive spaces.
+     *
+     * @param input the string to check
+     * @return true if the string contains consecutive spaces, false otherwise
+     */
+    public static boolean hasConsecutiveSpaces(String input) {
+        return input != null && input.contains("  ");
+    }
 }

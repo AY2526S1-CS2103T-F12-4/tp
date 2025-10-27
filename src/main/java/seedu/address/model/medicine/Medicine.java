@@ -2,6 +2,8 @@ package seedu.address.model.medicine;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
+import static seedu.address.commons.util.AppUtil.hasConsecutiveSpaces;
+import static seedu.address.logic.Messages.MESSAGE_CONSECUTIVE_SPACES;
 
 /**
  * Represents a Medicine in the address book.
@@ -9,8 +11,8 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Medicine {
 
-    public static final String MESSAGE_CONSTRAINTS = "Medicine names should be alphanumeric and can contain spaces";
-    public static final String VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
+    public static final String MESSAGE_CONSTRAINTS = "Medicine names should only contain printable characters and should not be blank";
+    public static final String VALIDATION_REGEX = "[\\p{Print}][\\p{Print} ]*";
 
     public final String medicineName;
 
@@ -21,6 +23,7 @@ public class Medicine {
      */
     public Medicine(String medicineName) {
         requireNonNull(medicineName);
+        checkArgument(!hasConsecutiveSpaces(medicineName), MESSAGE_CONSECUTIVE_SPACES);
         checkArgument(isValidMedicineName(medicineName), MESSAGE_CONSTRAINTS);
         this.medicineName = medicineName;
     }
