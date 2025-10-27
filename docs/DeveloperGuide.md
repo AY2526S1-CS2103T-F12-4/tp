@@ -311,151 +311,186 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is the `CLInic` and the **Actor** is the `clinic manager`, unless specified otherwise)
 
-**Use case: Add a new patient**
+**Use case: UC01 - Add a new patient**
 
 **MSS**
 
-1. Clinic manager requests to add a new patient
-2. CLInic prompts for patient details (name, phone, address, medical history, allergies, assigned doctor)
-3. Clinic manager enters the patient information
-4. CLInic adds the patient to the system
+1. Clinic manager requests to add a new patient using the add command
+2. Clinic manager enters patient details
+3. CLInic adds the patient and displays success message with patient details
 
    Use case ends.
 
 **Extensions**
 
-* 2a. The patient information is incomplete.
+* 2a. The patient information has invalid format.
 
-  * 2a1. CLInic shows an error message indicating required fields.
+  * 2a1. CLInic shows an error message indicating the specific invalid field and format requirements.
 
     Use case resumes at step 2.
 
-* 3a. The patient already exists in the system.
+* 2b. Required fields are missing.
 
-  * 3a1. CLInic shows an error message about duplicate patient.
+  * 2b1. CLInic shows an error message indicating missing required fields.
 
-    Use case ends.
+    Use case resumes at step 2.
 
-**Use case: Find a patient by name**
+* 2c. The input contains consecutive spaces.
 
-**MSS**
+  * 2c1. CLInic shows an error message about consecutive spaces not being allowed.
 
-1. Clinic manager requests to find a patient by name
-2. CLInic prompts for the patient name
-3. Clinic manager enters the patient name (can be partial)
-4. CLInic shows matching patients
+    Use case resumes at step 2.
 
-   Use case ends.
+* 2d. The patient already exists in the system (same name).
 
-**Extensions**
-
-* 2a. The search term is empty.
-
-  * 2a1. CLInic shows an error message.
-
-    Use case resumes at step 1.
-
-* 3a. No patients match the search term.
-
-  * 3a1. CLInic shows "No patients found" message.
+  * 2d1. CLInic shows an error message about duplicate patient.
 
     Use case ends.
 
-**Use case: Assign medicine to a patient**
+**Use case: UC02 - Find patients by name**
 
 **MSS**
 
-1. Clinic manager requests to assign medicine to a patient
-2. CLInic prompts for patient identification
-3. Clinic manager enters patient name or ID
-4. CLInic shows patient details
-5. Clinic manager requests to add medicine
-6. CLInic prompts for medicine details
-7. Clinic manager enters medicine name and dosage
-8. CLInic checks for potential allergies or drug interactions
-9. CLInic adds the medicine to the patient's record
+1. Clinic manager requests to find patients by name using the find command
+2. Clinic manager enters search keywords
+3. CLInic displays matching patients with their details
 
    Use case ends.
 
 **Extensions**
 
-* 3a. Patient not found.
+* 2a. The search keywords are empty.
 
-  * 3a1. CLInic shows an error message.
+  * 2a1. CLInic shows an error message about invalid command format.
 
     Use case resumes at step 1.
 
-* 8a. Potential allergy conflict detected.
+* 3a. No patients match the search keywords.
 
-  * 8a1. CLInic shows a warning about the allergy conflict.
-  * 8a2. Clinic manager confirms to proceed or cancels.
-
-    Use case resumes at step 6 if confirmed, ends if cancelled.
-
-* 8b. Potential drug interaction detected.
-
-  * 8b1. CLInic shows a warning about the drug interaction.
-  * 8b2. Clinic manager confirms to proceed or cancels.
-
-    Use case resumes at step 6 if confirmed, ends if cancelled.
-
-**Use case: Apply batch actions to multiple patients**
-
-**MSS**
-
-1. Clinic manager requests to apply batch actions
-2. CLInic prompts for selection criteria (filter by doctor, medicine, category, etc.)
-3. Clinic manager enters the filter criteria
-4. CLInic shows matching patients
-5. Clinic manager requests to apply action (tag, assign doctor, delete, etc.)
-6. CLInic prompts for action details
-7. Clinic manager enters the action details
-8. CLInic applies the action to all selected patients
-
-   Use case ends.
-
-**Extensions**
-
-* 3a. No patients match the filter criteria.
-
-  * 3a1. CLInic shows "No patients found" message.
+  * 3a1. CLInic shows "0 persons listed!" message.
 
     Use case ends.
 
-* 5a. Clinic manager cancels the batch action.
-
-  Use case ends.
-
-* 7a. Invalid action details provided.
-
-  * 7a1. CLInic shows an error message.
-
-    Use case resumes at step 6.
-
-**Use case: Archive an inactive patient**
+**Use case: UC03 - View patient medicines**
 
 **MSS**
 
-1. Clinic manager requests to archive a patient
-2. CLInic prompts for patient identification
-3. Clinic manager enters patient name or ID
-4. CLInic shows patient details
-5. Clinic manager confirms the archiving action
-6. CLInic moves the patient to archived status
+1. Clinic manager requests to view medicines for a specific patient using the med command
+2. Clinic manager enters the patient index
+3. CLInic displays the patient's medicines
 
    Use case ends.
 
 **Extensions**
 
-* 3a. Patient not found.
+* 2a. The index is invalid (not a positive integer).
 
-  * 3a1. CLInic shows an error message.
+  * 2a1. CLInic shows an error message about invalid index format.
+
+    Use case resumes at step 2.
+
+* 2b. The index is out of range.
+
+  * 2b1. CLInic shows an error message about invalid patient index.
+
+    Use case resumes at step 2.
+
+* 3a. The patient has no medicines.
+
+  * 3a1. CLInic shows message indicating no medicines are assigned.
+
+    Use case ends.
+
+**Use case: UC04 - Edit patient information**
+
+**MSS**
+
+1. Clinic manager requests to edit a patient using the edit command
+2. Clinic manager enters the patient index and fields to be modified
+3. CLInic updates the patient information and displays success message with updated patient details
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The index is invalid.
+
+  * 2a1. CLInic shows an error message about invalid index format.
+
+    Use case resumes at step 2.
+
+* 2b. No fields are provided for editing.
+
+  * 2b1. CLInic shows an error message indicating at least one field must be provided.
+
+    Use case resumes at step 2.
+
+* 2c. The index is out of range.
+
+  * 2c1. CLInic shows an error message about invalid patient index.
+
+    Use case resumes at step 2.
+
+* 2d. The new field values have invalid format.
+
+  * 2d1. CLInic shows an error message about the specific invalid field.
+
+    Use case resumes at step 2.
+
+* 2e. The edited patient would be identical to an existing patient.
+
+  * 2e1. CLInic shows an error message about duplicate patient.
+
+    Use case resumes at step 2.
+
+**Use case: UC05 - Find patients by medicine**
+
+**MSS**
+
+1. Clinic manager requests to find patients by medicine using the findmed command
+2. Clinic manager enters medicine names
+3. CLInic displays matching patients
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The medicine names are empty.
+
+  * 2a1. CLInic shows an error message about invalid command format.
 
     Use case resumes at step 1.
 
-* 5a. Clinic manager cancels the archiving.
+* 3a. No patients match the medicine criteria.
 
-  Use case ends.
+  * 3a1. CLInic shows "0 persons listed!" message.
+
+    Use case ends.
+
+**Use case: UC06 - Delete a patient**
+
+**MSS**
+
+1. Clinic manager requests to delete a patient using the delete command
+2. Clinic manager enters the patient index
+3. CLInic removes the patient from the system
+4. CLInic removes patient and displays success message
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The index is invalid (not a positive integer).
+
+  * 2a1. CLInic shows an error message about invalid index format.
+
+    Use case resumes at step 2.
+
+* 2b. The index is out of range.
+
+  * 2b1. CLInic shows an error message about invalid patient index.
+
+    Use case resumes at step 2.
 
 ### Non-Functional Requirements
 
