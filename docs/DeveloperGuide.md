@@ -316,10 +316,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. Clinic manager requests to add a new patient using the add command
-2. Clinic manager enters patient details (name, phone, email, address) and optional fields (doctor, tags, medicines)
-3. CLInic validates the input format and field constraints
-4. CLInic adds the patient to the system
-5. CLInic displays success message with patient details
+2. Clinic manager enters patient details
+3. CLInic adds the patient and displays success message with patient details
 
    Use case ends.
 
@@ -343,9 +341,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case resumes at step 2.
 
-* 4a. The patient already exists in the system (same name).
+* 2d. The patient already exists in the system (same name).
 
-  * 4a1. CLInic shows an error message about duplicate patient.
+  * 2d1. CLInic shows an error message about duplicate patient.
 
     Use case ends.
 
@@ -355,8 +353,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. Clinic manager requests to find patients by name using the find command
 2. Clinic manager enters search keywords
-3. CLInic searches for patients whose names contain any of the keywords
-4. CLInic displays matching patients with their details
+3. CLInic displays matching patients with their details
 
    Use case ends.
 
@@ -368,9 +365,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case resumes at step 1.
 
-* 4a. No patients match the search keywords.
+* 3a. No patients match the search keywords.
 
-  * 4a1. CLInic shows "0 persons listed!" message.
+  * 3a1. CLInic shows "0 persons listed!" message.
 
     Use case ends.
 
@@ -380,8 +377,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. Clinic manager requests to view medicines for a specific patient using the med command
 2. Clinic manager enters the patient index
-3. CLInic validates the index is within range
-4. CLInic displays the patient's medicines
+3. CLInic displays the patient's medicines
 
    Use case ends.
 
@@ -393,15 +389,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case resumes at step 2.
 
-* 3a. The index is out of range.
+* 2b. The index is out of range.
 
-  * 3a1. CLInic shows an error message about invalid patient index.
+  * 2b1. CLInic shows an error message about invalid patient index.
 
     Use case resumes at step 2.
 
-* 4a. The patient has no medicines.
+* 3a. The patient has no medicines.
 
-  * 4a1. CLInic shows message indicating no medicines are assigned.
+  * 3a1. CLInic shows message indicating no medicines are assigned.
 
     Use case ends.
 
@@ -411,9 +407,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. Clinic manager requests to edit a patient using the edit command
 2. Clinic manager enters the patient index and fields to be modified
-3. CLInic validates the index and new field values
-4. CLInic updates the patient information
-5. CLInic displays success message with updated patient details
+3. CLInic updates the patient information and displays success message with updated patient details
 
    Use case ends.
 
@@ -431,21 +425,21 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case resumes at step 2.
 
-* 3a. The index is out of range.
+* 2c. The index is out of range.
 
-  * 3a1. CLInic shows an error message about invalid patient index.
-
-    Use case resumes at step 2.
-
-* 3b. The new field values have invalid format.
-
-  * 3b1. CLInic shows an error message about the specific invalid field.
+  * 2c1. CLInic shows an error message about invalid patient index.
 
     Use case resumes at step 2.
 
-* 4a. The edited patient would be identical to an existing patient.
+* 2d. The new field values have invalid format.
 
-  * 4a1. CLInic shows an error message about duplicate patient.
+  * 2d1. CLInic shows an error message about the specific invalid field.
+
+    Use case resumes at step 2.
+
+* 2e. The edited patient would be identical to an existing patient.
+
+  * 2e1. CLInic shows an error message about duplicate patient.
 
     Use case resumes at step 2.
 
@@ -455,8 +449,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. Clinic manager requests to find patients by medicine using the findmed command
 2. Clinic manager enters medicine names
-3. CLInic searches for patients taking any of the specified medicines
-4. CLInic displays matching patients
+3. CLInic displays matching patients
 
    Use case ends.
 
@@ -468,9 +461,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case resumes at step 1.
 
-* 4a. No patients match the medicine criteria.
+* 3a. No patients match the medicine criteria.
 
-  * 4a1. CLInic shows "0 persons listed!" message.
+  * 3a1. CLInic shows "0 persons listed!" message.
 
     Use case ends.
 
@@ -480,9 +473,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. Clinic manager requests to delete a patient using the delete command
 2. Clinic manager enters the patient index
-3. CLInic validates the index is within range
-4. CLInic removes the patient from the system
-5. CLInic displays success message
+3. CLInic removes the patient from the system
+4. CLInic removes patient and displays success message
 
    Use case ends.
 
@@ -494,9 +486,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case resumes at step 2.
 
-* 3a. The index is out of range.
+* 2b. The index is out of range.
 
-  * 3a1. CLInic shows an error message about invalid patient index.
+  * 2b1. CLInic shows an error message about invalid patient index.
 
     Use case resumes at step 2.
 
