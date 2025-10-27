@@ -2,8 +2,6 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
-import static seedu.address.commons.util.AppUtil.hasConsecutiveSpaces;
-import static seedu.address.logic.Messages.MESSAGE_CONSECUTIVE_SPACES;
 
 /**
  * Represents a Person's address in the address book.
@@ -28,7 +26,6 @@ public class Address {
      */
     public Address(String address) {
         requireNonNull(address);
-        checkArgument(!hasConsecutiveSpaces(address), MESSAGE_CONSECUTIVE_SPACES);
         checkArgument(isValidAddress(address), MESSAGE_CONSTRAINTS);
         value = address;
     }
