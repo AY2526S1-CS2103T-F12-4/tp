@@ -197,6 +197,8 @@ Examples:
 
 ### Locating patients by medicines taken: `findmed`
 
+Format: `findmed med/MEDICINE [MORE_MEDICINES]...`
+
 * The search is case-insensitive. e.g `paracetamol` will match `Paracetamol`
 * if more than one medicine specified, it should be space-sperated like `findmed medA medB`
 * The order of the keywords does not matter. e.g. `paracetamol ibuprofen` and `ibuprofen paracetamol`
@@ -206,8 +208,8 @@ Examples:
   e.g. `paracetamol` will return patients who take paracetamol even if they take other medicines
 
 Examples:
-* `findmed paracetamol`
-* `findmed paracetamol ibuprofen`
+* `findmed med/paracetamol`
+* `findmed med/paracetamol med/ibuprofen`
 
 ### Deleting a patient : `delete`
 
