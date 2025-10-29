@@ -367,7 +367,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. No patients match the search keywords.
 
-  * 3a1. CLInic shows "0 persons listed!" message.
+  * 3a1. CLInic shows "0 patients listed!" message.
 
     Use case ends.
 
@@ -487,7 +487,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 3a. No patients match the medicine criteria.
 
-  * 3a1. CLInic shows "0 persons listed!" message.
+  * 3a1. CLInic shows "0 patients listed!" message.
 
     Use case ends.
 
