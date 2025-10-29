@@ -39,7 +39,7 @@ CLInic is a **desktop app for managing patients, optimized for use via a Command
 
 1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar addressbook.jar` command to run the application.<br>
+1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar CLInic.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/UI-Current.png)
 
@@ -100,12 +100,9 @@ Adds a patient to the address book.
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A patient can have any number of tags/medicines (including 0).
 
-Color legend: 🔴 allergy, 🔵 normal, 🟢 medicine — tags and medicines are colour-coded in the UI to improve readability.
-
-To create a red allergy tag, use `t/allergy` when adding a patient. Any tag starting with "allergy" will appear red in the interface.
+To create a red allergy tag, use `t/allergy` when adding a patient. Any tags that with "allergy" will appear red in the interface.
 </div>
 
 Examples:
