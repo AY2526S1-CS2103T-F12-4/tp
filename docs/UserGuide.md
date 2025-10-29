@@ -279,8 +279,8 @@ Action | Format, Examples
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/Doctor] [t/TAG]…​ [med/MEDICINE]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**Find Doctor** | `finddoc KEYWORD [MORE_KEYWORDS]`<br> e.g., `find Mike Ang`
-**Filter by Medicines** | `findmed MEDICINE [MORE_MEDICINE]`<br> e.g., `findmed Paracetamol Ibuprofen`
+**Find Doctor** | `finddoc KEYWORD [MORE_KEYWORDS]`<br> e.g., `finddoc Mike Ang`
+**Filter by Medicines** | `findmed med/MEDICINE [med/MEDICINE]...` or `findmed none` <br> e.g., `findmed med/Paracetamol med/Ibuprofen`
 **List** | `list`
 **Help** | `help`
 **View medicines** | `med INDEX`
