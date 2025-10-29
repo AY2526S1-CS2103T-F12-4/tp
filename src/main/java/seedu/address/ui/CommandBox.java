@@ -80,37 +80,62 @@ public class CommandBox extends UiPart<Region> {
 
         if (text.isEmpty()) {
             commandHint.setText("Type 'help' for available commands");
-        } else if (text.startsWith(AddCommand.COMMAND_WORD)) {
-            commandHint.setText(AddCommand.MESSAGE_USAGE);
-        } else if (text.startsWith(DeleteCommand.COMMAND_WORD)) {
-            commandHint.setText(DeleteCommand.MESSAGE_USAGE);
-        } else if (text.startsWith(EditCommand.COMMAND_WORD)) {
-            commandHint.setText(EditCommand.MESSAGE_USAGE);
-        } else if (text.startsWith(FindCommand.COMMAND_WORD)) {
-            commandHint.setText(FindCommand.MESSAGE_USAGE);
-        } else if (text.startsWith(FindMedicineCommand.COMMAND_WORD)) {
-            commandHint.setText(FindMedicineCommand.MESSAGE_USAGE);
-        } else if (text.startsWith(FindDoctorCommand.COMMAND_WORD)) {
-            commandHint.setText(FindDoctorCommand.MESSAGE_USAGE);
-        } else if (text.startsWith(ListCommand.COMMAND_WORD)) {
-            commandHint.setText("List all patients: " + ListCommand.COMMAND_WORD);
-        } else if (text.startsWith(HelpCommand.COMMAND_WORD)) {
-            commandHint.setText(HelpCommand.MESSAGE_USAGE);
-        } else if (text.startsWith(ClearCommand.COMMAND_WORD)) {
-            commandHint.setText("Clear all patients: " + ClearCommand.COMMAND_WORD);
-        } else if (text.startsWith(ExitCommand.COMMAND_WORD)) {
-            commandHint.setText("Exit the application: " + ExitCommand.COMMAND_WORD);
-        } else if (text.startsWith(ViewCommand.COMMAND_WORD)) {
-            commandHint.setText(ViewCommand.MESSAGE_USAGE);
-        } else if (text.startsWith(MedCommand.COMMAND_WORD)) {
-            commandHint.setText(MedCommand.MESSAGE_USAGE);
-        } else if (text.startsWith(LogCommand.COMMAND_WORD)) {
-            commandHint.setText(LogCommand.MESSAGE_USAGE);
-        } else if (text.startsWith(DisplayCommand.COMMAND_WORD)) {
-            commandHint.setText(DisplayCommand.MESSAGE_USAGE);
-        } else {
-            commandHint.setText("Unknown command. Type 'help' for available commands");
+            return;
         }
+
+        // Define known commands with their usage strings
+        String[][] commands = new String[][]{
+                {AddCommand.COMMAND_WORD, AddCommand.MESSAGE_USAGE},
+                {EditCommand.COMMAND_WORD, EditCommand.MESSAGE_USAGE},
+                {DeleteCommand.COMMAND_WORD, DeleteCommand.MESSAGE_USAGE},
+                // placed before 'find' to avoid shadowing
+                {FindMedicineCommand.COMMAND_WORD, FindMedicineCommand.MESSAGE_USAGE},
+                {FindDoctorCommand.COMMAND_WORD, FindDoctorCommand.MESSAGE_USAGE},
+                {FindCommand.COMMAND_WORD, FindCommand.MESSAGE_USAGE},
+                {ViewCommand.COMMAND_WORD, ViewCommand.MESSAGE_USAGE},
+                {MedCommand.COMMAND_WORD, MedCommand.MESSAGE_USAGE},
+                {LogCommand.COMMAND_WORD, LogCommand.MESSAGE_USAGE},
+                {DisplayCommand.COMMAND_WORD, DisplayCommand.MESSAGE_USAGE},
+                {HelpCommand.COMMAND_WORD, HelpCommand.MESSAGE_USAGE},
+                {ListCommand.COMMAND_WORD, "List all patients: " + ListCommand.COMMAND_WORD},
+                {ClearCommand.COMMAND_WORD, "Clear all patients: " + ClearCommand.COMMAND_WORD},
+                {ExitCommand.COMMAND_WORD, "Exit the application: " + ExitCommand.COMMAND_WORD}
+        };
+
+        // 1) Exact match takes priority (handles find vs findmed conflict when full word typed)
+        for (String[] entry : commands) {
+            if (entry[0].equals(text)) {
+                commandHint.setText(entry[1]);
+                return;
+            }
+        }
+
+        // 2) Partial match: any command whose word starts with the typed text
+        java.util.List<String[]> matches = new java.util.ArrayList<>();
+        for (String[] entry : commands) {
+            if (entry[0].startsWith(text)) {
+                matches.add(entry);
+            }
+        }
+
+        if (matches.size() == 1) {
+            commandHint.setText(matches.get(0)[1]);
+            return;
+        }
+
+        if (matches.size() > 1) {
+            // Show possible commands to guide further typing
+            String suggestions = matches.stream()
+                    .map(e -> e[0])
+                    .sorted()
+                    .limit(5)
+                    .reduce((a, b) -> a + ", " + b)
+                    .orElse("");
+            commandHint.setText("Possible commands: " + suggestions);
+            return;
+        }
+
+        commandHint.setText("Unknown command. Type 'help' for available commands");
     }
 
     /**
