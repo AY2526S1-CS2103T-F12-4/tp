@@ -443,7 +443,31 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case resumes at step 2.
 
-**Use case: UC05 - Find patients by medicine**
+**Use case: UC05 - Find patients by doctor**
+
+**MSS**
+
+1. Clinic manager requests to find patients by doctor using the finddoc command
+2. Clinic manager enters doctor names
+3. CLInic displays matching patients
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The doctor names are empty.
+
+    * 2a1. CLInic shows an error message about invalid command format.
+
+      Use case resumes at step 1.
+
+* 3a. No patients are seen by a doctor with that name.
+
+    * 3a1. CLInic shows "0 patients listed!" message.
+
+      Use case ends.
+
+**Use case: UC06 - Find patients by medicine**
 
 **MSS**
 
@@ -467,7 +491,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Use case: UC06 - Delete a patient**
+**Use case: UC07 - Delete a patient**
 
 **MSS**
 
@@ -491,6 +515,30 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
   * 2b1. CLInic shows an error message about invalid patient index.
 
     Use case resumes at step 2.
+
+**Use case: UC08 - View a patient**
+
+**MSS**
+
+1. Clinic manager requests to view a patient using the view command
+2. Clinic manager enters the patient index
+3. CLInic displays information about that patient
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The index is invalid (not a positive integer).
+
+    * 2a1. CLInic shows an error message about invalid index format.
+
+      Use case resumes at step 2.
+
+* 2b. The index is out of range.
+
+    * 2b1. CLInic shows an error message about invalid patient index.
+
+      Use case resumes at step 2.
 
 ### Non-Functional Requirements
 
