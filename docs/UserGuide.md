@@ -37,7 +37,7 @@ CLInic is a **desktop app for managing patients, optimized for use via a Command
 
 1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for your AddressBook.
+1. Copy the file to the folder you want to use as the _home folder_ for CLInic.
 
 1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar CLInic.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
@@ -48,11 +48,11 @@ CLInic is a **desktop app for managing patients, optimized for use via a Command
 
   * `list` : Lists all contacts.
 
-  * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a patient named `John Doe` to the Address Book.
+  * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a patient named `John Doe` to CLInic.
 
-  * `delete 3` : Deletes the 3rd contact shown in the current list.
+  * `delete 3` : Deletes the 3rd patient shown in the current list.
 
-  * `clear` : Deletes all contacts.
+  * `clear` : Deletes all patients.
 
   * `exit` : Exits the app.
 
@@ -95,14 +95,16 @@ Format: `help`
 
 ### Adding a patient: `add`
 
-Adds a patient to the address book.
+Adds a patient to CLInic.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`
 
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A patient can have any number of tags/medicines (including 0).
+<div markdown="span" class="alert alert-primary">:bulb: *Tip:*
+A patient can have any number of tags/medicines (including 0)
+</div>
 
-To create a red allergy tag, use `t/allergy` when adding a patient. Any tags that with "allergy" will appear red in the interface.
+<div markdown="span" class="alert alert-primary">:bulb: *Tip:*
+To create a red allergy tag, use `t/allergy` when adding a patient. Any tag containing "allergy" will appear red in the interface.
 </div>
 
 Examples:
@@ -111,13 +113,13 @@ Examples:
 
 ### Listing all patients : `list`
 
-Shows a list of all patients in the address book.
+Shows a list of all patients in CLInic.
 
 Format: `list`
 
 ### Viewing a patient : `view`
 
-Views the specified patient details from the address book.
+Views the specified patient details from CLInic.
 
 Format: `view INDEX`
 
@@ -145,7 +147,7 @@ Examples:
 
 ### Editing a patient : `edit`
 
-Edits an existing patient in the address book.
+Edits an existing patient in CLInic.
 
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/Doctor] [med/MEDICINE]…​ [t/TAG]…​`
 
@@ -213,7 +215,7 @@ Examples:
 
 ### Deleting a patient : `delete`
 
-Deletes the specified patient from the address book.
+Deletes the specified patient from CLInic.
 
 Format: `delete INDEX`
 
@@ -222,12 +224,12 @@ Format: `delete INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `delete 2` deletes the 2nd patient in the address book.
+* `list` followed by `delete 2` deletes the 2nd patient in CLInic.
 * `find Betsy` followed by `delete 1` deletes the 1st patient in the results of the `find` command.
 
 ### Clearing all entries : `clear`
 
-Clears all entries from the address book.
+Clears all patient entries in CLInic.
 
 Format: `clear`
 
@@ -239,15 +241,15 @@ Format: `exit`
 
 ### Saving the data
 
-AddressBook data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
+CLInic data are saved in the hard disk automatically after any command that changes the data. There is no need to save manually.
 
 ### Editing the data file
 
-AddressBook data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
+CLInic data are saved automatically as a JSON file `[JAR file location]/data/addressbook.json`. Advanced users are welcome to update data directly by editing that data file.
 
 <div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
-If your changes to the data file makes its format invalid, AddressBook will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
-Furthermore, certain edits can cause the AddressBook to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
+If your changes to the data file makes its format invalid, CLInic will discard all data and start with an empty data file at the next run. Hence, it is recommended to take a backup of the file before editing it.<br>
+Furthermore, certain edits can cause CLInic to behave in unexpected ways (e.g., if a value entered is outside of the acceptable range). Therefore, edit the data file only if you are confident that you can update it correctly.
 </div>
 
 --------------------------------------------------------------------------------------------------------------------
@@ -255,7 +257,7 @@ Furthermore, certain edits can cause the AddressBook to behave in unexpected way
 ## FAQ
 
 **Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous AddressBook home folder.
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous CLInic home folder.
 
 --------------------------------------------------------------------------------------------------------------------
 
