@@ -5,7 +5,21 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DisplayCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindDoctorCommand;
+import seedu.address.logic.commands.FindMedicineCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LogCommand;
+import seedu.address.logic.commands.MedCommand;
+import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -66,27 +80,62 @@ public class CommandBox extends UiPart<Region> {
 
         if (text.isEmpty()) {
             commandHint.setText("Type 'help' for available commands");
-        } else if (text.startsWith("add")) {
-            commandHint.setText("Add a new patient: add n/NAME p/PHONE e/EMAIL a/ADDRESS [d/DOCTOR] "
-                    + "[t/TAG]... [med/MEDICINE]...");
-        } else if (text.startsWith("delete")) {
-            commandHint.setText("Delete a patient: delete INDEX");
-        } else if (text.startsWith("edit")) {
-            commandHint.setText("Edit a patient: edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] "
-                    + "[a/ADDRESS] [d/DOCTOR] [t/TAG]... [med/MEDICINE]...");
-        } else if (text.startsWith("find")) {
-            commandHint.setText("Find patients: find KEYWORD [MORE_KEYWORDS]");
-        } else if (text.startsWith("list")) {
-            commandHint.setText("List all patients: list");
-        } else if (text.startsWith("help")) {
-            commandHint.setText("Show help information");
-        } else if (text.startsWith("clear")) {
-            commandHint.setText("Clear all patients: clear");
-        } else if (text.startsWith("exit")) {
-            commandHint.setText("Exit the application: exit");
-        } else {
-            commandHint.setText("Unknown command. Type 'help' for available commands");
+            return;
         }
+
+        // Define known commands with their usage strings
+        String[][] commands = new String[][]{
+                {AddCommand.COMMAND_WORD, AddCommand.MESSAGE_USAGE},
+                {EditCommand.COMMAND_WORD, EditCommand.MESSAGE_USAGE},
+                {DeleteCommand.COMMAND_WORD, DeleteCommand.MESSAGE_USAGE},
+                // placed before 'find' to avoid shadowing
+                {FindMedicineCommand.COMMAND_WORD, FindMedicineCommand.MESSAGE_USAGE},
+                {FindDoctorCommand.COMMAND_WORD, FindDoctorCommand.MESSAGE_USAGE},
+                {FindCommand.COMMAND_WORD, FindCommand.MESSAGE_USAGE},
+                {ViewCommand.COMMAND_WORD, ViewCommand.MESSAGE_USAGE},
+                {MedCommand.COMMAND_WORD, MedCommand.MESSAGE_USAGE},
+                {LogCommand.COMMAND_WORD, LogCommand.MESSAGE_USAGE},
+                {DisplayCommand.COMMAND_WORD, DisplayCommand.MESSAGE_USAGE},
+                {HelpCommand.COMMAND_WORD, HelpCommand.MESSAGE_USAGE},
+                {ListCommand.COMMAND_WORD, "List all patients: " + ListCommand.COMMAND_WORD},
+                {ClearCommand.COMMAND_WORD, "Clear all patients: " + ClearCommand.COMMAND_WORD},
+                {ExitCommand.COMMAND_WORD, "Exit the application: " + ExitCommand.COMMAND_WORD}
+        };
+
+        // 1) Exact match takes priority (handles find vs findmed conflict when full word typed)
+        for (String[] entry : commands) {
+            if (entry[0].equals(text)) {
+                commandHint.setText(entry[1]);
+                return;
+            }
+        }
+
+        // 2) Partial match: any command whose word starts with the typed text
+        java.util.List<String[]> matches = new java.util.ArrayList<>();
+        for (String[] entry : commands) {
+            if (entry[0].startsWith(text)) {
+                matches.add(entry);
+            }
+        }
+
+        if (matches.size() == 1) {
+            commandHint.setText(matches.get(0)[1]);
+            return;
+        }
+
+        if (matches.size() > 1) {
+            // Show possible commands to guide further typing
+            String suggestions = matches.stream()
+                    .map(e -> e[0])
+                    .sorted()
+                    .limit(5)
+                    .reduce((a, b) -> a + ", " + b)
+                    .orElse("");
+            commandHint.setText("Possible commands: " + suggestions);
+            return;
+        }
+
+        commandHint.setText("Unknown command. Type 'help' for available commands");
     }
 
     /**
