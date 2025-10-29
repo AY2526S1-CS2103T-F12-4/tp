@@ -172,12 +172,29 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* patients matching at least one keyword will be returned (i.e. `OR` search).
+* Patients matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 
 Examples:
 * `find John` returns `john` and `John Doe`
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
+
+### Locating patients by doctor: `finddoc`
+
+Finds patients whose doctor's name contain any of the given keywords.
+
+Format: `finddoc KEYWORD [MORE_KEYWORDS]`
+
+* The search is case-insensitive. e.g `william` will match all patients whose doctor is `William`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* Only the name is searched.
+* Only full words will be matched e.g. `Will` will not match `William`
+* Patients with doctors matching at least one keyword will be returned (i.e. `OR` search).
+  e.g. `Hans Bo` will return all patients with doctor `Hans Gruber`, `Bo Yang`
+
+Examples:
+* `find Jake` returns all patients whose doctor is `jake` and `Jake Lee`.
+* `find alex david` returns all patients whose doctor is `Alex Yeoh`, `David Li`<br>
 
 ### Locating patients by medicines taken: `findmed`
 
