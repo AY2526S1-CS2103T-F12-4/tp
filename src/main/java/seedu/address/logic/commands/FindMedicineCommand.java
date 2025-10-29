@@ -22,7 +22,7 @@ public class FindMedicineCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose medicines contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: med/MEDICINE [med/MEDICINE]... or none\n"
-            + "Example: " + COMMAND_WORD + " med/paracetamol med/ibuprofen"
+            + "Example: " + COMMAND_WORD + " med/paracetamol med/ibuprofen\n"
             + "         " + COMMAND_WORD + " none";
 
     private static final Logger logger = LogsCenter.getLogger(FindMedicineCommand.class);
