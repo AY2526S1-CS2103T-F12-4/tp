@@ -105,5 +105,4 @@ public class FindMedicineCommandTest {
     private MedicineContainsKeywordsPredicate preparePredicate(String userInput) {
         return new MedicineContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+")));
     }
-
 }
