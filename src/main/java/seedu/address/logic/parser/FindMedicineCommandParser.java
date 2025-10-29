@@ -30,7 +30,6 @@ public class FindMedicineCommandParser implements Parser<FindMedicineCommand> {
         String trimmedArgs = args.trim();
         // prepending a space for argument tokenizer to work
         String updatedArgs = " " + trimmedArgs;
-        System.out.println(trimmedArgs);
         // Check for "none" keyword
         if (trimmedArgs.equalsIgnoreCase(FindMedicineCommand.NONE_KEYWORD)) {
             return new FindMedicineCommand(new MedicineContainsKeywordsPredicate(List.of()));
@@ -38,14 +37,11 @@ public class FindMedicineCommandParser implements Parser<FindMedicineCommand> {
 
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(updatedArgs, PREFIX_MEDICINE);
 
-        System.out.println(argMultimap.getAllValues(PREFIX_MEDICINE));
-
         List<String> keywords = argMultimap.getAllValues(PREFIX_MEDICINE)
                 .stream()
                 .map(String::trim)
                 .filter(s -> !s.isEmpty())
                 .collect(Collectors.toList());
-        System.out.println(keywords);
 
         if (keywords.isEmpty()) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindMedicineCommand.MESSAGE_USAGE));
