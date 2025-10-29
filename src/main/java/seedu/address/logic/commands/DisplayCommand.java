@@ -14,15 +14,15 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
 /**
- * Displays the visit dates (DayList) for a person in the address book.
+ * Displays the visit dates (DayList) for a patient in the address book.
  */
 public class DisplayCommand extends Command {
 
     public static final String COMMAND_WORD = "display";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Displays the visit dates for the person identified "
-            + "by the index number used in the displayed person list.\n"
+            + ": Displays the visit dates for the patient identified "
+            + "by the index number used in the displayed patient list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
@@ -34,7 +34,7 @@ public class DisplayCommand extends Command {
     private final Index targetIndex;
 
     /**
-     * Creates a DisplayCommand to show visit dates for the specified person.
+     * Creates a DisplayCommand to show visit dates for the specified patient.
      */
     public DisplayCommand(Index targetIndex) {
         requireNonNull(targetIndex);

@@ -15,19 +15,19 @@ import seedu.address.model.Model;
 import seedu.address.model.person.Person;
 
 /**
- * Logs a visit date for a person identified using it's displayed index from the address book.
+ * Logs a visit date for a patient identified using it's displayed index from the address book.
  */
 public class LogCommand extends Command {
 
     public static final String COMMAND_WORD = "log";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Logs today's date as a visit for the person identified "
-            + "by the index number used in the displayed person list.\n"
+            + ": Logs today's date as a visit for the patient identified "
+            + "by the index number used in the displayed patient list.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_LOG_PERSON_SUCCESS = "Logged visit for person: %1$s";
+    public static final String MESSAGE_LOG_PERSON_SUCCESS = "Logged visit for patient: %1$s";
     public static final String MESSAGE_ALREADY_LOGGED_TODAY = "Visit already logged for today";
 
     private static final Logger logger = LogsCenter.getLogger(LogCommand.class);
