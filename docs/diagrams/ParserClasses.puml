@@ -35,4 +35,6 @@ XYZCommandParser ..> ParserUtil
 ParserUtil .down.> Prefix
 ArgumentTokenizer .down.> Prefix
 XYZCommand -up-|> Command
+
+note right of XYZCommandParser: XYZCommandParser = AddCommandParser, \nDeleteCommandParser, EditCommandParser, \nFindCommandParser, FindDoctorCommandParser, \nFindMedicineCommandParser, ListCommandParser, \nMedCommandParser, ViewCommandParser, \nLogCommandParser, DisplayCommandParser, \nClearCommandParser, HelpCommandParser, \nExitCommandParser
 @enduml
