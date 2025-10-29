@@ -5,7 +5,21 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Region;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.CommandResult;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DisplayCommand;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.FindDoctorCommand;
+import seedu.address.logic.commands.FindMedicineCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LogCommand;
+import seedu.address.logic.commands.MedCommand;
+import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -66,24 +80,34 @@ public class CommandBox extends UiPart<Region> {
 
         if (text.isEmpty()) {
             commandHint.setText("Type 'help' for available commands");
-        } else if (text.startsWith("add")) {
-            commandHint.setText("Add a new patient: add n/NAME p/PHONE e/EMAIL a/ADDRESS [d/DOCTOR] "
-                    + "[t/TAG]... [med/MEDICINE]...");
-        } else if (text.startsWith("delete")) {
-            commandHint.setText("Delete a patient: delete INDEX");
-        } else if (text.startsWith("edit")) {
-            commandHint.setText("Edit a patient: edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] "
-                    + "[a/ADDRESS] [d/DOCTOR] [t/TAG]... [med/MEDICINE]...");
-        } else if (text.startsWith("find")) {
-            commandHint.setText("Find patients: find KEYWORD [MORE_KEYWORDS]");
-        } else if (text.startsWith("list")) {
-            commandHint.setText("List all patients: list");
-        } else if (text.startsWith("help")) {
-            commandHint.setText("Show help information");
-        } else if (text.startsWith("clear")) {
-            commandHint.setText("Clear all patients: clear");
-        } else if (text.startsWith("exit")) {
-            commandHint.setText("Exit the application: exit");
+        } else if (text.startsWith(AddCommand.COMMAND_WORD)) {
+            commandHint.setText(AddCommand.MESSAGE_USAGE);
+        } else if (text.startsWith(DeleteCommand.COMMAND_WORD)) {
+            commandHint.setText(DeleteCommand.MESSAGE_USAGE);
+        } else if (text.startsWith(EditCommand.COMMAND_WORD)) {
+            commandHint.setText(EditCommand.MESSAGE_USAGE);
+        } else if (text.startsWith(FindCommand.COMMAND_WORD)) {
+            commandHint.setText(FindCommand.MESSAGE_USAGE);
+        } else if (text.startsWith(FindMedicineCommand.COMMAND_WORD)) {
+            commandHint.setText(FindMedicineCommand.MESSAGE_USAGE);
+        } else if (text.startsWith(FindDoctorCommand.COMMAND_WORD)) {
+            commandHint.setText(FindDoctorCommand.MESSAGE_USAGE);
+        } else if (text.startsWith(ListCommand.COMMAND_WORD)) {
+            commandHint.setText("List all patients: " + ListCommand.COMMAND_WORD);
+        } else if (text.startsWith(HelpCommand.COMMAND_WORD)) {
+            commandHint.setText(HelpCommand.MESSAGE_USAGE);
+        } else if (text.startsWith(ClearCommand.COMMAND_WORD)) {
+            commandHint.setText("Clear all patients: " + ClearCommand.COMMAND_WORD);
+        } else if (text.startsWith(ExitCommand.COMMAND_WORD)) {
+            commandHint.setText("Exit the application: " + ExitCommand.COMMAND_WORD);
+        } else if (text.startsWith(ViewCommand.COMMAND_WORD)) {
+            commandHint.setText(ViewCommand.MESSAGE_USAGE);
+        } else if (text.startsWith(MedCommand.COMMAND_WORD)) {
+            commandHint.setText(MedCommand.MESSAGE_USAGE);
+        } else if (text.startsWith(LogCommand.COMMAND_WORD)) {
+            commandHint.setText(LogCommand.MESSAGE_USAGE);
+        } else if (text.startsWith(DisplayCommand.COMMAND_WORD)) {
+            commandHint.setText(DisplayCommand.MESSAGE_USAGE);
         } else {
             commandHint.setText("Unknown command. Type 'help' for available commands");
         }
