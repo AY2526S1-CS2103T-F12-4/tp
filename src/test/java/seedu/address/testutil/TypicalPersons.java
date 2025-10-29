@@ -41,7 +41,7 @@ public class TypicalPersons {
             .withMedicines("paracetamol", "Ibuprofen").build();
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo").withDoctor("Jeff Lee")
-            .withMedicines("aspirin","paracetamol").build();
+            .withMedicines("aspirin", "paracetamol").build();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")
             .withEmail("anna@example.com").withAddress("4th street").build();
 
