@@ -17,6 +17,8 @@ CLInic is a **desktop app for managing patients, optimized for use via a Command
     - [Viewing medicines taken by patient : `med`](#viewing-medicines-taken-by-patient--med)
     - [Editing a patient : `edit`](#editing-a-patient--edit)
     - [Locating patients by name: `find`](#locating-patients-by-name-find)
+    - [Locating patients by doctor's name: `finddoc`](#locating-patients-by-doctor-finddoc)
+    - [Locating patients by medicines taken: `findmed`](#locating-patients-by-medicines-taken-findmed)
     - [Deleting a patient : `delete`](#deleting-a-patient--delete)
     - [Clearing all entries : `clear`](#clearing-all-entries--clear)
     - [Exiting the program : `exit`](#exiting-the-program--exit)
@@ -274,6 +276,7 @@ Action | Format, Examples
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/Doctor] [t/TAG]…​ [med/MEDICINE]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
+**Find Doctor** | `finddoc KEYWORD [MORE_KEYWORDS]`<br> e.g., `find Mike Ang`
 **Filter by Medicines** | `findmed MEDICINE [MORE_MEDICINE]`<br> e.g., `findmed Paracetamol Ibuprofen`
 **List** | `list`
 **Help** | `help`
