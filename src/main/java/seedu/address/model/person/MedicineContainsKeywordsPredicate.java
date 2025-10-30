@@ -21,7 +21,7 @@ public class MedicineContainsKeywordsPredicate implements Predicate<Person> {
 
     @Override
     public boolean test(Person person) {
-        // keywords is empty when "none" is specified after "findmed"
+        // keywords list is empty when "none" is specified after "findmed"
         if (keywords.isEmpty()) {
             return person.getMedicines().isEmpty();
         }
