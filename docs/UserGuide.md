@@ -82,6 +82,24 @@ CLInic is a **desktop app for managing patients, optimized for use via a Command
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
+### Command input and hints
+
+- All command words are lowercase. Inputs like `ADD`, `Add`, `LiSt` are not accepted. The UI will warn and suggest the lowercase form.
+- While typing, the command hint shows the exact format (parameters) for the detected command to aid fast typing. Exact word matches are prioritised; otherwise, partial matches show suggestions.
+- For commands that take no parameters (e.g., `list`, `exit`, `help`, `clear`), hints still appear even if you type extra text after the command word (e.g., `list 123`). On execution, the extra text is ignored.
+
+### Field constraints
+
+These constraints are enforced by the app. Inputs that violate them will be rejected with a clear error message.
+
+- Name: Only alphanumeric characters and spaces; must not be blank.
+- Phone: Digits only; at least 3 digits.
+- Email: Must follow standard email rules. Local-part allows alphanumeric and `+_.-` (cannot start/end with those). Domain labels are alphanumeric with optional hyphens and must end with a label of at least 2 characters.
+- Address: Cannot be blank (must not start with whitespace). Otherwise free-form.
+- Doctor: Only alphanumeric characters and spaces. Leave `d/` out to keep doctor empty.
+- Medicine: Only alphanumeric characters and spaces.
+- Tag: Alphanumeric and hyphen only (`[a-zA-Z0-9-]+`).
+
 ### Viewing help : `help`
 
 Shows a message explaining how to access the help page.
