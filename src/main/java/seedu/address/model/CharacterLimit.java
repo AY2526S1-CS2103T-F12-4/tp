@@ -1,6 +1,6 @@
 package seedu.address.model;
 /**
- * Contains validation constants for model classes.
+ * Contains character limits used for validations for model classes.
  */
 public class CharacterLimit {
     public static final int MAX_NAME_LENGTH = 100;
