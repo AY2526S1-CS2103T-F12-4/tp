@@ -231,7 +231,7 @@ Examples:
 
 ### Locating patients by medicines taken: `findmed`
 
-Format: `findmed med/MEDICINE [MORE_MEDICINES]...` or `findmed none`
+Format: `findmed med/KEYWORD [MORE_KEYWORDS]` or `findmed none`
 
 * The search is case-insensitive. e.g `paracetamol` will match `Paracetamol`
 * if `none` is specified after `findmed`, it returns all patients with no medicines assigned to them.

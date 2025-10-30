@@ -1,6 +1,14 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.model.CharacterLimit.MAX_ADDRESS_LENGTH;
+import static seedu.address.model.CharacterLimit.MAX_DOCTOR_LENGTH;
+import static seedu.address.model.CharacterLimit.MAX_EMAIL_LENGTH;
+import static seedu.address.model.CharacterLimit.MAX_MEDICINE_LENGTH;
+import static seedu.address.model.CharacterLimit.MAX_NAME_LENGTH;
+import static seedu.address.model.CharacterLimit.MAX_PHONE_LENGTH;
+import static seedu.address.model.CharacterLimit.MAX_TAG_LENGTH;
+import static seedu.address.model.CharacterLimit.MESSAGE_LENGTH_EXCEEDED;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -26,6 +34,19 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
 
     /**
+     * Validates the length of a string against a maximum length.
+     *
+     * @throws ParseException if the string length exceeds the maximum.
+     */
+    private static void validateLength(String value, int maxLength, String fieldName)
+            throws ParseException {
+        if (value.length() > maxLength) {
+            throw new ParseException(
+                    String.format(MESSAGE_LENGTH_EXCEEDED, fieldName, maxLength));
+        }
+    }
+
+    /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
      * @throws ParseException if the specified index is invalid (not non-zero unsigned integer).
@@ -47,6 +68,7 @@ public class ParserUtil {
     public static Name parseName(String name) throws ParseException {
         requireNonNull(name);
         String trimmedName = name.trim();
+        validateLength(trimmedName, MAX_NAME_LENGTH, "Name");
         if (trimmedName.contains("  ")) {
             throw new ParseException("Name: " + Messages.MESSAGE_CONSECUTIVE_SPACES);
         }
@@ -65,6 +87,7 @@ public class ParserUtil {
     public static Phone parsePhone(String phone) throws ParseException {
         requireNonNull(phone);
         String trimmedPhone = phone.trim();
+        validateLength(trimmedPhone, MAX_PHONE_LENGTH, "Phone");
         if (!Phone.isValidPhone(trimmedPhone)) {
             throw new ParseException(Phone.MESSAGE_CONSTRAINTS);
         }
@@ -80,6 +103,7 @@ public class ParserUtil {
     public static Address parseAddress(String address) throws ParseException {
         requireNonNull(address);
         String trimmedAddress = address.trim();
+        validateLength(trimmedAddress, MAX_ADDRESS_LENGTH, "Address");
         if (trimmedAddress.contains("  ")) {
             throw new ParseException("Address: " + Messages.MESSAGE_CONSECUTIVE_SPACES);
         }
@@ -98,6 +122,7 @@ public class ParserUtil {
     public static Doctor parseDoctor(String doctor) throws ParseException {
         requireNonNull(doctor);
         String trimmedDoctor = doctor.trim();
+        validateLength(trimmedDoctor, MAX_DOCTOR_LENGTH, "Doctor");
         if (trimmedDoctor.contains("  ")) {
             throw new ParseException("Doctor: " + Messages.MESSAGE_CONSECUTIVE_SPACES);
         }
@@ -116,6 +141,7 @@ public class ParserUtil {
     public static Email parseEmail(String email) throws ParseException {
         requireNonNull(email);
         String trimmedEmail = email.trim();
+        validateLength(trimmedEmail, MAX_EMAIL_LENGTH, "Email");
         if (!Email.isValidEmail(trimmedEmail)) {
             throw new ParseException(Email.MESSAGE_CONSTRAINTS);
         }
@@ -131,6 +157,7 @@ public class ParserUtil {
     public static Tag parseTag(String tag) throws ParseException {
         requireNonNull(tag);
         String trimmedTag = tag.trim();
+        validateLength(trimmedTag, MAX_TAG_LENGTH, "Tag");
         if (!Tag.isValidTagName(trimmedTag)) {
             throw new ParseException(Tag.MESSAGE_CONSTRAINTS);
         }
@@ -158,6 +185,7 @@ public class ParserUtil {
     public static Medicine parseMedicine(String medicine) throws ParseException {
         requireNonNull(medicine);
         String trimmedMedicine = medicine.trim();
+        validateLength(trimmedMedicine, MAX_MEDICINE_LENGTH, "Medicine");
         if (trimmedMedicine.contains("  ")) {
             throw new ParseException("Medicine: " + Messages.MESSAGE_CONSECUTIVE_SPACES);
         }
