@@ -15,6 +15,8 @@ CLInic is a **desktop app for managing patients, optimized for use via a Command
     - [Listing all patients : `list`](#listing-all-patients--list)
     - [Viewing a patient : `view`](#viewing-a-patient--view)
     - [Viewing medicines taken by patient : `med`](#viewing-medicines-taken-by-patient--med)
+    - [Logging a visit for a patient : `log`](#logging-a-visit-for-a-patient--log)
+    - [Displaying visit dates for a patient : `display`](#displaying-visit-dates-for-a-patient--display)
     - [Editing a patient : `edit`](#editing-a-patient--edit)
     - [Locating patients by name: `find`](#locating-patients-by-name-find)
     - [Locating patients by doctor's name: `finddoc`](#locating-patients-by-doctor-finddoc)
@@ -144,6 +146,36 @@ Format: `med INDEX`
 Examples:
 * `list` followed by `view 3` views the medicines taken by the 3rd patient in the address book.
 * `find Jackson` followed by `view 1` views the medicines taken by the 1st patient in the results of the `find` command.
+
+### Logging a visit for a patient : `log`
+
+Logs today's date as a visit for the specified patient.
+
+Format: `log INDEX`
+
+* Logs a visit for the patient at the specified `INDEX`.
+* The index refers to the index number shown in the displayed patient list.
+* The index **must be a positive integer** 1, 2, 3, …​
+* If a visit has already been logged for today, the command will fail with a message indicating it has already been logged.
+
+Examples:
+* `list` followed by `log 3` logs today's visit for the 3rd patient in the address book.
+* `find Jackson` followed by `log 1` logs today's visit for the 1st patient in the results of the `find` command.
+
+### Displaying visit dates for a patient : `display`
+
+Displays all recorded visit dates for the specified patient.
+
+Format: `display INDEX`
+
+* Displays the visit dates of the patient at the specified `INDEX`.
+* The index refers to the index number shown in the displayed patient list.
+* The index **must be a positive integer** 1, 2, 3, …​
+* If there are no recorded visits for the patient, a message indicating so will be shown.
+
+Examples:
+* `list` followed by `display 3` shows the visit dates of the 3rd patient in the address book.
+* `find Jackson` followed by `display 1` shows the visit dates of the 1st patient in the results of the `find` command.
 
 ### Editing a patient : `edit`
 
@@ -285,3 +317,5 @@ Action | Format, Examples
 **Help** | `help`
 **View medicines** | `med INDEX`
 **View patient** | `view INDEX`
+**Log visit** | `log INDEX`<br> e.g., `log 1`
+**Display visits** | `display INDEX`<br> e.g., `display 1`
