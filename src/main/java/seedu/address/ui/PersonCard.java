@@ -3,6 +3,7 @@ package seedu.address.ui;
 import java.util.Comparator;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
@@ -101,6 +102,8 @@ public class PersonCard extends UiPart<Region> {
                         Label medicineLabel = new Label(medicine.medicineName);
                         medicineLabel.setStyle("-fx-background-color: #e8f5e8; -fx-text-fill: #2e7d32; "
                                 + "-fx-padding: 2 6 2 6; -fx-background-radius: 3;");
+                        // Add margin to create spacing between medicine tags
+                        FlowPane.setMargin(medicineLabel, new Insets(0, 4, 0, 0));
                         medicines.getChildren().add(medicineLabel);
                     });
         } else {
