@@ -35,15 +35,15 @@ CLInic is a **desktop app for managing patients, optimized for use via a Command
 1. Ensure you have Java `17` or above installed in your Computer.<br>
    **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
-1. Download the latest `.jar` file from [here](https://github.com/se-edu/addressbook-level3/releases).
+2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-F12-4/tp/releases).
 
-1. Copy the file to the folder you want to use as the _home folder_ for CLInic.
+3. Copy the file to the folder you want to use as the _home folder_ for CLInic.
 
-1. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar CLInic.jar` command to run the application.<br>
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar CLInic.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/UI-Current.png)
 
-1. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
+5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
   * `list` : Lists all contacts.
@@ -199,17 +199,21 @@ Examples:
 
 ### Locating patients by medicines taken: `findmed`
 
+Format: `findmed med/MEDICINE [MORE_MEDICINES]...` or `findmed none`
+
 * The search is case-insensitive. e.g `paracetamol` will match `Paracetamol`
-* if more than one medicine specified, it should be space-sperated like `findmed medA medB`
-* The order of the keywords does not matter. e.g. `paracetamol ibuprofen` and `ibuprofen paracetamol`
+* if `none` is specified after `findmed`, it returns all patients with no medicines assigned to them.
+* If more than one medicine specified, it should be space-sperated like `findmed med/medA med/medB`
+* The order of the keywords does not matter. e.g. `med/paracetamol med/ibuprofen` and `med/ibuprofen med/paracetamol`
   will fetch patients who take both these medicines
 * Only full words will be matched e.g. `ibu` will not match `ibuprofen`
 * patients matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `paracetamol` will return patients who take paracetamol even if they take other medicines
 
 Examples:
-* `findmed paracetamol`
-* `findmed paracetamol ibuprofen`
+* `findmed med/paracetamol`
+* `findmed med/paracetamol med/ibuprofen`
+* `findmed none`
 
 ### Deleting a patient : `delete`
 
@@ -275,8 +279,8 @@ Action | Format, Examples
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/Doctor] [t/TAG]…​ [med/MEDICINE]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
-**Find Doctor** | `finddoc KEYWORD [MORE_KEYWORDS]`<br> e.g., `find Mike Ang`
-**Filter by Medicines** | `findmed MEDICINE [MORE_MEDICINE]`<br> e.g., `findmed Paracetamol Ibuprofen`
+**Find Doctor** | `finddoc KEYWORD [MORE_KEYWORDS]`<br> e.g., `finddoc Mike Ang`
+**Filter by Medicines** | `findmed med/MEDICINE [med/MEDICINE]...` or `findmed none` <br> e.g., `findmed med/Paracetamol med/Ibuprofen`
 **List** | `list`
 **Help** | `help`
 **View medicines** | `med INDEX`
