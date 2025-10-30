@@ -5,7 +5,6 @@ title: User Guide
 
 CLInic is a **desktop app for managing patients, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CLInic can get your patient management tasks done faster than traditional GUI apps.
 
-![Ui](images/UI-Current.png)
 
 ## Table of Contents
 - [Quick start](#quick-start)
@@ -101,6 +100,10 @@ Adds a patient to CLInic.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`
 
+<div markdown="span" class="alert alert-info">:information_source: **Note:**
+When a new patient is added, the current date is automatically logged as their first visit.
+</div>
+
 <div markdown="span" class="alert alert-primary">:bulb: *Tip:*
 A patient can have any number of tags/medicines (including 0)
 </div>
@@ -121,7 +124,7 @@ Format: `list`
 
 ### Viewing a patient : `view`
 
-Views the specified patient details from CLInic.
+Views the specified patient details from CLInic (includes name, phone, email, address, doctor, tags).
 
 Format: `view INDEX`
 
@@ -186,8 +189,12 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/Doctor] [med/MED
 * Edits the patient at the specified `INDEX`. The index refers to the index number shown in the displayed patient list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags/medicines, the existing tags/medicines of the patient will be removed i.e adding of these fields is not cumulative.
-* You can remove all the patient’s tags/medicines by typing `t/` or `med/` without
+
+<div markdown="span" class="alert alert-warning">:exclamation: **Caution:**
+When editing tags/medicines, the existing tags/medicines of the patient will be removed i.e adding of these fields is not cumulative.
+</div>
+
+* You can remove all the patient's tags/medicines by typing `t/` or `med/` without
   specifying any tags after it.
 
 Examples:
@@ -315,7 +322,7 @@ Action | Format, Examples
 **Filter by Medicines** | `findmed med/MEDICINE [med/MEDICINE]...` or `findmed none` <br> e.g., `findmed med/Paracetamol med/Ibuprofen`
 **List** | `list`
 **Help** | `help`
-**View medicines** | `med INDEX`
-**View patient** | `view INDEX`
+**View medicines** | `med INDEX`<br> e.g., `med 1`
+**View patient** | `view INDEX`<br> e.g., `view 2`
 **Log visit** | `log INDEX`<br> e.g., `log 1`
 **Display visits** | `display INDEX`<br> e.g., `display 1`
