@@ -29,7 +29,7 @@ public class MedicineContainsKeywordsPredicate implements Predicate<Person> {
         return person.getMedicines().stream()
                 .map(Medicine::toString)
                 .anyMatch(medName -> keywords.stream()
-                        .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(medName, keyword)));
+                        .anyMatch(keyword -> medName.toLowerCase().contains(keyword.toLowerCase())));
     }
 
     @Override
