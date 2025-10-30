@@ -17,11 +17,13 @@ import seedu.address.model.person.MedicineContainsKeywordsPredicate;
 public class FindMedicineCommand extends Command {
 
     public static final String COMMAND_WORD = "findmed";
+    public static final String NONE_KEYWORD = "none";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all patients whose medicines contain any of "
             + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
-            + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-            + "Example: " + COMMAND_WORD + " paracetamol ibuprofen";
+            + "Parameters: med/MEDICINE [med/MEDICINE]... or none\n"
+            + "Example: " + COMMAND_WORD + " med/paracetamol med/ibuprofen\n"
+            + "         " + COMMAND_WORD + " none";
 
     private static final Logger logger = LogsCenter.getLogger(FindMedicineCommand.class);
 

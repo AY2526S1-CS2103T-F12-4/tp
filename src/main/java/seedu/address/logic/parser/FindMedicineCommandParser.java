@@ -1,8 +1,8 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.logic.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MEDICINE;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +13,7 @@ import seedu.address.model.person.MedicineContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindMedicineCommand object
+ * Accepts multiple med/ prefixes, e.g. "findmed med/paracetamol med/ibuprofen".
  */
 public class FindMedicineCommandParser implements Parser<FindMedicineCommand> {
 
@@ -20,29 +21,31 @@ public class FindMedicineCommandParser implements Parser<FindMedicineCommand> {
      * Parses the given {@code String} of arguments and returns a FindMedicineCommand
      * object for execution.
      *
-     * Usage: findmed paracetamol ibuprofen
+     * Usage: findmed med/paracetamol med/ibuprofen
      *
      * @throws ParseException if the user input does not follow the expected format
      */
     @Override
     public FindMedicineCommand parse(String args) throws ParseException {
         String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindMedicineCommand.MESSAGE_USAGE));
+        // prepending a space for argument tokenizer to work
+        String updatedArgs = " " + trimmedArgs;
+        // Check for "none" keyword
+        if (trimmedArgs.equalsIgnoreCase(FindMedicineCommand.NONE_KEYWORD)) {
+            return new FindMedicineCommand(new MedicineContainsKeywordsPredicate(List.of()));
         }
 
-        List<String> keywords;
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(updatedArgs, PREFIX_MEDICINE);
 
-        if (trimmedArgs.equals("none")) {
-            keywords = List.of();
-        } else {
-            keywords = Arrays.stream(trimmedArgs.split("\\s+"))
-                    .map(String::trim)
-                    .filter(s -> !s.isEmpty())
-                    .collect(Collectors.toList());
+        List<String> keywords = argMultimap.getAllValues(PREFIX_MEDICINE)
+                .stream()
+                .map(String::trim)
+                .filter(s -> !s.isEmpty())
+                .collect(Collectors.toList());
+
+        if (keywords.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindMedicineCommand.MESSAGE_USAGE));
         }
-
         return new FindMedicineCommand(new MedicineContainsKeywordsPredicate(keywords));
     }
 }

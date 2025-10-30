@@ -3,7 +3,6 @@ package seedu.address.model.person;
 import java.util.List;
 import java.util.function.Predicate;
 
-import seedu.address.commons.util.StringUtil;
 import seedu.address.commons.util.ToStringBuilder;
 import seedu.address.model.medicine.Medicine;
 
@@ -21,7 +20,7 @@ public class MedicineContainsKeywordsPredicate implements Predicate<Person> {
 
     @Override
     public boolean test(Person person) {
-        // keywords is empty when "none" is specified after "findmed"
+        // keywords list is empty when "none" is specified after "findmed"
         if (keywords.isEmpty()) {
             return person.getMedicines().isEmpty();
         }
@@ -29,7 +28,7 @@ public class MedicineContainsKeywordsPredicate implements Predicate<Person> {
         return person.getMedicines().stream()
                 .map(Medicine::toString)
                 .anyMatch(medName -> keywords.stream()
-                        .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(medName, keyword)));
+                        .anyMatch(keyword -> medName.toLowerCase().contains(keyword.toLowerCase())));
     }
 
     @Override
