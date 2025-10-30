@@ -9,5 +9,6 @@
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10" />
   </columnConstraints>
   <Label fx:id="saveLocationStatus" />
-  <Label fx:id="totalRecordsStatus" GridPane.columnIndex="1" />
+  <Label fx:id="totalDisplayedStatus" GridPane.columnIndex="1" />
+  <Label fx:id="totalPresentStatus" GridPane.columnIndex="2" />
 </GridPane>

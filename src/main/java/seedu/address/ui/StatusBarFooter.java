@@ -3,6 +3,7 @@ package seedu.address.ui;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,25 +22,49 @@ public class StatusBarFooter extends UiPart<Region> {
     private Label saveLocationStatus;
 
     @FXML
-    private Label totalRecordsStatus;
+    private Label totalDisplayedStatus;
+
+    @FXML
+    private Label totalPresentStatus;
 
     /**
-     * Creates a {@code StatusBarFooter} with the given {@code Path}.
+     * Creates a {@code StatusBarFooter} with the given {@code Path} and lists to observe.
+     *
+     * @param saveLocation path used to display save location.
+     * @param filteredPersonList observable filtered list used to show number of displayed records.
+     * @param allPersonList observable full list used to show total records present.
      */
-    public StatusBarFooter(Path saveLocation, ObservableList<Person> filteredPersonList) {
+    public StatusBarFooter(Path saveLocation, ObservableList<Person> filteredPersonList,
+                           ObservableList<Person> allPersonList) {
         super(FXML);
         saveLocationStatus.setText(Paths.get(".").resolve(saveLocation).toString());
-        // initialize total records text
-        updateTotalRecords(filteredPersonList.size());
+        // initialize the counts
+        updateCounts(filteredPersonList.size(), allPersonList.size());
 
-        // listen for changes to the filtered list and update label
-        filteredPersonList.addListener((ListChangeListener<Person>) change -> {
-            updateTotalRecords(filteredPersonList.size());
-        });
+        // Listen for changes in both filtered and all person lists and update their counts
+        ListChangeListener<Person> listener = change -> updateCounts(filteredPersonList.size(),
+                allPersonList.size());
+
+        filteredPersonList.addListener(listener);
+        allPersonList.addListener(listener);
     }
 
-    private void updateTotalRecords(int size) {
-        totalRecordsStatus.setText(String.format("Total patients: %d", size));
+    /**
+     * Updates the displayed counts in the status bar footer in a thread-safe manner.
+     *
+     * @param displayedCount The number of patients currently shown in the filtered list view
+     * @param presentCount The total number of patients stored in CLInic
+     */
+    private void updateCounts(int displayedCount, int presentCount) {
+        if (Platform.isFxApplicationThread()) {
+            totalDisplayedStatus.setText(String.format("Displayed: %d", displayedCount));
+            totalPresentStatus.setText(String.format("Total Patients: %d", presentCount));
+        } else {
+            Platform.runLater(() -> {
+                totalDisplayedStatus.setText(String.format("Displayed: %d", displayedCount));
+                totalPresentStatus.setText(String.format("Total Patients: %d", presentCount));
+            });
+        }
     }
 
 }
