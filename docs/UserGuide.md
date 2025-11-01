@@ -240,7 +240,7 @@ Examples:
 
 ### Locating patients by medicines taken: `findmed`
 
-Format: `findmed med/MEDICINE [MORE_MEDICINES]...` or `findmed none`
+Format: `findmed med/KEYWORD [MORE_KEYWORDS]...` or `findmed none`
 
 * The search is case-insensitive. e.g `paracetamol` will match `Paracetamol`
 * if `none` is specified after `findmed`, it returns all patients with no medicines assigned to them.
@@ -321,7 +321,7 @@ Action | Format, Examples
 **Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/Doctor] [t/TAG]…​ [med/MEDICINE]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Find Doctor** | `finddoc KEYWORD [MORE_KEYWORDS]`<br> e.g., `finddoc Mike Ang`
-**Filter by Medicines** | `findmed med/MEDICINE [med/MEDICINE]...` or `findmed none` <br> e.g., `findmed med/Paracetamol med/Ibuprofen`
+**Filter by Medicines** | `findmed med/KEYWORD [MORE_KEYWORDS]...` or `findmed none` <br> e.g., `findmed med/Paracetamol med/Ibuprofen`
 **List** | `list`
 **Help** | `help`
 **View medicines** | `med INDEX`<br> e.g., `med 1`
