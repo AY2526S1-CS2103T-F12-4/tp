@@ -3,23 +3,23 @@ layout: page
 title: User Guide
 ---
 
-CLInic is a **desktop app for managing patients, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CLInic can get your patient management tasks done faster than traditional GUI apps.
+CLInic is a **desktop app for managing patients, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). It is primarily intended for clinic managers working at the front desk who need a fast, keyboard-driven way to manage patient records. If you can type fast, CLInic can get your patient management tasks done faster than traditional GUI apps.
 
 
 ## Table of Contents
 - [Quick start](#quick-start)
 - [Features](#features)
     - [Viewing help : `help`](#viewing-help--help)
-    - [Adding a patient: `add`](#adding-a-patient-add)
+    - [Adding a patient : `add`](#adding-a-patient-add)
     - [Listing all patients : `list`](#listing-all-patients--list)
     - [Viewing a patient : `view`](#viewing-a-patient--view)
     - [Viewing medicines taken by patient : `med`](#viewing-medicines-taken-by-patient--med)
     - [Logging a visit for a patient : `log`](#logging-a-visit-for-a-patient--log)
     - [Displaying visit dates for a patient : `display`](#displaying-visit-dates-for-a-patient--display)
     - [Editing a patient : `edit`](#editing-a-patient--edit)
-    - [Locating patients by name: `find`](#locating-patients-by-name-find)
-    - [Locating patients by doctor's name: `finddoc`](#locating-patients-by-doctor-finddoc)
-    - [Locating patients by medicines taken: `findmed`](#locating-patients-by-medicines-taken-findmed)
+    - [Locating patients by name : `find`](#locating-patients-by-name-find)
+    - [Locating patients by doctor's name : `finddoc`](#locating-patients-by-doctor-finddoc)
+    - [Locating patients by medicines taken : `findmed`](#locating-patients-by-medicines-taken-findmed)
     - [Deleting a patient : `delete`](#deleting-a-patient--delete)
     - [Clearing all entries : `clear`](#clearing-all-entries--clear)
     - [Exiting the program : `exit`](#exiting-the-program--exit)
@@ -105,19 +105,15 @@ When a new patient is added, the current date is automatically logged as their f
 </div>
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A patient can have any number of tags/medicines (including 0)
-</div>
-
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 To create a red allergy tag, use `t/allergy` when adding a patient. Any tag containing "allergy" will appear red in the interface.
 
 Tag names may use hyphens to separate words (e.g. `allergy-peanut`).
-Spaces and Underscores are not allowed.
+(Spaces and Underscores are not allowed).
 </div>
 
 Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/James William`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/friend med/Paracetamol med/Aspirin`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Road p/1234567 t/friend med/Paracetamol med/Aspirin`
 
 ### Listing all patients : `list`
 
@@ -136,7 +132,7 @@ Format: `view INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `view 3` views the 3rd patient in the address book.
+* `list` followed by `view 3` views the 3rd patient in CLInic.
 * `find Jackson` followed by `view 1` views the 1st patient in the results of the `find` command.
 
 ### Viewing medicines taken by patient : `med`
@@ -150,7 +146,7 @@ Format: `med INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `med 3` views the medicines taken by the 3rd patient in the address book.
+* `list` followed by `med 3` views the medicines taken by the 3rd patient in CLInic.
 * `find Jackson` followed by `med 1` views the medicines taken by the 1st patient in the results of the `find` command.
 
 ### Logging a visit for a patient : `log`
@@ -165,7 +161,7 @@ Format: `log INDEX`
 * If a visit has already been logged for today, the command will fail with a message indicating it has already been logged.
 
 Examples:
-* `list` followed by `log 3` logs today's visit for the 3rd patient in the address book.
+* `list` followed by `log 3` logs today's visit for the 3rd patient in CLInic.
 * `find Jackson` followed by `log 1` logs today's visit for the 1st patient in the results of the `find` command.
 
 ### Displaying visit dates for a patient : `display`
@@ -180,7 +176,7 @@ Format: `display INDEX`
 * If there are no recorded visits for the patient, a message indicating so will be shown.
 
 Examples:
-* `list` followed by `display 3` shows the visit dates of the 3rd patient in the address book.
+* `list` followed by `display 3` shows the visit dates of the 3rd patient in CLInic.
 * `find Jackson` followed by `display 1` shows the visit dates of the 1st patient in the results of the `find` command.
 
 ### Editing a patient : `edit`
@@ -316,7 +312,7 @@ Furthermore, certain edits can cause CLInic to behave in unexpected ways (e.g., 
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​` <br> e.g., `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Road p/1234567 t/friend med/Paracetamol med/Aspirin`
+**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​` <br> e.g., `add n/Betsy Crowe t/allergy-peanut e/betsycrowe@example.com a/Newgate Road p/1234567 med/Paracetamol med/Aspirin`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`
