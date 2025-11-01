@@ -33,8 +33,8 @@ CLInic is a **desktop app for managing patients, optimized for use via a Command
 
 ## Quick start
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+1. Ensure you have Java `17` or above installed on your computer. To confirm, open a terminal and run `java -version`; it should print a line containing `17` (for example: `java version "17.0.2"`).<br>
+  **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-F12-4/tp/releases).
 
@@ -112,8 +112,8 @@ Tag names may use hyphens to separate words (e.g. `allergy-peanut`).
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/James William`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Road p/1234567 t/friend med/Paracetamol med/Aspirin`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/James William`.
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Road p/1234567 t/friend med/Paracetamol med/Aspirin`.
 
 ### Listing all patients : `list`
 
@@ -205,31 +205,31 @@ Examples:
 
 Finds patients whose names contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find KEYWORD [MORE_KEYWORDS]`.
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case-insensitive, e.g. `hans` will match `Hans`.
+* The order of the keywords does not matter, e.g. `Hans Bo` will match `Bo Hans`.
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Only full words will be matched, e.g. `Han` will not match `Hans`.
 * Patients matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
 
 Examples:
-* `find John` returns `john` and `John Doe`
+* `find John` returns `john` and `John Doe`.
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
 
 ### Locating patients by doctor: `finddoc`
 
 Finds patients whose doctor's name contain any of the given keywords.
 
-Format: `finddoc KEYWORD [MORE_KEYWORDS]`
+Format: `finddoc KEYWORD [MORE_KEYWORDS]`.
 
-* The search is case-insensitive. e.g `william` will match all patients whose doctor is `William`.
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case-insensitive, e.g. `william` will match all patients whose doctor is `William`.
+* The order of the keywords does not matter, e.g. `Hans Bo` will match `Bo Hans`.
 * Only the name is searched.
-* Only full words will be matched e.g. `Will` will not match `William`
+* Only full words will be matched, e.g. `Will` will not match `William`.
 * Patients with doctors matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return all patients with doctor `Hans Gruber`, `Bo Yang`
+  e.g. `Hans Bo` will return all patients with doctor `Hans Gruber`, `Bo Yang`.
 
 Examples:
 * `find Jake` returns all patients whose doctor is `jake` and `Jake Lee`.
@@ -237,16 +237,15 @@ Examples:
 
 ### Locating patients by medicines taken: `findmed`
 
-Format: `findmed med/KEYWORD [MORE_KEYWORDS]...` or `findmed none`
+Format: `findmed med/KEYWORD [MORE_KEYWORDS]...` or `findmed none`.
 
-* The search is case-insensitive. e.g `paracetamol` will match `Paracetamol`
-* if `none` is specified after `findmed`, it returns all patients with no medicines assigned to them.
-* If more than one medicine specified, it should be space-sperated like `findmed med/medA med/medB`
-* The order of the keywords does not matter. e.g. `med/paracetamol med/ibuprofen` and `med/ibuprofen med/paracetamol`
-  will fetch patients who take both these medicines
-* Only full words will be matched e.g. `ibu` will not match `ibuprofen`
-* patients matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `paracetamol` will return patients who take paracetamol even if they take other medicines
+* The search is case-insensitive. e.g. `paracetamol` will match `Paracetamol`.
+* If `none` is specified after `findmed`, it returns all patients with no medicines assigned to them.
+* If more than one medicine is specified, they should be space-separated, e.g. `findmed med/medA med/medB`.
+* The order of the keywords does not matter, e.g. `med/paracetamol med/ibuprofen` and `med/ibuprofen med/paracetamol` will fetch patients who take both these medicines.
+* Only full words will be matched, e.g. `ibu` will not match `ibuprofen`.
+* Patients matching at least one keyword will be returned (i.e. `OR` search).
+  e.g. `paracetamol` will return patients who take paracetamol even if they take other medicines.
 
 Examples:
 * `findmed med/paracetamol`
@@ -296,8 +295,23 @@ Furthermore, certain edits can cause CLInic to behave in unexpected ways (e.g., 
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous CLInic home folder.
+**Q**: How do I transfer my data to another computer?<br>
+**A**: Close CLInic on the original computer. Copy the entire `data` folder from the CLInic home folder (or the data file inside it) to the same location next to `CLInic.jar` on the other computer. When you start CLInic on the new machine it will use that data file. Do not edit the data file while CLInic is running.
+
+**Q**: How can I make a backup of my CLInic data?<br>
+**A**: Close CLInic, then make a copy of the `data` folder in the same location as the CLInic `.jar` file (or copy the data file inside it). Store that copy somewhere safe (e.g., a USB stick, network drive, or cloud storage). Do not edit the data file while CLInic is running — always close the app before creating or restoring backups.
+
+**Q**: I want to print or save a patient's details — how do I do that?<br>
+**A**: Use `view INDEX` to show the patient's details in the app. You can then copy the information from the result display and paste it into a document, or take a screenshot. If you need a structured data copy, export the application's `data` folder (see Backup above) and open the data file with a text editor while the app is closed.
+
+**Q**: I accidentally deleted a patient — can I get them back?<br>
+**A**: CLInic does not provide an "undo" for delete operations. If you have a recent backup of your data folder, close CLInic and restore the backup copy of the data file. If you do not have a backup, the deleted record cannot be recovered from within the app.
+
+**Q**: The app won't open or I see an error when starting CLInic — what should I check?<br>
+**A**: First, confirm you have Java 17 installed (see the [Quick start](#quick-start) section, step 1). Try running CLInic from a terminal using `java -jar CLInic.jar` to see any error messages printed to the console. If the error mentions a corrupted data file, try temporarily moving the `data` folder out of the app folder (the app will create a new empty data file on next run).
+
+**Q**: Is there a way to update CLInic to a newer version?<br>
+**A**: Yes — download the newer `CLInic.jar` from the releases page [here](https://github.com/AY2526S1-CS2103T-F12-4/tp/releases), and replace the existing `CLInic.jar` in your CLInic folder. Your `data` folder will remain intact. Always close CLInic before replacing the `.jar` file.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -306,7 +320,7 @@ Furthermore, certain edits can cause CLInic to behave in unexpected ways (e.g., 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
 3. **Do not edit the data file while the app is running**. If you directly edit the `addressbook.json` file (the data file) while CLInic is open, your changes may be overwritten when the app next saves. The app does not detect external edits during runtime, so modify the file only when the application is closed.
-4. **UI may appear cut off on some displays**. In some screen or resolution configurations the result display, command box or command hint may appear cut off. The workaround is to maximize the app or toggle full-screen so the UI elements can resize correctly.
+4. **UI may appear cut off on some displays**. In some screen or resolution configurations the result display, command box or command hints may appear cut off. The workaround is to maximize the app or toggle full-screen so the UI elements can resize correctly.
 
 --------------------------------------------------------------------------------------------------------------------
 
