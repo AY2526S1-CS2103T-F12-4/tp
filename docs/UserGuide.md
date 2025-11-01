@@ -85,24 +85,6 @@ CLInic is a **desktop app for managing patients, optimized for use via a Command
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
 </div>
 
-### Command input and hints
-
-- All command words are lowercase. Inputs like `ADD`, `Add`, `LiSt` are not accepted. The UI will warn and suggest the lowercase form.
-- While typing, the command hint shows the exact format (parameters) for the detected command to aid fast typing. Exact word matches are prioritised; otherwise, partial matches show suggestions.
-- For commands that take no parameters (e.g., `list`, `exit`, `help`, `clear`), hints still appear even if you type extra text after the command word (e.g., `list 123`). On execution, the extra text is ignored.
-
-### Field constraints
-
-These constraints are enforced by the app. Inputs that violate them will be rejected with a clear error message.
-
-- Name: Only alphanumeric characters and spaces; must not be blank.
-- Phone: Digits only; at least 3 digits.
-- Email: Must follow standard email rules. Local-part allows alphanumeric and `+_.-` (cannot start/end with those). Domain labels are alphanumeric with optional hyphens and must end with a label of at least 2 characters.
-- Address: Cannot be blank (must not start with whitespace). Otherwise free-form.
-- Doctor: Only alphanumeric characters and spaces. Leave `d/` out to keep doctor empty.
-- Medicine: Only alphanumeric characters and spaces.
-- Tag: Alphanumeric and hyphen only (`[a-zA-Z0-9-]+`).
-
 ### Viewing help : `help`
 
 Shows a message explaining how to access the help page.
@@ -122,12 +104,14 @@ Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DOCTOR] [t/TAG]…​ [m
 When a new patient is added, the current date is automatically logged as their first visit.
 </div>
 
-<div markdown="span" class="alert alert-primary">:bulb: *Tip:*
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 A patient can have any number of tags/medicines (including 0)
 </div>
 
-<div markdown="span" class="alert alert-primary">:bulb: *Tip:*
+<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 To create a red allergy tag, use `t/allergy` when adding a patient. Any tag containing "allergy" will appear red in the interface.
+
+Tag names may use hyphens to separate words (e.g. `high-blood-pressure`).
 </div>
 
 Examples:
@@ -165,8 +149,8 @@ Format: `med INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `view 3` views the medicines taken by the 3rd patient in the address book.
-* `find Jackson` followed by `view 1` views the medicines taken by the 1st patient in the results of the `find` command.
+* `list` followed by `med 3` views the medicines taken by the 3rd patient in the address book.
+* `find Jackson` followed by `med 1` views the medicines taken by the 1st patient in the results of the `find` command.
 
 ### Logging a visit for a patient : `log`
 
@@ -256,7 +240,7 @@ Examples:
 
 ### Locating patients by medicines taken: `findmed`
 
-Format: `findmed med/KEYWORD [MORE_KEYWORDS]` or `findmed none`
+Format: `findmed med/MEDICINE [MORE_MEDICINES]...` or `findmed none`
 
 * The search is case-insensitive. e.g `paracetamol` will match `Paracetamol`
 * if `none` is specified after `findmed`, it returns all patients with no medicines assigned to them.
@@ -331,7 +315,7 @@ Furthermore, certain edits can cause CLInic to behave in unexpected ways (e.g., 
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/Doctor] [t/TAG]…​ [med/MEDICINE]…​` <br> e.g., `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/friend med/Paracetamol med/Aspirin`
+**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/Doctor] [t/TAG]…​ [med/MEDICINE]…​` <br> e.g., `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Road p/1234567 t/friend med/Paracetamol med/Aspirin`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
 **Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/Doctor] [t/TAG]…​ [med/MEDICINE]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
