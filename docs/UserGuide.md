@@ -111,7 +111,8 @@ A patient can have any number of tags/medicines (including 0)
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 To create a red allergy tag, use `t/allergy` when adding a patient. Any tag containing "allergy" will appear red in the interface.
 
-Tag names may use hyphens to separate words (e.g. `high-blood-pressure`).
+Tag names may use hyphens to separate words (e.g. `allergy-peanut`).
+Spaces and Underscores are not allowed.
 </div>
 
 Examples:
@@ -186,7 +187,7 @@ Examples:
 
 Edits an existing patient in CLInic.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/Doctor] [med/MEDICINE]…​ [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DOCTOR] [med/MEDICINE]…​ [t/TAG]…​`
 
 * Edits the patient at the specified `INDEX`. The index refers to the index number shown in the displayed patient list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -315,10 +316,10 @@ Furthermore, certain edits can cause CLInic to behave in unexpected ways (e.g., 
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/Doctor] [t/TAG]…​ [med/MEDICINE]…​` <br> e.g., `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Road p/1234567 t/friend med/Paracetamol med/Aspirin`
+**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​` <br> e.g., `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Road p/1234567 t/friend med/Paracetamol med/Aspirin`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/Doctor] [t/TAG]…​ [med/MEDICINE]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Find Doctor** | `finddoc KEYWORD [MORE_KEYWORDS]`<br> e.g., `finddoc Mike Ang`
 **Filter by Medicines** | `findmed med/KEYWORD [MORE_KEYWORDS]...` or `findmed none` <br> e.g., `findmed med/Paracetamol med/Ibuprofen`
