@@ -3,23 +3,23 @@ layout: page
 title: User Guide
 ---
 
-CLInic is a **desktop app for managing patients, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CLInic can get your patient management tasks done faster than traditional GUI apps.
+CLInic is a **desktop app for managing patients, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). It is primarily intended for clinic managers working at the front desk who need a fast, keyboard-driven way to manage patient records. If you can type fast, CLInic can get your patient management tasks done faster than traditional GUI apps.
 
 
 ## Table of Contents
 - [Quick start](#quick-start)
 - [Features](#features)
     - [Viewing help : `help`](#viewing-help--help)
-    - [Adding a patient: `add`](#adding-a-patient-add)
+    - [Adding a patient : `add`](#adding-a-patient-add)
     - [Listing all patients : `list`](#listing-all-patients--list)
     - [Viewing a patient : `view`](#viewing-a-patient--view)
     - [Viewing medicines taken by patient : `med`](#viewing-medicines-taken-by-patient--med)
     - [Logging a visit for a patient : `log`](#logging-a-visit-for-a-patient--log)
     - [Displaying visit dates for a patient : `display`](#displaying-visit-dates-for-a-patient--display)
     - [Editing a patient : `edit`](#editing-a-patient--edit)
-    - [Locating patients by name: `find`](#locating-patients-by-name-find)
-    - [Locating patients by doctor's name: `finddoc`](#locating-patients-by-doctor-finddoc)
-    - [Locating patients by medicines taken: `findmed`](#locating-patients-by-medicines-taken-findmed)
+    - [Locating patients by name : `find`](#locating-patients-by-name-find)
+    - [Locating patients by doctor's name : `finddoc`](#locating-patients-by-doctor-finddoc)
+    - [Locating patients by medicines taken : `findmed`](#locating-patients-by-medicines-taken-findmed)
     - [Deleting a patient : `delete`](#deleting-a-patient--delete)
     - [Clearing all entries : `clear`](#clearing-all-entries--clear)
     - [Exiting the program : `exit`](#exiting-the-program--exit)
@@ -33,8 +33,8 @@ CLInic is a **desktop app for managing patients, optimized for use via a Command
 
 ## Quick start
 
-1. Ensure you have Java `17` or above installed in your Computer.<br>
-   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
+1. Ensure you have Java `17` or above installed on your computer. To confirm, open a terminal and run `java -version`; it should print a line containing `17` (for example: `java version "17.0.2"`).<br>
+  **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-F12-4/tp/releases).
 
@@ -105,18 +105,15 @@ When a new patient is added, the current date is automatically logged as their f
 </div>
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-A patient can have any number of tags/medicines (including 0)
-</div>
-
-<div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 To create a red allergy tag, use `t/allergy` when adding a patient. Any tag containing "allergy" will appear red in the interface.
 
-Tag names may use hyphens to separate words (e.g. `high-blood-pressure`).
+Tag names may use hyphens to separate words (e.g. `allergy-peanut`).
+(Spaces and Underscores are not allowed).
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/James William`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/friend med/Paracetamol med/Aspirin`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/James William`.
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Road p/1234567 t/friend med/Paracetamol med/Aspirin`.
 
 ### Listing all patients : `list`
 
@@ -135,7 +132,7 @@ Format: `view INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `view 3` views the 3rd patient in the address book.
+* `list` followed by `view 3` views the 3rd patient in CLInic.
 * `find Jackson` followed by `view 1` views the 1st patient in the results of the `find` command.
 
 ### Viewing medicines taken by patient : `med`
@@ -149,7 +146,7 @@ Format: `med INDEX`
 * The index **must be a positive integer** 1, 2, 3, …​
 
 Examples:
-* `list` followed by `med 3` views the medicines taken by the 3rd patient in the address book.
+* `list` followed by `med 3` views the medicines taken by the 3rd patient in CLInic.
 * `find Jackson` followed by `med 1` views the medicines taken by the 1st patient in the results of the `find` command.
 
 ### Logging a visit for a patient : `log`
@@ -164,7 +161,7 @@ Format: `log INDEX`
 * If a visit has already been logged for today, the command will fail with a message indicating it has already been logged.
 
 Examples:
-* `list` followed by `log 3` logs today's visit for the 3rd patient in the address book.
+* `list` followed by `log 3` logs today's visit for the 3rd patient in CLInic.
 * `find Jackson` followed by `log 1` logs today's visit for the 1st patient in the results of the `find` command.
 
 ### Displaying visit dates for a patient : `display`
@@ -179,14 +176,14 @@ Format: `display INDEX`
 * If there are no recorded visits for the patient, a message indicating so will be shown.
 
 Examples:
-* `list` followed by `display 3` shows the visit dates of the 3rd patient in the address book.
+* `list` followed by `display 3` shows the visit dates of the 3rd patient in CLInic.
 * `find Jackson` followed by `display 1` shows the visit dates of the 1st patient in the results of the `find` command.
 
 ### Editing a patient : `edit`
 
 Edits an existing patient in CLInic.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/Doctor] [med/MEDICINE]…​ [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DOCTOR] [med/MEDICINE]…​ [t/TAG]…​`
 
 * Edits the patient at the specified `INDEX`. The index refers to the index number shown in the displayed patient list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -208,31 +205,31 @@ Examples:
 
 Finds patients whose names contain any of the given keywords.
 
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find KEYWORD [MORE_KEYWORDS]`.
 
-* The search is case-insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case-insensitive, e.g. `hans` will match `Hans`.
+* The order of the keywords does not matter, e.g. `Hans Bo` will match `Bo Hans`.
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Only full words will be matched, e.g. `Han` will not match `Hans`.
 * Patients matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+  e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
 
 Examples:
-* `find John` returns `john` and `John Doe`
+* `find John` returns `john` and `John Doe`.
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
 
 ### Locating patients by doctor: `finddoc`
 
 Finds patients whose doctor's name contain any of the given keywords.
 
-Format: `finddoc KEYWORD [MORE_KEYWORDS]`
+Format: `finddoc KEYWORD [MORE_KEYWORDS]`.
 
-* The search is case-insensitive. e.g `william` will match all patients whose doctor is `William`.
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case-insensitive, e.g. `william` will match all patients whose doctor is `William`.
+* The order of the keywords does not matter, e.g. `Hans Bo` will match `Bo Hans`.
 * Only the name is searched.
-* Only full words will be matched e.g. `Will` will not match `William`
+* Only full words will be matched, e.g. `Will` will not match `William`.
 * Patients with doctors matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `Hans Bo` will return all patients with doctor `Hans Gruber`, `Bo Yang`
+  e.g. `Hans Bo` will return all patients with doctor `Hans Gruber`, `Bo Yang`.
 
 Examples:
 * `find Jake` returns all patients whose doctor is `jake` and `Jake Lee`.
@@ -240,16 +237,15 @@ Examples:
 
 ### Locating patients by medicines taken: `findmed`
 
-Format: `findmed med/KEYWORD [MORE_KEYWORDS]...` or `findmed none`
+Format: `findmed med/KEYWORD [MORE_KEYWORDS]...` or `findmed none`.
 
-* The search is case-insensitive. e.g `paracetamol` will match `Paracetamol`
-* if `none` is specified after `findmed`, it returns all patients with no medicines assigned to them.
-* If more than one medicine specified, it should be space-sperated like `findmed med/medA med/medB`
-* The order of the keywords does not matter. e.g. `med/paracetamol med/ibuprofen` and `med/ibuprofen med/paracetamol`
-  will fetch patients who take both these medicines
-* Only full words will be matched e.g. `ibu` will not match `ibuprofen`
-* patients matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `paracetamol` will return patients who take paracetamol even if they take other medicines
+* The search is case-insensitive. e.g. `paracetamol` will match `Paracetamol`.
+* If `none` is specified after `findmed`, it returns all patients with no medicines assigned to them.
+* If more than one medicine is specified, they should be space-separated, e.g. `findmed med/medA med/medB`.
+* The order of the keywords does not matter, e.g. `med/paracetamol med/ibuprofen` and `med/ibuprofen med/paracetamol` will fetch patients who take both these medicines.
+* Only full words will be matched, e.g. `ibu` will not match `ibuprofen`.
+* Patients matching at least one keyword will be returned (i.e. `OR` search).
+  e.g. `paracetamol` will return patients who take paracetamol even if they take other medicines.
 
 Examples:
 * `findmed med/paracetamol`
@@ -299,8 +295,23 @@ Furthermore, certain edits can cause CLInic to behave in unexpected ways (e.g., 
 
 ## FAQ
 
-**Q**: How do I transfer my data to another Computer?<br>
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous CLInic home folder.
+**Q**: How do I transfer my data to another computer?<br>
+**A**: Close CLInic on the original computer. Copy the entire `data` folder from the CLInic home folder (or the data file inside it) to the same location next to `CLInic.jar` on the other computer. When you start CLInic on the new machine it will use that data file. Do not edit the data file while CLInic is running.
+
+**Q**: How can I make a backup of my CLInic data?<br>
+**A**: Close CLInic, then make a copy of the `data` folder in the same location as the CLInic `.jar` file (or copy the data file inside it). Store that copy somewhere safe (e.g., a USB stick, network drive, or cloud storage). Do not edit the data file while CLInic is running — always close the app before creating or restoring backups.
+
+**Q**: I want to print or save a patient's details — how do I do that?<br>
+**A**: Use `view INDEX` to show the patient's details in the app. You can then copy the information from the result display and paste it into a document, or take a screenshot. If you need a structured data copy, export the application's `data` folder (see Backup above) and open the data file with a text editor while the app is closed.
+
+**Q**: I accidentally deleted a patient — can I get them back?<br>
+**A**: CLInic does not provide an "undo" for delete operations. If you have a recent backup of your data folder, close CLInic and restore the backup copy of the data file. If you do not have a backup, the deleted record cannot be recovered from within the app.
+
+**Q**: The app won't open or I see an error when starting CLInic — what should I check?<br>
+**A**: First, confirm you have Java 17 installed (see the [Quick start](#quick-start) section, step 1). Try running CLInic from a terminal using `java -jar CLInic.jar` to see any error messages printed to the console. If the error mentions a corrupted data file, try temporarily moving the `data` folder out of the app folder (the app will create a new empty data file on next run).
+
+**Q**: Is there a way to update CLInic to a newer version?<br>
+**A**: Yes — download the newer `CLInic.jar` from the releases page [here](https://github.com/AY2526S1-CS2103T-F12-4/tp/releases), and replace the existing `CLInic.jar` in your CLInic folder. Your `data` folder will remain intact. Always close CLInic before replacing the `.jar` file.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -308,6 +319,8 @@ Furthermore, certain edits can cause CLInic to behave in unexpected ways (e.g., 
 
 1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+3. **Do not edit the data file while the app is running**. If you directly edit the `addressbook.json` file (the data file) while CLInic is open, your changes may be overwritten when the app next saves. The app does not detect external edits during runtime, so modify the file only when the application is closed.
+4. **UI may appear cut off on some displays**. In some screen or resolution configurations the result display, command box or command hints may appear cut off. The workaround is to maximize the app or toggle full-screen so the UI elements can resize correctly.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -315,10 +328,10 @@ Furthermore, certain edits can cause CLInic to behave in unexpected ways (e.g., 
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/Doctor] [t/TAG]…​ [med/MEDICINE]…​` <br> e.g., `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Road p/1234567 t/friend med/Paracetamol med/Aspirin`
+**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​` <br> e.g., `add n/Betsy Crowe t/allergy-peanut e/betsycrowe@example.com a/Newgate Road p/1234567 med/Paracetamol med/Aspirin`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/Doctor] [t/TAG]…​ [med/MEDICINE]…​`<br> e.g.,`edit 2 n/James Lee e/jameslee@example.com`
+**Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Find Doctor** | `finddoc KEYWORD [MORE_KEYWORDS]`<br> e.g., `finddoc Mike Ang`
 **Filter by Medicines** | `findmed med/KEYWORD [MORE_KEYWORDS]...` or `findmed none` <br> e.g., `findmed med/Paracetamol med/Ibuprofen`
