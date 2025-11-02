@@ -307,17 +307,19 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `*`      | clinic manager                             | import patient records         | avoid retyping existing data from spreadsheets                         |
 | `*`      | clinic manager                             | detect duplicate records       | maintain clean and consistent data                                     |
 
+
 ### Use cases
 
-(For all use cases below, the **System** is the `CLInic` and the **Actor** is the `clinic manager`, unless specified otherwise)
+(For all use cases below, the **System** is `CLInic` and the **Actor** is the `clinic manager`, unless specified otherwise)
 
 **Use case: UC01 - Add a new patient**
 
 **MSS**
 
-1. Clinic manager requests to add a new patient using the add command
-2. Clinic manager enters patient details
-3. CLInic adds the patient and displays success message with patient details
+1. Clinic manager chooses to add a new patient.
+2. Clinic manager enters the required patient information.
+3. CLInic adds the patient and displays confirmation.
+4. CLInic displays the updated patient list.
 
    Use case ends.
 
@@ -325,89 +327,23 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. The patient information has invalid format.
 
-  * 2a1. CLInic shows an error message indicating the specific invalid field and format requirements.
+  * 2a1. CLInic shows an error message.
 
     Use case resumes at step 2.
 
-* 2b. Required fields are missing.
+* 2b. The patient already exists in the system.
 
-  * 2b1. CLInic shows an error message indicating missing required fields.
-
-    Use case resumes at step 2.
-
-* 2c. The input contains consecutive spaces.
-
-  * 2c1. CLInic shows an error message about consecutive spaces not being allowed.
-
-    Use case resumes at step 2.
-
-* 2d. The patient already exists in the system (same name).
-
-  * 2d1. CLInic shows an error message about duplicate patient.
+  * 2b1. CLInic shows an error message.
 
     Use case ends.
 
-**Use case: UC02 - Find patients by name**
+**Use case: UC12 - View a patient**
 
 **MSS**
 
-1. Clinic manager requests to find patients by name using the find command
-2. Clinic manager enters search keywords
-3. CLInic displays matching patients with their details
-
-   Use case ends.
-
-**Extensions**
-
-* 2a. The search keywords are empty.
-
-  * 2a1. CLInic shows an error message about invalid command format.
-
-    Use case resumes at step 1.
-
-* 3a. No patients match the search keywords.
-
-  * 3a1. CLInic shows "0 patients listed!" message.
-
-    Use case ends.
-
-**Use case: UC03 - View patient medicines**
-
-**MSS**
-
-1. Clinic manager requests to view medicines for a specific patient using the med command
-2. Clinic manager enters the patient index
-3. CLInic displays the patient's medicines
-
-   Use case ends.
-
-**Extensions**
-
-* 2a. The index is invalid (not a positive integer).
-
-  * 2a1. CLInic shows an error message about invalid index format.
-
-    Use case resumes at step 2.
-
-* 2b. The index is out of range.
-
-  * 2b1. CLInic shows an error message about invalid patient index.
-
-    Use case resumes at step 2.
-
-* 3a. The patient has no medicines.
-
-  * 3a1. CLInic shows message indicating no medicines are assigned.
-
-    Use case ends.
-
-**Use case: UC04 - Edit patient information**
-
-**MSS**
-
-1. Clinic manager requests to edit a patient using the edit command
-2. Clinic manager enters the patient index and fields to be modified
-3. CLInic updates the patient information and displays success message with updated patient details
+1. Clinic manager chooses to view a patient.
+2. Clinic manager enters the patient index.
+3. CLInic displays information about that patient.
 
    Use case ends.
 
@@ -415,130 +351,238 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. The index is invalid.
 
-  * 2a1. CLInic shows an error message about invalid index format.
+  * 2a1. CLInic shows an error message.
 
     Use case resumes at step 2.
 
-* 2b. No fields are provided for editing.
-
-  * 2b1. CLInic shows an error message indicating at least one field must be provided.
-
-    Use case resumes at step 2.
-
-* 2c. The index is out of range.
-
-  * 2c1. CLInic shows an error message about invalid patient index.
-
-    Use case resumes at step 2.
-
-* 2d. The new field values have invalid format.
-
-  * 2d1. CLInic shows an error message about the specific invalid field.
-
-    Use case resumes at step 2.
-
-* 2e. The edited patient would be identical to an existing patient.
-
-  * 2e1. CLInic shows an error message about duplicate patient.
-
-    Use case resumes at step 2.
-
-**Use case: UC05 - Find patients by doctor**
+**Use case: UC03 - View patient medicines**
 
 **MSS**
 
-1. Clinic manager requests to find patients by doctor using the finddoc command
-2. Clinic manager enters doctor names
-3. CLInic displays matching patients
+1. Clinic manager chooses to view a patient's medicines.
+2. Clinic manager enters the patient index.
+3. CLInic displays the patient's medicines.
 
    Use case ends.
 
 **Extensions**
 
-* 2a. The doctor names are empty.
+* 2a. The index is invalid.
 
-    * 2a1. CLInic shows an error message about invalid command format.
+  * 2a1. CLInic shows an error message.
 
-      Use case resumes at step 1.
+    Use case resumes at step 2.
 
-* 3a. No patients are seen by a doctor with that name.
+* 3a. The patient has no medicines.
 
-    * 3a1. CLInic shows "0 patients listed!" message.
-
-      Use case ends.
-
-**Use case: UC06 - Find patients by medicine**
-
-**MSS**
-
-1. Clinic manager requests to find patients by medicine using the findmed command
-2. Clinic manager enters medicine names
-3. CLInic displays matching patients
-
-   Use case ends.
-
-**Extensions**
-
-* 2a. The medicine names are empty.
-
-  * 2a1. CLInic shows an error message about invalid command format.
-
-    Use case resumes at step 1.
-
-* 3a. No patients match the medicine criteria.
-
-  * 3a1. CLInic shows "0 patients listed!" message.
+  * 3a1. CLInic indicates that the patient has no medicines recorded.
 
     Use case ends.
 
-**Use case: UC07 - Delete a patient**
+**Use case: UC04 - Log a visit**
 
 **MSS**
 
-1. Clinic manager requests to delete a patient using the delete command
-2. Clinic manager enters the patient index
-3. CLInic removes the patient from the system
-4. CLInic removes patient and displays success message
+1. Clinic manager chooses to log a visit for a patient.
+2. Clinic manager enters the patient index.
+3. CLInic logs today's date for the patient and displays confirmation.
 
    Use case ends.
 
 **Extensions**
 
-* 2a. The index is invalid (not a positive integer).
+* 2a. The index is invalid.
 
-  * 2a1. CLInic shows an error message about invalid index format.
-
-    Use case resumes at step 2.
-
-* 2b. The index is out of range.
-
-  * 2b1. CLInic shows an error message about invalid patient index.
+  * 2a1. CLInic shows an error message.
 
     Use case resumes at step 2.
 
-**Use case: UC08 - View a patient**
+* 3a. A visit for today is already recorded for the patient.
+
+  * 3a1. CLInic indicates that today's visit has already been logged.
+
+    Use case ends.
+
+**Use case: UC05 - Display visit dates**
 
 **MSS**
 
-1. Clinic manager requests to view a patient using the view command
-2. Clinic manager enters the patient index
-3. CLInic displays information about that patient
+1. Clinic manager chooses to display a patient's visit dates.
+2. Clinic manager enters the patient index.
+3. CLInic displays recorded visit dates for the patient.
 
    Use case ends.
 
 **Extensions**
 
-* 2a. The index is invalid (not a positive integer).
+* 2a. The index is invalid.
 
-    * 2a1. CLInic shows an error message about invalid index format.
+  * 2a1. CLInic shows an error message.
 
-      Use case resumes at step 2.
+    Use case resumes at step 2.
 
-* 2b. The index is out of range.
+* 3a. The patient has no recorded dates.
 
-    * 2b1. CLInic shows an error message about invalid patient index.
+  * 3a1. CLInic indicates that the patient has no recorded dates.
 
-      Use case resumes at step 2.
+    Use case ends.
+
+**Use case: UC06 - Edit patient information**
+
+**MSS**
+
+1. Clinic manager chooses to edit a patient.
+2. Clinic manager enters the patient index and the fields to modify.
+3. CLInic updates the patient information and displays confirmation.
+4. CLInic displays the updated patient list.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The index is invalid.
+
+  * 2a1. CLInic shows an error message.
+
+    Use case resumes at step 2.
+
+* 2b. The patient information has invalid format.
+
+  * 2b1. CLInic shows an error message.
+
+    Use case resumes at step 2.
+
+* 2c. The edited patient would be identical to another existing patient.
+
+  * 2c1. CLInic shows an error message.
+
+    Use case resumes at step 2.
+
+**Use case: UC07 - Find patients by name**
+
+**MSS**
+
+1. Clinic manager chooses to find patients by name.
+2. Clinic manager enters one or more search keywords.
+3. CLInic displays list of matching patients.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The search keywords are empty.
+
+  * 2a1. CLInic shows an error message.
+
+    Use case resumes at step 2.
+
+* 3a. No patients match the search keywords.
+
+  * 3a1. CLInic indicates that no patients match the search criteria.
+
+    Use case ends.
+
+**Use case: UC08 - Find patients by doctor**
+
+**MSS**
+
+1. Clinic manager chooses to find patients by doctor.
+2. Clinic manager enters one or more search keywords.
+3. CLInic displays list of matching patients.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The search keywords are empty.
+
+  * 2a1. CLInic shows an error message.
+
+    Use case resumes at step 2.
+
+* 3a. No patients match the search keywords.
+
+  * 3a1. CLInic indicates that no patients match the search criteria.
+
+    Use case ends.
+
+**Use case: UC09 - Find patients by medicine**
+
+**MSS**
+
+1. Clinic manager chooses to find patients by medicine.
+2. Clinic manager enters one or more search keywords (or `none`).
+3. CLInic displays list of matching patients.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The search keywords are empty.
+
+  * 2a1. CLInic shows an error message.
+
+    Use case resumes at step 2.
+
+* 3a. No patients match the search keywords.
+
+  * 3a1. CLInic indicates that no patients match the search criteria.
+
+    Use case ends.
+
+**Use case: UC10 - Delete a patient**
+
+**MSS**
+
+1. Clinic manager chooses to delete a patient.
+2. Clinic manager enters the patient index.
+3. CLInic removes the patient and displays confirmation.
+4. CLInic displays the updated patient list.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The index is invalid.
+
+  * 2a1. CLInic shows an error message.
+
+    Use case resumes at step 2.
+
+**Use case: UC11 - Viewing help**
+
+**MSS**
+
+1. Clinic manager chooses to view help.
+2. CLInic displays the help URL.
+
+   Use case ends.
+
+**Use case: UC02 - List all patients**
+
+**MSS**
+
+1. Clinic manager chooses to list all patients.
+2. CLInic displays list of all patients.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. There are no patients in the system.
+
+  * 2a1. CLInic displays an empty list.
+
+    Use case ends.
+
+**Use case: UC13 - Clear all entries**
+
+**MSS**
+
+1. Clinic manager chooses to clear all patient entries.
+2. CLInic clears all patient data and displays confirmation.
+
+   Use case ends.
 
 ### Non-Functional Requirements
 
