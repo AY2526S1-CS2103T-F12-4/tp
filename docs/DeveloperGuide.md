@@ -269,7 +269,7 @@ _{Explain here how the data archiving feature will be implemented}_
 * is reasonably comfortable using CLI apps
 * needs to track medical information, medicines, and patient visits
 * requires quick access to patient contact details for communication
-* needs to manage patient categories and medical histories
+* needs to manage patient medication
 
 **Value proposition**: manage clinic operations and patient records faster than a typical mouse/GUI driven app, with specialized features for healthcare management
 
@@ -312,6 +312,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 (For all use cases below, the **System** is `CLInic` and the **Actor** is the `clinic manager`, unless specified otherwise)
 
+
 **Use case: UC01 - Add a new patient**
 
 **MSS**
@@ -337,23 +338,29 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Use case: UC12 - View a patient**
+**Use case: UC02 - Find patients by name**
 
 **MSS**
 
-1. Clinic manager chooses to view a patient.
-2. Clinic manager enters the patient index.
-3. CLInic displays information about that patient.
+1. Clinic manager chooses to find patients by name.
+2. Clinic manager enters one or more search keywords.
+3. CLInic displays list of matching patients.
 
    Use case ends.
 
 **Extensions**
 
-* 2a. The index is invalid.
+* 2a. The search keywords are empty.
 
   * 2a1. CLInic shows an error message.
 
     Use case resumes at step 2.
+
+* 3a. No patients match the search keywords.
+
+  * 3a1. CLInic indicates that no patients match the search criteria.
+
+    Use case ends.
 
 **Use case: UC03 - View patient medicines**
 
@@ -379,55 +386,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Use case: UC04 - Log a visit**
-
-**MSS**
-
-1. Clinic manager chooses to log a visit for a patient.
-2. Clinic manager enters the patient index.
-3. CLInic logs today's date for the patient and displays confirmation.
-
-   Use case ends.
-
-**Extensions**
-
-* 2a. The index is invalid.
-
-  * 2a1. CLInic shows an error message.
-
-    Use case resumes at step 2.
-
-* 3a. A visit for today is already recorded for the patient.
-
-  * 3a1. CLInic indicates that today's visit has already been logged.
-
-    Use case ends.
-
-**Use case: UC05 - Display visit dates**
-
-**MSS**
-
-1. Clinic manager chooses to display a patient's visit dates.
-2. Clinic manager enters the patient index.
-3. CLInic displays recorded visit dates for the patient.
-
-   Use case ends.
-
-**Extensions**
-
-* 2a. The index is invalid.
-
-  * 2a1. CLInic shows an error message.
-
-    Use case resumes at step 2.
-
-* 3a. The patient has no recorded dates.
-
-  * 3a1. CLInic indicates that the patient has no recorded dates.
-
-    Use case ends.
-
-**Use case: UC06 - Edit patient information**
+**Use case: UC04 - Edit patient information**
 
 **MSS**
 
@@ -458,31 +417,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case resumes at step 2.
 
-**Use case: UC07 - Find patients by name**
-
-**MSS**
-
-1. Clinic manager chooses to find patients by name.
-2. Clinic manager enters one or more search keywords.
-3. CLInic displays list of matching patients.
-
-   Use case ends.
-
-**Extensions**
-
-* 2a. The search keywords are empty.
-
-  * 2a1. CLInic shows an error message.
-
-    Use case resumes at step 2.
-
-* 3a. No patients match the search keywords.
-
-  * 3a1. CLInic indicates that no patients match the search criteria.
-
-    Use case ends.
-
-**Use case: UC08 - Find patients by doctor**
+**Use case: UC05 - Find patients by doctor**
 
 **MSS**
 
@@ -494,6 +429,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
+**Extensions**
+
 * 2a. The search keywords are empty.
 
   * 2a1. CLInic shows an error message.
@@ -506,7 +443,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Use case: UC09 - Find patients by medicine**
+**Use case: UC06 - Find patients by medicine**
 
 **MSS**
 
@@ -530,7 +467,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Use case: UC10 - Delete a patient**
+**Use case: UC07 - Delete a patient**
 
 **MSS**
 
@@ -549,16 +486,25 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case resumes at step 2.
 
-**Use case: UC11 - Viewing help**
+**Use case: UC08 - View a patient**
 
 **MSS**
 
-1. Clinic manager chooses to view help.
-2. CLInic displays the help URL.
+1. Clinic manager chooses to view a patient.
+2. Clinic manager enters the patient index.
+3. CLInic displays information about that patient.
 
    Use case ends.
 
-**Use case: UC02 - List all patients**
+**Extensions**
+
+* 2a. The index is invalid.
+
+  * 2a1. CLInic shows an error message.
+
+    Use case resumes at step 2.
+
+**Use case: UC09 - List all patients**
 
 **MSS**
 
@@ -575,12 +521,69 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
     Use case ends.
 
-**Use case: UC13 - Clear all entries**
+**Use case: UC10 - Log a visit**
+
+**MSS**
+
+1. Clinic manager chooses to log a visit for a patient.
+2. Clinic manager enters the patient index.
+3. CLInic logs today's date for the patient and displays confirmation.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The index is invalid.
+
+  * 2a1. CLInic shows an error message.
+
+    Use case resumes at step 2.
+
+* 3a. A visit for today is already recorded for the patient.
+
+  * 3a1. CLInic indicates that today's visit has already been logged.
+
+    Use case ends.
+
+**Use case: UC11 - Display visit dates**
+
+**MSS**
+
+1. Clinic manager chooses to display a patient's visit dates.
+2. Clinic manager enters the patient index.
+3. CLInic displays recorded visit dates for the patient.
+
+   Use case ends.
+
+**Extensions**
+
+* 2a. The index is invalid.
+
+  * 2a1. CLInic shows an error message.
+
+    Use case resumes at step 2.
+
+* 3a. The patient has no recorded dates.
+
+  * 3a1. CLInic indicates that the patient has no recorded dates.
+
+    Use case ends.
+
+**Use case: UC12 - Clear all entries**
 
 **MSS**
 
 1. Clinic manager chooses to clear all patient entries.
 2. CLInic clears all patient data and displays confirmation.
+
+   Use case ends.
+
+**Use case: UC13 - Viewing help**
+
+**MSS**
+
+1. Clinic manager chooses to view help.
+2. CLInic displays the help URL.
 
    Use case ends.
 
@@ -611,25 +614,61 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 12. **Memory Usage**: The system should not consume excessive memory resources, suitable for typical clinic computer systems.
 
 ### Glossary
+* **Mainstream OS**: Examples include Windows, Linux, Unix and macOS.
 
-* **Mainstream OS**: Windows, Linux, Unix, MacOS
-* **Patient Record**: A comprehensive file containing a patient's personal information, medical history, current medications, allergies, and assigned healthcare provider
-* **Medical History**: A record of past illnesses, treatments, surgeries, and medical conditions for a patient
-* **Allergy**: An adverse reaction to specific substances (medicines, foods, environmental factors) that should be avoided for a patient
-* **Drug Interaction**: A situation where two or more medicines interact with each other, potentially causing harmful effects
-* **Batch Action**: An operation that can be applied to multiple patients simultaneously (e.g., tagging, assigning doctor, archiving)
-* **Patient Category**: A classification system for patients (e.g., chronic illness, elderly, children) used for tailored care and communication
-* **Archived Patient**: A patient record that has been moved to inactive status but can be reactivated if needed
-* **Fuzzy Search**: A search method that can find results even with partial, misspelled, or incomplete search terms
-* **Command Alias**: A shortened or alternative command name that performs the same function as the full command
-* **Medicine Distribution**: The tracking of which patients are currently taking specific medications
-* **Visit Schedule**: A record of when patients visit the clinic for appointments or treatments
-* **Private Patient Detail**: Sensitive medical information that should not be shared with unauthorized personnel
-* **Clinic Manager**: The primary user of the system who manages patient records and clinic operations
-* **Healthcare Provider**: A doctor, nurse, or other medical professional assigned to care for specific patients
-* **Inventory Management**: The tracking of medicine stock levels and reorder requirements
-* **Patient ID**: A unique identifier assigned to each patient for easy reference and data management
+* **CLI (Command Line Interface)**: A text-based interface where users type commands into the command box to control CLInic.
 
+* **GUI (Graphical User Interface)**: The visual interface (windows, buttons, lists) rendered by JavaFX that displays data and receives user input.
+
+* **JSON**: A human-readable text format used by the app to store data files on disk.
+
+* **UI**: The component that renders the graphical interface using JavaFX and forwards user input to the `Logic` layer.
+
+* **Logic**: The component that executes Commands and coordinates model updates and responses to the UI.
+
+* **Storage**: The component responsible for persisting and loading application data as JSON files on disk.
+
+* **AddressBookParser**: The component that converts raw command strings into `Command` objects by delegating to specific command parsers.
+
+* **Parser (interface)**: The interface implemented by `XYZCommandParser` classes to parse command syntax into `Command` instances.
+
+* **ParserUtil**: A collection of small helper methods used by parsers to validate and convert raw input into model values.
+
+* **Command**: An object representing an executable user action, created by parsers and run by the `Logic` component.
+
+* **CommandResult**: The object returned after executing a `Command` carrying the message to display and any UI hints.
+
+* **Model**: The layer that exposes data and operations on the AddressBook and user preferences to other components.
+
+* **AddressBook**: The in-memory container holding all `Person` objects representing patient data.
+
+* **VersionedAddressBook**: A model wrapper that stores snapshots of AddressBook states to support undo and redo.
+
+* **Batch Action**: An operation that applies a single command to multiple patients at once (for example, tagging several patients).
+
+* **Fuzzy Search**: A search strategy that matches results approximately, such as case-insensitive or token-based matching.
+
+* **Patient Record**: A patient's contact details and medications.
+
+* **Patient Categories**: Tags used to classify patients (for example, chronic, elderly, child) for filtering or reporting.
+
+* **Clinic Manager**: The primary user role responsible for managing patient records and clinic operations.
+
+* **Healthcare Provider**: A doctor, nurse, or clinician assigned to care for a patient.
+
+* **Private Patient Detail**: Sensitive patient information that must be protected and not disclosed.
+
+* **Archived Patient**: A patient record marked inactive and removed from normal lists but kept for possible restoration.
+
+* **Visit Schedule**: A log of dates when a patient visited the clinic.
+
+* **Medicine Distribution**: Tracking which patients are prescribed or taking particular medications.
+
+* **Inventory**: The stock of medicines and medical supplies that the clinic keeps on hand.
+
+* **Command Alias**: A shortened or alternate name for an existing command.
+
+* **Invalid (use case context)**: Refers to input or request errors such as wrong format, index out of range, missing required fields, or other validation failures.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
