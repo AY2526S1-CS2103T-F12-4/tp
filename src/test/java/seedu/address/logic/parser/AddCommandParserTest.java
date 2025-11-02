@@ -80,13 +80,14 @@ public class AddCommandParserTest {
         } catch (Exception e) {
             String actual = e.getMessage();
             // Accept either the parser duplicate-prefix error or the model's name constraint error
+            String errMsg = String.format(
+                    "Expected duplicate-prefix message or name-constraint message but was: %s",
+                    actual
+            );
             org.junit.jupiter.api.Assertions.assertTrue(
                     actual.equals(Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME))
                             || actual.equals(Name.MESSAGE_CONSTRAINTS),
-                    () -> String.format(
-                            "Expected duplicate-prefix message or name-constraint message but was: %s",
-                            actual
-                    )
+                    errMsg
             );
         }
 
@@ -125,12 +126,13 @@ public class AddCommandParserTest {
         } catch (Exception e) {
             String actual = e.getMessage();
             String expectedFormat = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
+            String errMsg = String.format(
+                    "Expected email-constraint message or invalid-format but was: %s",
+                    actual
+            );
             org.junit.jupiter.api.Assertions.assertTrue(
                     actual.equals(Email.MESSAGE_CONSTRAINTS) || actual.equals(expectedFormat),
-                    () -> String.format(
-                            "Expected email-constraint message or invalid-format but was: %s",
-                            actual
-                    )
+                    errMsg
             );
         }
 
