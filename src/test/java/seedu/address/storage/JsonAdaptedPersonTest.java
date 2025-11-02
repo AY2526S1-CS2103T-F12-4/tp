@@ -56,9 +56,9 @@ public class JsonAdaptedPersonTest {
                 VALID_MEDICINES,
                 null
         );
-    // model may throw IllegalValueException or IllegalArgumentException depending on implementation details;
-    // assert that an exception is thrown (message check is intentionally omitted to reduce brittleness).
-    assertThrows(Exception.class, person::toModelType);
+        // model may throw IllegalValueException or IllegalArgumentException depending on implementation details;
+        // assert that an exception is thrown (message check is intentionally omitted to reduce brittleness).
+        assertThrows(Exception.class, person::toModelType);
     }
 
     @Test

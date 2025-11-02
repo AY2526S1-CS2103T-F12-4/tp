@@ -83,7 +83,10 @@ public class AddCommandParserTest {
             org.junit.jupiter.api.Assertions.assertTrue(
                     actual.equals(Messages.getErrorMessageForDuplicatePrefixes(PREFIX_NAME))
                             || actual.equals(Name.MESSAGE_CONSTRAINTS),
-                    () -> String.format("Expected duplicate-prefix message or name-constraint message but was: %s", actual)
+                    () -> String.format(
+                            "Expected duplicate-prefix message or name-constraint message but was: %s",
+                            actual
+                    )
             );
         }
 
@@ -124,7 +127,10 @@ public class AddCommandParserTest {
             String expectedFormat = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
             org.junit.jupiter.api.Assertions.assertTrue(
                     actual.equals(Email.MESSAGE_CONSTRAINTS) || actual.equals(expectedFormat),
-                    () -> String.format("Expected email-constraint message or invalid-format but was: %s", actual)
+                    () -> String.format(
+                            "Expected email-constraint message or invalid-format but was: %s",
+                            actual
+                    )
             );
         }
 
