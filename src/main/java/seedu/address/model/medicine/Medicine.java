@@ -10,7 +10,9 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Medicine {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Medicines can take any values, and it should not be blank";
+            "Medicines can take any values\n"
+            + "should not be blank when adding a patient\n"
+            + "can be blank when editing a patient\n";
 
     public static final String VALIDATION_REGEX = ".*\\S.*";
 
