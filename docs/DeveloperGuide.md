@@ -658,8 +658,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * **Private Patient Detail**: Sensitive patient information that must be protected and not disclosed.
 
-* **Archived Patient**: A patient record marked inactive and removed from normal lists but kept for possible restoration.
-
 * **Visit Schedule**: A log of dates when a patient visited the clinic.
 
 * **Medicine Distribution**: Tracking which patients are prescribed or taking particular medications.
