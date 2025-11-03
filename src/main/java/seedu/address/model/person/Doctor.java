@@ -10,9 +10,9 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 public class Doctor {
     public static final String MESSAGE_CONSTRAINTS =
-            "Doctor names should only contain alphanumeric characters and spaces";
+            "Doctors can take any values";
 
-    public static final String VALIDATION_REGEX = "^([\\p{Alnum}][\\p{Alnum} ]*)?$";
+    public static final String VALIDATION_REGEX = ".*\\S.*";
 
     public final String name;
 
