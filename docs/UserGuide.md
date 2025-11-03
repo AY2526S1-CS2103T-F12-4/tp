@@ -110,10 +110,6 @@ Adds a patient to CLInic.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [dr/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`
 
-<div markdown="span" class="alert alert-info">:information_source: **Note:**
-When a new patient is added, the current date is automatically logged as their first visit.
-</div>
-
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 To create a red allergy tag, use `t/allergy` when adding a patient. Any tag containing the word "allergy" (case-insensitive) will appear red in the interface.
 
@@ -162,6 +158,10 @@ Examples:
 ### Logging a visit for a patient : `log`
 
 Logs today's date as a visit for the specified patient.
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:**
+When a new patient is added, the current date is automatically logged as their first visit.
+</div>
 
 Format: `log INDEX`
 
