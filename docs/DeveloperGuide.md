@@ -661,7 +661,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * **Command Alias**: A shortened or alternate name for an existing command.
 
-* **Invalid Input**: Refers to input or request errors such as wrong format, index out of range, missing required fields, or other validation failures.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
@@ -713,6 +712,11 @@ addition to the user guide link.
 
 ### Unique identification numbers for patients
 
-1. Each person added will be assigned a unique id.
+1. Each patient added will be assigned a unique id.
 2. Now patients with same names can be added safely and can be distinguished by their unique id.
 
+### Confirmation for delete and clear commands
+
+1. Whenever user performs a `delete` or `clear` operation, a warning message is displayed as result.
+2. Subsequently, if the user wants to process with the action, he will enter `yes`, or `no` if he does not want to 
+proceed with the delete or clear command.
