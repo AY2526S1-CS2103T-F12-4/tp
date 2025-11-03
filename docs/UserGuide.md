@@ -108,7 +108,7 @@ Format: `help`
 
 Adds a patient to CLInic.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [dr/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:**
 When a new patient is added, the current date is automatically logged as their first visit.
@@ -122,7 +122,7 @@ Tag names may use hyphens to separate words (e.g. `allergy-peanut`).
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/James William`.
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 dr/James William`.
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Road p/1234567 t/friend med/Paracetamol med/Aspirin`.
 
 ### Listing all patients : `list`
@@ -344,10 +344,10 @@ Furthermore, certain edits can cause CLInic to behave in unexpected ways (e.g., 
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​` <br> e.g., `add n/Betsy Crowe t/allergy-peanut e/betsycrowe@example.com a/Newgate Road p/1234567 med/Paracetamol med/Aspirin`
+**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [dr/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​` <br> e.g., `add n/Betsy Crowe t/allergy-peanut e/betsycrowe@example.com a/Newgate Road p/1234567 med/Paracetamol med/Aspirin`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`
+**Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dr/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Find Doctor** | `finddoc KEYWORD [MORE_KEYWORDS]`<br> e.g., `finddoc Mike Ang`
 **Filter by Medicines** | `findmed med/KEYWORD [MORE_KEYWORDS]...` or `findmed none` <br> e.g., `findmed med/Paracetamol med/Ibuprofen`
