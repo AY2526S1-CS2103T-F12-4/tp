@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Tag {
 
     public static final String MESSAGE_CONSTRAINTS = "Tag names should be alphanumeric (hyphen is allowed) "
-            + "and should not be blank";
+            + "and it should not be blank";
     public static final String VALIDATION_REGEX = "^[a-zA-Z0-9-]+$";
 
     public final String tagName;
