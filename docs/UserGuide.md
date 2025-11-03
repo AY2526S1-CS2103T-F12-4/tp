@@ -3,9 +3,19 @@ layout: page
 title: User Guide
 ---
 
-CLInic is a **desktop app for managing patients, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). It is primarily intended for clinic managers working at the front desk who need a fast, keyboard-driven way to manage patient records. If you can type fast, CLInic can get your patient management tasks done faster than traditional GUI apps.
+CLInic is a **desktop app designed for small clinic managers for managing patient data, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). It is primarily intended for clinic managers working at the front desk who need a fast, keyboard-driven way to manage patient records. If you can type fast, CLInic can get your patient management tasks done faster than traditional GUI apps.
 
+What you can manage with CLInic:
 
+* Patients: add new patients, view a full record, edit details, and delete when necessary (`add`, `view`, `edit`, `delete`, `list`).
+
+* Visits: log a new visit and display a patient’s past visit dates for quick verification at the counter (`log`, `display`).
+
+* Medications: see what medicines a patient is taking and find other patients on the same medication (`med`, `findmed`).
+
+* Doctors & assignments: locate patients by their attending doctor to help with scheduling and triage (`finddoc`).
+
+Search & retrieval: filter by name for rapid identification, even in large panels (`find`).
 ## Table of Contents
 - [Quick start](#quick-start)
 - [Features](#features)
@@ -33,15 +43,16 @@ CLInic is a **desktop app for managing patients, optimized for use via a Command
 
 ## Quick start
 
-1. Ensure you have Java `17` or above installed on your computer. To confirm, open a terminal and run `java -version`; it should print a line containing `17` (for example: `java version "17.0.2"`).<br>
+1. Ensure you have Java `17` installed on your computer. To confirm, open a terminal and run `java -version`; it should print a line containing `17` (for example: `java version "17.0.2"`).<br>
   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-F12-4/tp/releases).
 
 3. Copy the file to the folder you want to use as the _home folder_ for CLInic.
 
-4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar CLInic.jar` command to run the application.<br>
+4. Open a command terminal, navigate (`cd`) into the folder you put the jar file in, and use the `java -jar CLInic.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+
    ![Ui](images/UI-Current.png)
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -98,21 +109,17 @@ Format: `help`
 
 Adds a patient to CLInic.
 
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:**
-When a new patient is added, the current date is automatically logged as their first visit.
-</div>
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [dr/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-To create a red allergy tag, use `t/allergy` when adding a patient. Any tag containing "allergy" will appear red in the interface.
+To create a red allergy tag, use `t/allergy` when adding a patient. Any tag containing the word "allergy" (case-insensitive) will appear red in the interface.
 
 Tag names may use hyphens to separate words (e.g. `allergy-peanut`).
 (Spaces and Underscores are not allowed).
 </div>
 
 Examples:
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/James William`.
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 dr/James William`.
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Road p/1234567 t/friend med/Paracetamol med/Aspirin`.
 
 ### Listing all patients : `list`
@@ -152,6 +159,10 @@ Examples:
 ### Logging a visit for a patient : `log`
 
 Logs today's date as a visit for the specified patient.
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:**
+When a new patient is added, the current date is automatically logged as their first visit.
+</div>
 
 Format: `log INDEX`
 
@@ -199,7 +210,18 @@ When editing tags/medicines, the existing tags/medicines of the patient will be 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st patient to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing tags.
-*  `edit 2 d/` Removes the doctor assigned to that patient.
+*  `edit 2 dr/` Removes the doctor assigned to that patient.
+
+<br>
+<br>
+<br>
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:**
+The `find, `finddoc` and `findmed` commands search from the list of all patients recorded whenever used,
+e.g performing `find john` returns the list of all patients who have the word `john` in their name. If a `findmed` 
+command or a `finddoc` command follows it, the result displayed is searched from the list of all patients and not from
+the patients whose names contain the word "john"
+</div>
 
 ### Locating patients by name: `find`
 
@@ -230,10 +252,12 @@ Format: `finddoc KEYWORD [MORE_KEYWORDS]`.
 * Only full words will be matched, e.g. `Will` will not match `William`.
 * Patients with doctors matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return all patients with doctor `Hans Gruber`, `Bo Yang`.
+* When `finddoc` is entered after the `find` command, CLInic returns a list of all patients with that doctor, instead of only those patients in the filtered `find` list.
 
 Examples:
-* `find Jake` returns all patients whose doctor is `jake` and `Jake Lee`.
-* `find alex david` returns all patients whose doctor is `Alex Yeoh`, `David Li`<br>
+* `finddoc Jake` returns all patients whose doctor is `jake` and `Jake Lee`.
+* `finddoc alex david` returns all patients whose doctor is `Alex Yeoh`, `David Li`<br>
+* `find John` followed by `finddoc William` returns all patients whose doctor is `William`, not just patients with name `John`.
 
 ### Locating patients by medicines taken: `findmed`
 
@@ -242,10 +266,9 @@ Format: `findmed med/KEYWORD [MORE_KEYWORDS]...` or `findmed none`.
 * The search is case-insensitive. e.g. `paracetamol` will match `Paracetamol`.
 * If `none` is specified after `findmed`, it returns all patients with no medicines assigned to them.
 * If more than one medicine is specified, they should be space-separated, e.g. `findmed med/medA med/medB`.
-* The order of the keywords does not matter, e.g. `med/paracetamol med/ibuprofen` and `med/ibuprofen med/paracetamol` will fetch patients who take both these medicines.
-* Only full words will be matched, e.g. `ibu` will not match `ibuprofen`.
-* Patients matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `paracetamol` will return patients who take paracetamol even if they take other medicines.
+* The order of the keywords does not matter, e.g. `med/paracetamol med/ibuprofen` and `med/ibuprofen med/paracetamol` will fetch patients who take any of these medicines.
+* Partial words will be matched, e.g. `ibu` will match`ibuprofen`.
+* When multiple keywords are searched, an `OR` search takes place and all patients whose medicines match any of the specified keywords will appear.
 
 Examples:
 * `findmed med/paracetamol`
@@ -328,10 +351,10 @@ Furthermore, certain edits can cause CLInic to behave in unexpected ways (e.g., 
 
 Action | Format, Examples
 --------|------------------
-**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [d/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​` <br> e.g., `add n/Betsy Crowe t/allergy-peanut e/betsycrowe@example.com a/Newgate Road p/1234567 med/Paracetamol med/Aspirin`
+**Add** | `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [dr/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​` <br> e.g., `add n/Betsy Crowe t/allergy-peanut e/betsycrowe@example.com a/Newgate Road p/1234567 med/Paracetamol med/Aspirin`
 **Clear** | `clear`
 **Delete** | `delete INDEX`<br> e.g., `delete 3`
-**Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`
+**Edit** | `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dr/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`<br> e.g., `edit 2 n/James Lee e/jameslee@example.com`
 **Find** | `find KEYWORD [MORE_KEYWORDS]`<br> e.g., `find James Jake`
 **Find Doctor** | `finddoc KEYWORD [MORE_KEYWORDS]`<br> e.g., `finddoc Mike Ang`
 **Filter by Medicines** | `findmed med/KEYWORD [MORE_KEYWORDS]...` or `findmed none` <br> e.g., `findmed med/Paracetamol med/Ibuprofen`
