@@ -50,7 +50,7 @@ Search & retrieval: filter by name for rapid identification, even in large panel
 
 3. Copy the file to the folder you want to use as the _home folder_ for CLInic.
 
-4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar CLInic.jar` command to run the application.<br>
+4. Open a command terminal, navigate into the folder you put the jar file in, and use the `java -jar CLInic.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/UI-Current.png)
 
@@ -115,7 +115,7 @@ When a new patient is added, the current date is automatically logged as their f
 </div>
 
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
-To create a red allergy tag, use `t/allergy` when adding a patient. Any tag containing "allergy" will appear red in the interface.
+To create a red allergy tag, use `t/allergy` when adding a patient. Any tag containing the word "allergy" (case-insensitive) will appear red in the interface.
 
 Tag names may use hyphens to separate words (e.g. `allergy-peanut`).
 (Spaces and Underscores are not allowed).
@@ -210,6 +210,13 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st patient to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing tags.
 *  `edit 2 d/` Removes the doctor assigned to that patient.
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:**
+The `find, `finddoc` and `findmed` commands search from the list of all patients recorded whenever used,
+e.g performing `find john` returns the list of all patients who have the word `john` in their name. If a `findmed` 
+command or a `finddoc` command follows it, the result displayed is searched from the list of all patients and not from
+the patients whose names contain the word "john"
+</div>
 
 ### Locating patients by name: `find`
 
