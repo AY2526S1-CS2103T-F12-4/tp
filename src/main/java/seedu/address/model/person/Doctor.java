@@ -10,9 +10,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 public class Doctor {
     public static final String MESSAGE_CONSTRAINTS =
-            "Doctors can take any values";
+            "Doctor names can take any alphanumeric characters, spaces and any " +
+                    "of these special characters: comma, at, hyphen, and slash";
 
-    public static final String VALIDATION_REGEX = ".*\\S.*";
+    public static final String VALIDATION_REGEX = "^$|^(?!\\s+$)[a-zA-Z0-9\\s/@,-]+$";
 
     public final String name;
 

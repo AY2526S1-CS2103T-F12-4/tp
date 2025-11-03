@@ -127,7 +127,7 @@ class JsonAdaptedPerson {
         if (doctor == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Doctor.class.getSimpleName()));
         }
-        final Doctor modelDoctor = new Doctor(doctor);
+        final Doctor modelDoctor = new  Doctor(doctor);
         final Set<Tag> modelTags = new HashSet<>(personTags);
         final Set<Medicine> modelMedicines = new HashSet<>(personMedicines);
 
