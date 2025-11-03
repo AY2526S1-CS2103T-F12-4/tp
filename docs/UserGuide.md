@@ -50,9 +50,10 @@ Search & retrieval: filter by name for rapid identification, even in large panel
 
 3. Copy the file to the folder you want to use as the _home folder_ for CLInic.
 
-4. Open a command terminal, navigate into the folder you put the jar file in, and use the `java -jar CLInic.jar` command to run the application.<br>
+4. Open a command terminal, navigate (`cd`) into the folder you put the jar file in, and use the `java -jar CLInic.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/UI-Current.png)
+
+   ![Ui](images/UI_img.png)
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
@@ -210,6 +211,9 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st patient to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing tags.
 *  `edit 2 dr/` Removes the doctor assigned to that patient.
+
+
+
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:**
 The `find, `finddoc` and `findmed` commands search from the list of all patients recorded whenever used,
