@@ -3,7 +3,7 @@ layout: page
 title: User Guide
 ---
 
-CLInic is a **desktop app for managing patients, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). It is primarily intended for clinic managers working at the front desk who need a fast, keyboard-driven way to manage patient records. If you can type fast, CLInic can get your patient management tasks done faster than traditional GUI apps.
+CLInic is a **desktop app designed for small clinic managers for managing patient data, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). It is primarily intended for clinic managers working at the front desk who need a fast, keyboard-driven way to manage patient records. If you can type fast, CLInic can get your patient management tasks done faster than traditional GUI apps.
 
 What you can manage with CLInic:
 
@@ -252,10 +252,12 @@ Format: `finddoc KEYWORD [MORE_KEYWORDS]`.
 * Only full words will be matched, e.g. `Will` will not match `William`.
 * Patients with doctors matching at least one keyword will be returned (i.e. `OR` search).
   e.g. `Hans Bo` will return all patients with doctor `Hans Gruber`, `Bo Yang`.
+* When `finddoc` is entered after the `find` command, CLInic returns a list of all patients with that doctor, instead of only those patients in the filtered `find` list.
 
 Examples:
-* `find Jake` returns all patients whose doctor is `jake` and `Jake Lee`.
-* `find alex david` returns all patients whose doctor is `Alex Yeoh`, `David Li`<br>
+* `finddoc Jake` returns all patients whose doctor is `jake` and `Jake Lee`.
+* `finddoc alex david` returns all patients whose doctor is `Alex Yeoh`, `David Li`<br>
+* `find John` followed by `finddoc William` returns all patients whose doctor is `William`, not just patients with name `John`.
 
 ### Locating patients by medicines taken: `findmed`
 
