@@ -601,17 +601,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 6. **Scalability**: The system should handle growth from small clinics (50-100 patients) to medium-sized clinics (500-1000 patients) without significant performance degradation.
 
-7. **Accessibility**: The system should be usable by healthcare professionals with varying levels of technical expertise, with clear error messages and help documentation.
+7. **Accessibility**: The system should be usable by healthcare professionals with average to fast typing speeds, with clear error messages and help documentation.
 
 8. **Response Time**: Common operations (add patient, search patient, view details) should complete within 2 seconds for typical usage scenarios.
 
-9. **Data Validation**: The system should validate medical information (allergies, drug interactions) and provide appropriate warnings to prevent medical errors.
+9. **Backup and Recovery**: The system should support data backup and recovery mechanisms to prevent loss of critical patient information.
 
-10. **Backup and Recovery**: The system should support data backup and recovery mechanisms to prevent loss of critical patient information.
+10. **Offline Functionality**: The system should work completely offline to ensure availability in areas with poor internet connectivity.
 
-11. **Offline Functionality**: The system should work completely offline to ensure availability in areas with poor internet connectivity.
-
-12. **Memory Usage**: The system should not consume excessive memory resources, suitable for typical clinic computer systems.
+11. **Memory Usage**: The system should not consume excessive memory resources, suitable for typical clinic computer systems.
 
 ### Glossary
 * **Mainstream OS**: Examples include Windows, Linux, Unix and macOS.
