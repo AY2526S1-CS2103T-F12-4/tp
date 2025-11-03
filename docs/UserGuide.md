@@ -43,15 +43,16 @@ Search & retrieval: filter by name for rapid identification, even in large panel
 
 ## Quick start
 
-1. Ensure you have Java `17` or above installed on your computer. To confirm, open a terminal and run `java -version`; it should print a line containing `17` (for example: `java version "17.0.2"`).<br>
+1. Ensure you have Java `17` installed on your computer. To confirm, open a terminal and run `java -version`; it should print a line containing `17` (for example: `java version "17.0.2"`).<br>
   **Mac users:** Ensure you have the precise JDK version prescribed [here](https://se-education.org/guides/tutorials/javaInstallationMac.html).
 
 2. Download the latest `.jar` file from [here](https://github.com/AY2526S1-CS2103T-F12-4/tp/releases).
 
 3. Copy the file to the folder you want to use as the _home folder_ for CLInic.
 
-4. Open a command terminal, navigate into the folder you put the jar file in, and use the `java -jar CLInic.jar` command to run the application.<br>
+4. Open a command terminal, navigate (`cd`) into the folder you put the jar file in, and use the `java -jar CLInic.jar` command to run the application.<br>
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+
    ![Ui](images/UI-Current.png)
 
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
@@ -210,6 +211,10 @@ Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st patient to be `91234567` and `johndoe@example.com` respectively.
 *  `edit 2 n/Betsy Crower t/` Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing tags.
 *  `edit 2 dr/` Removes the doctor assigned to that patient.
+
+<br>
+<br>
+<br>
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:**
 The `find, `finddoc` and `findmed` commands search from the list of all patients recorded whenever used,
