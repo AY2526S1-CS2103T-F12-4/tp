@@ -5,7 +5,17 @@ title: User Guide
 
 CLInic is a **desktop app for managing patients, optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (GUI). It is primarily intended for clinic managers working at the front desk who need a fast, keyboard-driven way to manage patient records. If you can type fast, CLInic can get your patient management tasks done faster than traditional GUI apps.
 
+What you can manage with CLInic:
 
+* Patients: add new patients, view a full record, edit details, and delete when necessary (`add`, `view`, `edit`, `delete`, `list`).
+
+* Visits: log a new visit and display a patient’s past visit dates for quick verification at the counter (`log`, `display`).
+
+* Medications: see what medicines a patient is taking and find other patients on the same medication (`med`, `findmed`).
+
+* Doctors & assignments: locate patients by their attending doctor to help with scheduling and triage (`finddoc`).
+
+Search & retrieval: filter by name for rapid identification, even in large panels (`find`).
 ## Table of Contents
 - [Quick start](#quick-start)
 - [Features](#features)
@@ -242,10 +252,9 @@ Format: `findmed med/KEYWORD [MORE_KEYWORDS]...` or `findmed none`.
 * The search is case-insensitive. e.g. `paracetamol` will match `Paracetamol`.
 * If `none` is specified after `findmed`, it returns all patients with no medicines assigned to them.
 * If more than one medicine is specified, they should be space-separated, e.g. `findmed med/medA med/medB`.
-* The order of the keywords does not matter, e.g. `med/paracetamol med/ibuprofen` and `med/ibuprofen med/paracetamol` will fetch patients who take both these medicines.
-* Only full words will be matched, e.g. `ibu` will not match `ibuprofen`.
-* Patients matching at least one keyword will be returned (i.e. `OR` search).
-  e.g. `paracetamol` will return patients who take paracetamol even if they take other medicines.
+* The order of the keywords does not matter, e.g. `med/paracetamol med/ibuprofen` and `med/ibuprofen med/paracetamol` will fetch patients who take any of these medicines.
+* Partial words will be matched, e.g. `ibu` will match`ibuprofen`.
+* When multiple keywords are searched, an `OR` search takes place and all patients whose medicines match any of the specified keywords will appear.
 
 Examples:
 * `findmed med/paracetamol`
