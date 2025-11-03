@@ -217,10 +217,10 @@ Examples:
 <br>
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:**
-The `find, `finddoc` and `findmed` commands search from the list of all patients recorded whenever used,
+The `find`, `finddoc` and `findmed` commands search from the list of all patients recorded whenever used,
 e.g performing `find john` returns the list of all patients who have the word `john` in their name. If a `findmed` 
 command or a `finddoc` command follows it, the result displayed is searched from the list of all patients and not from
-the patients whose names contain the word "john"
+the patients whose names contain the word `john`
 </div>
 
 ### Locating patients by name: `find`
@@ -271,9 +271,9 @@ Format: `findmed med/KEYWORD [MORE_KEYWORDS]...` or `findmed none`.
 * When multiple keywords are searched, an `OR` search takes place and all patients whose medicines match any of the specified keywords will appear.
 
 Examples:
-* `findmed med/paracetamol`
-* `findmed med/paracetamol med/ibuprofen`
-* `findmed none`
+* `findmed med/paracetamol` returns all patients who take the medicine `paracetamol`.
+* `findmed med/paracetamol med/ibuprofen` returns all patients who take any or both of the specified medicines.
+* `findmed none` returns all patients who have no medicines assigned to them.
 
 ### Deleting a patient : `delete`
 

@@ -71,7 +71,7 @@ The sections below give more details of each component.
 
 ### UI component
 
-The **API** of this component is specified in [`Ui.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/ui/Ui.java)
+The **API** of this component is specified in [`Ui.java`](https://github.com/AY2526S1-CS2103T-F12-4/tp/blob/master/src/main/java/seedu/address/ui/Ui.java)
 
 ![Structure of the UI Component](images/UiClassDiagram.png)
 
@@ -88,7 +88,7 @@ The `UI` component,
 
 ### Logic component
 
-**API** : [`Logic.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/logic/Logic.java)
+**API** : [`Logic.java`](https://github.com/AY2526S1-CS2103T-F12-4/tp/blob/master/src/main/java/seedu/address/logic/Logic.java)
 
 Here's a (partial) class diagram of the `Logic` component:
 
@@ -118,7 +118,7 @@ How the parsing works:
 * All `XYZCommandParser` classes (e.g., `AddCommandParser`, `DeleteCommandParser`, ...) inherit from the `Parser` interface so that they can be treated similarly where possible e.g, during testing.
 
 ### Model component
-**API** : [`Model.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/model/Model.java)
+**API** : [`Model.java`](https://github.com/AY2526S1-CS2103T-F12-4/tp/blob/master/src/main/java/seedu/address/model/Model.java)
 
 <img src="images/ModelClassDiagram.png" width="450" />
 
@@ -139,7 +139,7 @@ The `Model` component,
 
 ### Storage component
 
-**API** : [`Storage.java`](https://github.com/se-edu/addressbook-level3/tree/master/src/main/java/seedu/address/storage/Storage.java)
+**API** : [`Storage.java`](https://github.com/AY2526S1-CS2103T-F12-4/tp/blob/master/src/main/java/seedu/address/storage/Storage.java)
 
 <img src="images/StorageClassDiagram.png" width="550" />
 
@@ -158,88 +158,46 @@ Classes used by multiple components are in the `seedu.address.commons` package.
 
 This section describes some noteworthy details on how certain features are implemented.
 
-### \[Proposed\] Undo/redo feature
+### findmed feature
 
-#### Proposed Implementation
+The findmed feature is implemented by using the following classes:
 
-The proposed undo/redo mechanism is facilitated by `VersionedAddressBook`. It extends `AddressBook` with an undo/redo history, stored internally as an `addressBookStateList` and `currentStatePointer`. Additionally, it implements the following operations:
+#### Parser Class
+* `FindMedicineCommandParser`
+    * This class parses the parameters entered by the user and generates a list of keywords
+    * Then it creates a new `FindMedicineCommand` object.
+#### Model Classes
+* `Medicine`
+    * This class abstracts a medicine by storing its name, it validation regex and message constraints.
+* `MedicineContainsKeywordPredicate`
+    * This class is used as the predicate for `FilteredList` which is used display
+      the filtered list to the user.
+    * This class contains a test() method which determines which all patients we
+      match from the list of all patients.
 
-* `VersionedAddressBook#commit()` — Saves the current address book state in its history.
-* `VersionedAddressBook#undo()` — Restores the previous address book state from its history.
-* `VersionedAddressBook#redo()` — Restores a previously undone address book state from its history.
+#### Command Class
+* `FindMedicineCommand`
+    * This class contains the execute method that facilitates the update of the list of patients
+      that needs to be displayed and outputs a `CommandResult` object.
 
-These operations are exposed in the `Model` interface as `Model#commitAddressBook()`, `Model#undoAddressBook()` and `Model#redoAddressBook()` respectively.
+#### Sequence Diagram
+The following sequence diagram explains how a `findmed` operation goes through the Logic and Model components.
+![FindMedicineSequenceDiagram](images/FindMedicineSequenceDiagram.png)
 
-Given below is an example usage scenario and how the undo/redo mechanism behaves at each step.
+Design Considerations:
 
-Step 1. The user launches the application for the first time. The `VersionedAddressBook` will be initialized with the initial address book state, and the `currentStatePointer` pointing to that single address book state.
+* Alternative 1 (current Choice): `findmed` and other find-related commands filter from the list of all patients
+  everytime someone performs the operation.
+    * Pros: Easier to implement.
+    * Cons: Cannot filter from an already filtered list of patients, making it
+      more difficult to narrow down patients based on multiple filters. (e.g. Cannot filter by name "john" first,
+      then further filter based on a medicine on the patients containing the name "john").
 
-![UndoRedoState0](images/UndoRedoState0.png)
-
-Step 2. The user executes `delete 5` command to delete the 5th person in the address book. The `delete` command calls `Model#commitAddressBook()`, causing the modified state of the address book after the `delete 5` command executes to be saved in the `addressBookStateList`, and the `currentStatePointer` is shifted to the newly inserted address book state.
-
-![UndoRedoState1](images/UndoRedoState1.png)
-
-Step 3. The user executes `add n/David …​` to add a new person. The `add` command also calls `Model#commitAddressBook()`, causing another modified address book state to be saved into the `addressBookStateList`.
-
-![UndoRedoState2](images/UndoRedoState2.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If a command fails its execution, it will not call `Model#commitAddressBook()`, so the address book state will not be saved into the `addressBookStateList`.
-
-</div>
-
-Step 4. The user now decides that adding the person was a mistake, and decides to undo that action by executing the `undo` command. The `undo` command will call `Model#undoAddressBook()`, which will shift the `currentStatePointer` once to the left, pointing it to the previous address book state, and restores the address book to that state.
-
-![UndoRedoState3](images/UndoRedoState3.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index 0, pointing to the initial AddressBook state, then there are no previous AddressBook states to restore. The `undo` command uses `Model#canUndoAddressBook()` to check if this is the case. If so, it will return an error to the user rather
-than attempting to perform the undo.
-
-</div>
-
-The following sequence diagram shows how an undo operation goes through the `Logic` component:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram-Logic.png)
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** The lifeline for `UndoCommand` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
-
-</div>
-
-Similarly, how an undo operation goes through the `Model` component is shown below:
-
-![UndoSequenceDiagram](images/UndoSequenceDiagram-Model.png)
-
-The `redo` command does the opposite — it calls `Model#redoAddressBook()`, which shifts the `currentStatePointer` once to the right, pointing to the previously undone state, and restores the address book to that state.
-
-<div markdown="span" class="alert alert-info">:information_source: **Note:** If the `currentStatePointer` is at index `addressBookStateList.size() - 1`, pointing to the latest address book state, then there are no undone AddressBook states to restore. The `redo` command uses `Model#canRedoAddressBook()` to check if this is the case. If so, it will return an error to the user rather than attempting to perform the redo.
-
-</div>
-
-Step 5. The user then decides to execute the command `list`. Commands that do not modify the address book, such as `list`, will usually not call `Model#commitAddressBook()`, `Model#undoAddressBook()` or `Model#redoAddressBook()`. Thus, the `addressBookStateList` remains unchanged.
-
-![UndoRedoState4](images/UndoRedoState4.png)
-
-Step 6. The user executes `clear`, which calls `Model#commitAddressBook()`. Since the `currentStatePointer` is not pointing at the end of the `addressBookStateList`, all address book states after the `currentStatePointer` will be purged. Reason: It no longer makes sense to redo the `add n/David …​` command. This is the behavior that most modern desktop applications follow.
-
-![UndoRedoState5](images/UndoRedoState5.png)
-
-The following activity diagram summarizes what happens when a user executes a new command:
-
-<img src="images/CommitActivityDiagram.png" width="250" />
-
-#### Design considerations:
-
-**Aspect: How undo & redo executes:**
-
-* **Alternative 1 (current choice):** Saves the entire address book.
-  * Pros: Easy to implement.
-  * Cons: May have performance issues in terms of memory usage.
-
-* **Alternative 2:** Individual command knows how to undo/redo by
-  itself.
-  * Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-  * Cons: We must ensure that the implementation of each individual command are correct.
-
+* Alternative 2 : `findmed` and other find-related commands filter based on the current state of the list displayed to
+  the user.
+    * Pros: Can Narrow down patients based on several filters applied one after the other.
+    * Cons: Harder to implement, need to perform `list` operation to list all patients, before you want to filter from
+      all patients stored.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -586,7 +544,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1. **Platform Independence**: Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
+1. **Platform Independence**: Should work on any _mainstream OS_ as long as it has Java `17` installed.
 
 2. **Performance**: Should be able to hold up to 1000 patients without a noticeable sluggishness in performance for typical usage.
 
@@ -598,17 +556,15 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 6. **Scalability**: The system should handle growth from small clinics (50-100 patients) to medium-sized clinics (500-1000 patients) without significant performance degradation.
 
-7. **Accessibility**: The system should be usable by healthcare professionals with varying levels of technical expertise, with clear error messages and help documentation.
+7. **Accessibility**: The system should be usable by healthcare professionals with average to fast typing speeds, with clear error messages and help documentation.
 
 8. **Response Time**: Common operations (add patient, search patient, view details) should complete within 2 seconds for typical usage scenarios.
 
-9. **Data Validation**: The system should validate medical information (allergies, drug interactions) and provide appropriate warnings to prevent medical errors.
+9. **Backup and Recovery**: The system should support data backup and recovery mechanisms to prevent loss of critical patient information.
 
-10. **Backup and Recovery**: The system should support data backup and recovery mechanisms to prevent loss of critical patient information.
+10. **Offline Functionality**: The system should work completely offline (except the help link to our user guide) to ensure availability in areas with poor internet connectivity.
 
-11. **Offline Functionality**: The system should work completely offline to ensure availability in areas with poor internet connectivity.
-
-12. **Memory Usage**: The system should not consume excessive memory resources, suitable for typical clinic computer systems.
+11. **Memory Usage**: The system should not consume excessive memory resources (not more than 200 MB), suitable for typical clinic computer systems.
 
 ### Glossary
 * **Mainstream OS**: Examples include Windows, Linux, Unix and macOS.
@@ -663,7 +619,6 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * **Command Alias**: A shortened or alternate name for an existing command.
 
-* **Invalid Input**: Refers to input or request errors such as wrong format, index out of range, missing required fields, or other validation failures.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
@@ -705,3 +660,21 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
+
+## **Appendix: Planned Enhancements**
+
+### Detailed offline help window
+
+1. When user performs a `help` operation, a window containing all command formats with example should pop up in 
+addition to the user guide link.
+
+### Unique identification numbers for patients
+
+1. Each patient added will be assigned a unique id.
+2. Now patients with same names can be added safely and can be distinguished by their unique id.
+
+### Confirmation for delete and clear commands
+
+1. Whenever user performs a `delete` or `clear` operation, a warning message is displayed as result.
+2. Subsequently, if the user wants to process with the action, he will enter `yes`, or `no` if he does not want to 
+proceed with the delete or clear command.
