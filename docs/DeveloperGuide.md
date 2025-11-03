@@ -666,7 +666,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * **Command Alias**: A shortened or alternate name for an existing command.
 
-* **Invalid (use case context)**: Refers to input or request errors such as wrong format, index out of range, missing required fields, or other validation failures.
+* **Invalid Input**: Refers to input or request errors such as wrong format, index out of range, missing required fields, or other validation failures.
 --------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Instructions for manual testing**
