@@ -589,7 +589,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 ### Non-Functional Requirements
 
-1. **Platform Independence**: Should work on any _mainstream OS_ as long as it has Java `17` or above installed.
+1. **Platform Independence**: Should work on any _mainstream OS_ as long as it has Java `17` installed.
 
 2. **Performance**: Should be able to hold up to 1000 patients without a noticeable sluggishness in performance for typical usage.
 
@@ -607,9 +607,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 9. **Backup and Recovery**: The system should support data backup and recovery mechanisms to prevent loss of critical patient information.
 
-10. **Offline Functionality**: The system should work completely offline to ensure availability in areas with poor internet connectivity.
+10. **Offline Functionality**: The system should work completely offline (except the help link to our user guide) to ensure availability in areas with poor internet connectivity.
 
-11. **Memory Usage**: The system should not consume excessive memory resources, suitable for typical clinic computer systems.
+11. **Memory Usage**: The system should not consume excessive memory resources (not more than 200 MB), suitable for typical clinic computer systems.
 
 ### Glossary
 * **Mainstream OS**: Examples include Windows, Linux, Unix and macOS.
@@ -717,3 +717,16 @@ testers are expected to do more *exploratory* testing.
    1. _{explain how to simulate a missing/corrupted file, and the expected behavior}_
 
 1. _{ more test cases …​ }_
+
+## **Appendix: Planned Enhancements**
+
+### Detailed offline help window
+
+1. When user performs a `help` operation, a window containing all command formats with example should pop up in 
+addition to the user guide link.
+
+### Unique identification numbers for patients
+
+1. Each person added will be assigned a unique id.
+2. Now patients with same names can be added safely and can be distinguished by their unique id.
+
