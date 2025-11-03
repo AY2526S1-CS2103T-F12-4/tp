@@ -271,9 +271,9 @@ Format: `findmed med/KEYWORD [MORE_KEYWORDS]...` or `findmed none`.
 * When multiple keywords are searched, an `OR` search takes place and all patients whose medicines match any of the specified keywords will appear.
 
 Examples:
-* `findmed med/paracetamol`
-* `findmed med/paracetamol med/ibuprofen`
-* `findmed none`
+* `findmed med/paracetamol` returns all patients who take the medicine `paracetamol`.
+* `findmed med/paracetamol med/ibuprofen` returns all patients who take any or both of the specified medicines.
+* `findmed none` returns all patients who have no medicines assigned to them.
 
 ### Deleting a patient : `delete`
 
