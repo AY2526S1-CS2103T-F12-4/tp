@@ -10,10 +10,14 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 public class Doctor {
     public static final String MESSAGE_CONSTRAINTS =
-            "Doctor names can take any alphanumeric characters, spaces and any "
-                    + "of these special characters: comma, at, hyphen, and slash";
+            "Doctor names can be empty or contain alphanumeric characters, spaces, commas, "
+                    + "the at symbol (@), hyphens (-), and periods (.). The only allowed slash "
+                    + "tokens are 'd/o' and 's/o' as standalone words.";
 
-    public static final String VALIDATION_REGEX = "^$|^(?!\\s+$)[a-zA-Z0-9\\s/@,-]+$";
+    // Empty string allowed; otherwise sequence of valid tokens separated by spaces. Each token is either:
+    // - [A-Za-z0-9@,.-]+ OR exactly 'd/o' OR exactly 's/o'
+    public static final String VALIDATION_REGEX =
+            "^$|^(?!\\s*$)(?:[A-Za-z0-9@,.-]+|d/o|s/o)(?:\\s+(?:[A-Za-z0-9@,.-]+|d/o|s/o))*$";
 
     public final String name;
 
@@ -44,7 +48,7 @@ public class Doctor {
      * Returns true if a given string is a valid name for a doctor.
      */
     public static boolean isValidDoctor(String test) {
-        return test.matches(VALIDATION_REGEX);
+        return test != null && test.matches(VALIDATION_REGEX);
     }
 
     @Override
