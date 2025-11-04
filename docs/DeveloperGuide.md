@@ -164,16 +164,19 @@ The findmed feature is implemented by using the following classes:
 
 #### Parser Class
 * `FindMedicineCommandParser`
-    * This class parses the parameters entered by the user and generates a list of keywords
-    * Then it creates a new `FindMedicineCommand` object.
+    * Parses multiple `med/` prefixes to extract medicine keywords (e.g., `findmed med/Paracetamol med/Ibuprofen`).
+    * Handles the special `none` keyword to find patients with no medicines.
+    * Validates that at least one medicine keyword is provided (unless `none` is specified).
+    * Creates a `MedicineContainsKeywordsPredicate` with the extracted keywords and wraps it in a `FindMedicineCommand`.
 #### Model Classes
 * `Medicine`
-    * This class abstracts a medicine by storing its name, it validation regex and message constraints.
-* `MedicineContainsKeywordPredicate`
-    * This class is used as the predicate for `FilteredList` which is used display
-      the filtered list to the user.
-    * This class contains a test() method which determines which all patients we
-      match from the list of all patients.
+    * This class abstracts a medicine by storing its name, validation regex, and message constraints.
+    * Medicine names must not contain forward slashes (`/`) due to command parsing requirements.
+* `MedicineContainsKeywordsPredicate`
+    * This class implements `Predicate<Person>` and is used to filter the person list.
+    * The `test()` method checks if any of the patient's medicines match any of the specified keywords (case-insensitive).
+    * Uses OR logic: a patient matches if any of their medicines contain any of the keywords.
+    * Special handling for `none` keyword: when keywords list is empty, matches patients with no medicines.
 
 #### Command Class
 * `FindMedicineCommand`
@@ -183,6 +186,15 @@ The findmed feature is implemented by using the following classes:
 #### Sequence Diagram
 The following sequence diagram explains how a `findmed` operation goes through the Logic and Model components.
 ![FindMedicineSequenceDiagram](images/FindMedicineSequenceDiagram.png)
+
+**How `findmed` works:**
+1. User enters command like `findmed med/Paracetamol med/Ibuprofen`.
+2. `AddressBookParser` identifies the command and creates `FindMedicineCommandParser`.
+3. `FindMedicineCommandParser` extracts all `med/` prefixes and creates `MedicineContainsKeywordsPredicate`.
+4. `FindMedicineCommand` is created with the predicate.
+5. `FindMedicineCommand.execute()` calls `model.updateFilteredPersonList(predicate)`.
+6. The predicate filters patients whose medicines contain any of the keywords (case-insensitive OR logic).
+7. Filtered list is displayed to the user.
 
 Design Considerations:
 
@@ -198,6 +210,84 @@ Design Considerations:
     * Pros: Can Narrow down patients based on several filters applied one after the other.
     * Cons: Harder to implement, need to perform `list` operation to list all patients, before you want to filter from
       all patients stored.
+
+### Visit logging feature
+
+The visit logging feature allows clinic managers to track when patients visit the clinic. This feature is implemented using the following classes:
+
+#### Model Classes
+* `Person`
+    * Contains a `DayList` object that stores a list of visit dates (`LocalDate` objects).
+    * Provides `getDayList()` method to retrieve the DayList.
+    * The Person class is immutable; visit dates are added by creating a new Person instance.
+* `DayList`
+    * Stores a sorted list of visit dates (`List<LocalDate>`) for a patient.
+    * **Immutable design**: Operations like `addVisitDate()` return a new `DayList` instance rather than modifying the existing one.
+    * Ensures no duplicate visits on the same day using `hasVisitDate()` check.
+    * Automatically sorts visit dates chronologically.
+    * Provides methods:
+      * `addVisitDate(LocalDate date)`: Returns new DayList with date added (if not duplicate).
+      * `hasVisitDate(LocalDate date)`: Checks if a date exists in the list.
+      * `getVisitDates()`: Returns immutable view of all visit dates.
+      * `getVisitCount()`: Returns number of visits.
+      * `getMostRecentVisit()`: Returns most recent visit date (or null).
+      * `getEarliestVisit()`: Returns earliest visit date (or null).
+
+#### Command Classes
+* `LogCommand`
+    * Adds today's date (`LocalDate.now()`) to the patient's visit list.
+    * Retrieves patient from filtered list using index.
+    * Validates that the visit has not already been logged for today using `dayList.hasVisitDate(today)`.
+    * Throws `CommandException` with message `MESSAGE_ALREADY_LOGGED_TODAY` if duplicate.
+    * Creates a new `Person` instance with updated `DayList` (immutability pattern).
+    * Uses `model.setPerson(target, updated)` to update the model.
+    * Returns success message formatted with patient details.
+
+* `DisplayCommand`
+    * Displays all recorded visit dates for a specified patient.
+    * Formats dates as "MMM dd, yyyy" using `DateTimeFormatter`.
+    * Each date is prefixed with a bullet point ("• ").
+    * Dates are joined with newlines for display.
+    * Shows `MESSAGE_NO_VISITS` if `getVisitCount() == 0`.
+
+#### Sequence Diagram
+The following sequence diagram explains how `log` and `display` operations go through the Logic and Model components.
+
+![LogDisplaySequenceDiagram](images/LogDisplaySequenceDiagram.png)
+
+The diagram shows:
+1. `AddressBookParser` creating `LogCommandParser` or `DisplayCommandParser`
+2. The parser parsing the index and creating `LogCommand` or `DisplayCommand`
+3. `LogCommand.execute()` calling `model.getFilteredPersonList()`
+4. `LogCommand` checking `person.getDayList().hasVisitDate(today)`
+5. `LogCommand` creating new `Person` with `dayList.addVisitDate(today)`
+6. `LogCommand` calling `model.setPerson(target, updated)`
+7. `DisplayCommand` retrieving visit dates and formatting them for display
+
+**How `log` works:**
+1. User enters `log INDEX`.
+2. `AddressBookParser` creates `LogCommandParser` which parses the index.
+3. `LogCommand` is created with the target index.
+4. `LogCommand.execute()` retrieves the patient from the filtered list.
+5. Checks if today's date already exists using `dayList.hasVisitDate(LocalDate.now())`.
+6. If duplicate, throws `CommandException` with appropriate message.
+7. Otherwise, creates a new `Person` with updated `DayList` using `dayList.addVisitDate(today)`.
+8. Updates the model using `model.setPerson(personToLog, updatedPerson)`.
+9. Returns success message.
+
+Design Considerations:
+
+* **Alternative 1 (current Choice)**: Visit logging uses `LocalDate.now()` to automatically log today's date.
+    * Pros: Simple and prevents user errors in date entry.
+    * Cons: Cannot log visits for past dates, which may be needed for historical data entry.
+
+* **Alternative 2**: Allow users to specify a date for visit logging.
+    * Pros: More flexible, allows logging historical visits.
+    * Cons: More complex validation, potential for user errors in date entry.
+
+* **Automatic Visit Logging on Patient Addition**: When a new patient is added via `AddCommand`, the `AddCommandParser` automatically creates a `DayList` with today's date: `new DayList().addVisitDate(LocalDate.now())`.
+    * Pros: Ensures every patient has at least one visit record, simplifying visit tracking logic.
+    * Cons: May not accurately reflect the actual first visit date if the patient was added after their first visit. Users cannot specify a different first visit date during patient creation.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -241,7 +331,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 | `* * *`  | clinic manager                             | find a patient by name         | locate patient details without having to go through the entire list    |
 | `* * *`  | clinic manager                             | view patient addresses         | deliver medicines to patients                                          |
 | `* * *`  | clinic manager                             | view patient contact details   | contact patients when needed                                           |
-| `* * *`  | clinic manager                             | view patient visit schedules   | keep track of which patients visit on certain days                     |
+| `* * *`  | clinic manager                             | log patient visits             | record when a patient visits the clinic for tracking purposes          |
+| `* * *`  | clinic manager                             | view patient visit history     | see all visit dates for a specific patient to track their visit frequency |
 | `* * *`  | clinic manager                             | view medicine distribution     | track which patients are taking which medicines                        |
 | `* * *`  | clinic manager                             | edit patient records           | update information when changes are required                           |
 | `* * *`  | clinic manager                             | record patient allergies       | avoid prescribing medicines that may cause adverse reactions           |
@@ -384,18 +475,16 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 **Extensions**
 
-**Extensions**
-
 * 2a. The search keywords are empty.
 
   * 2a1. CLInic shows an error message.
-
+  
     Use case resumes at step 2.
 
 * 3a. No patients match the search keywords.
 
   * 3a1. CLInic indicates that no patients match the search criteria.
-
+  
     Use case ends.
 
 **Use case: UC06 - Find patients by medicine**
@@ -413,13 +502,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2a. The search keywords are empty.
 
   * 2a1. CLInic shows an error message.
-
+  
     Use case resumes at step 2.
 
 * 3a. No patients match the search keywords.
 
   * 3a1. CLInic indicates that no patients match the search criteria.
-
+  
     Use case ends.
 
 **Use case: UC07 - Delete a patient**
@@ -473,7 +562,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 2a. There are no patients in the system.
 
   * 2a1. CLInic displays an empty list.
-
+  
     Use case ends.
 
 **Use case: UC10 - Log a visit**
@@ -484,7 +573,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 2. Clinic manager enters the patient index.
 3. CLInic logs today's date for the patient and displays confirmation.
 
-   Use case ends.
+  Use case ends.
 
 **Extensions**
 
@@ -540,7 +629,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 1. Clinic manager chooses to view help.
 2. CLInic displays the help URL.
 
-   Use case ends.
+  Use case ends.
 
 ### Non-Functional Requirements
 
@@ -660,21 +749,186 @@ testers are expected to do more *exploratory* testing.
    1. Other incorrect delete commands to try: `delete`, `delete x`, `...` (where x is larger than the list size)<br>
       Expected: Similar to previous.
 
+### Adding a patient
+
+1. Adding a patient with all fields
+
+   1. Prerequisites: None.
+
+   1. Test case: `add n/John Doe p/98765432 e/john@example.com a/123 Main Street dr/Dr. Smith t/diabetes med/Paracetamol`<br>
+      Expected: Patient added with all fields. Details shown in the status message. Patient appears in the list.
+
+   1. Test case: `add n/John Doe p/98765432 e/john@example.com a/123 Main Street`<br>
+      Expected: Patient added with required fields only. Optional fields (doctor, tags, medicines) are omitted.
+
+1. Adding a patient with invalid fields
+
+   1. Test case: `add n/ p/98765432 e/john@example.com a/123 Main Street`<br>
+      Expected: Error message shown. Patient is not added.
+
+   1. Test case: `add n/John Doe p/12 e/john@example.com a/123 Main Street`<br>
+      Expected: Error message about phone number being too short. Patient is not added.
+
+### Finding patients
+
+1. Finding patients by name
+
+   1. Prerequisites: At least one patient in the list.
+
+   1. Test case: `find John`<br>
+      Expected: All patients with "John" in their name are displayed.
+
+   1. Test case: `find John Doe`<br>
+      Expected: Patients matching both "John" and "Doe" are displayed.
+
+1. Finding patients by medicine
+
+   1. Prerequisites: At least one patient with medicine recorded.
+
+   1. Test case: `findmed med/Paracetamol`<br>
+      Expected: All patients taking Paracetamol are displayed.
+
+   1. Test case: `findmed none`<br>
+      Expected: All patients with no medicines recorded are displayed.
+
+### Logging visits
+
+1. Logging a visit for a patient
+
+   1. Prerequisites: At least one patient in the list.
+
+   1. Test case: `log 1`<br>
+      Expected: Today's date is logged for the first patient. Success message shown.
+
+   1. Test case: `log 1` (repeated immediately)<br>
+      Expected: Error message indicating visit has already been logged for today.
+
+### Viewing patient information
+
+1. Viewing patient details
+
+   1. Prerequisites: At least one patient in the list.
+
+   1. Test case: `view 1`<br>
+      Expected: Full details of the first patient are displayed, including name, phone, email, address, doctor, tags, and medicines.
+
+1. Viewing patient medicines
+
+   1. Prerequisites: At least one patient in the list.
+
+   1. Test case: `med 1`<br>
+      Expected: All medicines for the first patient are displayed.
+
+   1. Test case: `med 1` (for patient with no medicines)<br>
+      Expected: Message indicating no medicines recorded.
+
+--------------------------------------------------------------------------------------------------------------------
+
+## **Appendix: Effort**
+
+This section describes the difficulty level, challenges faced, effort required, and achievements of the CLInic project.
+
+### Project Overview
+
+CLInic is a desktop application for clinic management, built on top of the AddressBook-Level3 (AB3) framework. While AB3 dealt with a single entity type (Person), CLInic extends this to handle healthcare-specific features including patient records, medicine tracking, visit logging, and doctor assignments.
+
+### Difficulty Level
+
+**Moderate to High**: The project required significant extension of the AB3 framework, particularly in:
+
+* **Multiple Entity Relationships**: Implementing medicine tracking, visit logging, and doctor assignments required careful design of relationships between entities.
+* **Domain-Specific Validation**: Healthcare data requires stricter validation rules (e.g., medicine names, patient records, visit dates).
+* **Enhanced Search Capabilities**: Implementing multiple search filters (by name, doctor, medicine) required predicate design and filtering logic.
+* **UI Enhancements**: Adding command hints, conditional field display, and color-coded tags required UI component modifications.
+
+### Challenges Faced
+
+1. **Medicine Parsing**: The initial implementation had challenges with parsing multiple medicines from a single command (e.g., `add n/John med/Paracetamol med/Ibuprofen`), requiring careful handling of the `med/` prefix parsing using `ArgumentMultimap.getAllValues(PREFIX_MEDICINE)`. The parser needed to handle multiple occurrences of the same prefix while maintaining proper validation.
+
+2. **Visit Date Management**: Implementing automatic visit logging on patient addition (in `AddCommandParser`) and preventing duplicate visits on the same day required:
+   * Immutable `DayList` design with `addVisitDate()` returning new instances
+   * Duplicate detection using `hasVisitDate(LocalDate)` checks
+   * Proper integration with `Person` immutability pattern
+   * Date formatting for display using `DateTimeFormatter`
+
+3. **Command Hint System**: Creating a dynamic command hint system that provides context-aware suggestions required:
+   * Real-time parsing of partial commands
+   * Matching against command prefixes (case-insensitive)
+   * UI integration with `CommandBox` and `CommandHint` components
+   * Handling multiple matching commands (e.g., `find`, `finddoc`, `findmed`)
+
+4. **Data Validation**: Ensuring all field constraints are properly validated:
+   * Name: Allows alphanumeric, spaces, commas, at symbols, hyphens, and `s/o`/`d/o` patterns only
+   * Phone: Minimum 3 digits, maximum 20 digits
+   * Email: Complex regex validation for local-part@domain format
+   * Medicine: No forward slashes allowed (parsing constraint)
+   * Doctor: Same constraints as Name but optional
+   * Tags: Alphanumeric and hyphens only
+   * All fields have maximum length constraints defined in `CharacterLimit` class
+
+5. **Case-Insensitive Duplicate Detection**: Implementing case-insensitive name checking for duplicate detection in `Person.isSamePerson()` using `equalsIgnoreCase()`, ensuring "John Doe" and "john doe" are treated as the same person.
+
+### Effort Required
+
+* **Team Size**: 5 members
+* **Development Time**: Approximately 10 weeks (iterations v1.0 through v1.5)
+* **Code Contribution**: Significant new code added across Logic, Model, UI, and Storage components
+
+### Achievements
+
+1. **Feature Completeness**: Successfully implemented all core features including patient management, medicine tracking, visit logging, and search capabilities.
+
+2. **Code Quality**: Maintained high code quality standards with comprehensive test coverage, proper error handling, and clear documentation.
+
+3. **User Experience**: Enhanced UI with command hints, color-coded tags, and conditional field display for better usability.
+
+4. **Data Integrity**: Implemented robust validation and duplicate detection to ensure data consistency.
+
+5. **Documentation**: Comprehensive User Guide and Developer Guide with clear instructions and examples.
+
+### Comparison with AB3
+
+While AB3 provided an excellent foundation, CLInic required substantial additional work:
+
+* **AB3**: Single entity type (Person) with basic fields and simple search
+* **CLInic**: Extended to include medicines (multiple per patient), visit tracking, doctor assignments, and multiple search filters
+
+The complexity increase was primarily in:
+- **Model relationships**: 
+  * `Person` → `Set<Medicine>` (many-to-many relationship)
+  * `Person` → `DayList` (one-to-one relationship with sorted list of `LocalDate`)
+  * `Person` → `Doctor` (optional one-to-one relationship)
+- **Search predicates**: 
+  * `MedicineContainsKeywordsPredicate` (OR logic, case-insensitive, handles `none` keyword)
+  * `DoctorNameContainsKeywordsPredicate` (similar pattern for doctor search, uses `StringUtil.containsWordIgnoreCase`)
+  * `NameContainsKeywordsPredicate` (for name search, uses `StringUtil.containsWordIgnoreCase`)
+- **Command parsing**: 
+  * Handling multiple `med/` prefixes in `FindMedicineCommandParser`
+  * Automatic visit date logging in `AddCommandParser` (`new DayList().addVisitDate(LocalDate.now())`)
+  * Index-based patient selection with validation
+- **UI enhancements**: 
+  * Dynamic command hints with real-time parsing
+  * Conditional field display (empty doctor field hidden)
+  * Color-coded tags (allergy tags in red, general tags in blue, medicines in green)
+
+### Reuse and Adaptation
+
+* **AB3 Framework**: Reused architecture, component structure, and basic command pattern (~70% of base structure)
+* **New Components**: Medicine, Visit tracking, enhanced search predicates, command hints (~30% new code)
+* **Adaptation Work**: Significant customization of existing components to fit healthcare domain requirements
+
+--------------------------------------------------------------------------------------------------------------------
 
 ## **Appendix: Planned Enhancements**
 
-### Detailed offline help window
+Team size: 5
 
-1. When user performs a `help` operation, a window containing all command formats with example should pop up in 
-addition to the user guide link.
+1. **Support medicine names with slashes**: The current implementation does not allow medicine names that contain forward slashes (`/`), which is a limitation when recording medicines with dosage information (e.g., `Paracetamol/500mg`, `Co-codamol/30mg`). We plan to update the `Medicine` validation regex to allow forward slashes while maintaining proper parsing. This will involve modifying the `Medicine` class validation regex and updating the command parser to handle slashes correctly. Example: Users will be able to add medicines like `add n/John Doe med/Paracetamol/500mg` without errors.
 
-### Unique identification numbers for patients
+2. **Improve UI display for long content**: The current UI may appear cut off on some displays, especially when result display, command box, or command hints contain long content. We plan to add automatic scrolling and proper text wrapping to ensure all content is visible and accessible. This will involve updating the `ResultDisplay`, `CommandBox`, and `CommandHint` components to handle overflow gracefully with scrollbars that appear when needed. The scrollbars will be visible by default when content exceeds the display area.
 
-1. Each patient added will be assigned a unique id.
-2. Now patients with same names can be added safely and can be distinguished by their unique id.
+3. **Detailed offline help window**: When a user performs a `help` operation, currently only a URL to the user guide is displayed. We plan to add a pop-up window containing all command formats with examples, making it easier for users to access help without leaving the application. This will involve creating a new `HelpWindow` component that displays formatted command documentation.
 
-### Confirmation for delete and clear commands
+4. **Unique identification numbers for patients**: Currently, patients are identified by name, which prevents adding patients with the same name (even if they are different people). We plan to assign each patient a unique identification number upon creation, allowing patients with the same name to coexist in the system. Patients will be distinguished by their unique ID, while names can still be used for searching and display. Example: `add n/John Doe` will create a patient with ID `P001`, and another `add n/John Doe` will create a patient with ID `P002`.
 
-1. Whenever user performs a `delete` or `clear` operation, a warning message is displayed as result.
-2. Subsequently, if the user wants to process with the action, he will enter `yes`, or `no` if he does not want to 
-proceed with the delete or clear command.
+5. **Confirmation for delete and clear commands**: Currently, `delete` and `clear` commands execute immediately without confirmation, which can lead to accidental data loss. We plan to add a two-step confirmation process: first, display a warning message showing what will be deleted, then require the user to enter `yes` to proceed or `no` to cancel. Example: `delete 1` will show "Are you sure you want to delete patient at index 1? Type 'yes' to confirm or 'no' to cancel." Then the user must type `yes` or `no` to proceed.

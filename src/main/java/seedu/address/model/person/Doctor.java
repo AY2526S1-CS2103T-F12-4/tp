@@ -9,6 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 
 public class Doctor {
+
     public static final String MESSAGE_CONSTRAINTS =
             "Doctor names can be empty or contain alphanumeric characters, spaces, commas, "
                     + "the at symbol (@), hyphens (-), and periods (.). The only allowed slash "

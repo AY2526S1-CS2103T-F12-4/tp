@@ -10,11 +10,11 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Medicine {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Medicines can take any values\n"
+            "Medicines can take any values except forward slashes (/)\n"
             + "should not be blank when adding a patient\n"
             + "can be blank when editing a patient\n";
 
-    public static final String VALIDATION_REGEX = ".*\\S.*";
+    public static final String VALIDATION_REGEX = "^(?!.*/).*\\S.*$";
 
     public final String medicineName;
 
