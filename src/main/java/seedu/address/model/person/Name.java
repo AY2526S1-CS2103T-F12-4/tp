@@ -15,7 +15,7 @@ public class Name {
         + "\"s/o\" and \"d/o\". No other slashes are permitted.";
 
 
-    public static final String VALIDATION_REGEX = "^(?:[A-Za-z0-9 @,\\-]|s/o|d/o)+$";
+    public static final String VALIDATION_REGEX = "^(?!\\s*$)(?:[A-Za-z0-9 @,\\-]|s/o|d/o)+$";
 
     public final String fullName;
 
