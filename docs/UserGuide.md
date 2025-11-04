@@ -436,11 +436,13 @@ Furthermore, certain edits can cause CLInic to behave in unexpected ways (e.g., 
 
 1. **Multiple monitor setups**: CLInic may exhibit unpredictable behavior when used with multiple monitors, especially when monitors are disconnected or the display configuration changes. The window may appear off-screen or in an unexpected location. If this occurs, you can delete the `preferences.json` file in the CLInic installation folder to reset window settings.
 
-2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+2. **Medicine names with slashes are not supported**: CLInic does not support medicine names that contain forward slashes (`/`), even though such medicine names exist in reality (e.g., `Paracetamol/500mg`, `Co-codamol/30mg`). This is a limitation of the current implementation. If you need to record such medicines, consider using alternative formats without slashes (e.g., `Paracetamol 500mg`, `Co-codamol 30mg`).
 
-3. **Do not edit the data file while the app is running**. If you directly edit the `addressbook.json` file (the data file) while CLInic is open, your changes may be overwritten when the app next saves. The app does not detect external edits during runtime, so modify the file only when the application is closed.
+3. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
 
-4. **UI may appear cut off on some displays**. In some screen or resolution configurations the result display, command box or command hints may appear cut off. The workaround is to maximize the app or toggle full-screen so the UI elements can resize correctly.
+4. **Do not edit the data file while the app is running**. If you directly edit the `addressbook.json` file (the data file) while CLInic is open, your changes may be overwritten when the app next saves. The app does not detect external edits during runtime, so modify the file only when the application is closed.
+
+5. **UI may appear cut off on some displays**. In some screen or resolution configurations the result display, command box or command hints may appear cut off. The workaround is to maximize the app or toggle full-screen so the UI elements can resize correctly.
 
 --------------------------------------------------------------------------------------------------------------------
 
