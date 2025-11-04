@@ -24,8 +24,9 @@ Search & retrieval: filter by name for rapid identification, even in large panel
     - [Listing all patients : `list`](#listing-all-patients--list)
     - [Viewing a patient : `view`](#viewing-a-patient--view)
     - [Viewing medicines taken by patient : `med`](#viewing-medicines-taken-by-patient--med)
-    - [Logging a visit for a patient : `log`](#logging-a-visit-for-a-patient--log)
-    - [Displaying visit dates for a patient : `display`](#displaying-visit-dates-for-a-patient--display)
+    - [Managing Visits](#managing-visits)
+        - [Logging a visit for a patient : `log`](#logging-a-visit-for-a-patient--log)
+        - [Displaying visit dates for a patient : `display`](#displaying-visit-dates-for-a-patient--display)
     - [Editing a patient : `edit`](#editing-a-patient--edit)
     - [Locating patients by name : `find`](#locating-patients-by-name-find)
     - [Locating patients by doctor's name : `finddoc`](#locating-patients-by-doctor-finddoc)
@@ -68,7 +69,7 @@ Search & retrieval: filter by name for rapid identification, even in large panel
 
   * `exit` : Exits the app.
 
-1. Refer to the [Features](#features) below for details of each command.
+6. Refer to the [Features](#features) below for details of each command.
 
 --------------------------------------------------------------------------------------------------------------------
 
@@ -98,6 +99,73 @@ Search & retrieval: filter by name for rapid identification, even in large panel
 * **Command hints**: As you type commands, CLInic displays helpful hints below the command box. When you type a complete command word (e.g., `find`), the hint shows the full command format with parameters and examples for that specific command. When you type a partial command word that matches multiple commands (e.g., `fin`), the hint shows suggestions like "Possible commands: find, finddoc, findmed" to help you discover and complete your command. The hints persist as you continue typing parameters, helping you see the correct command format throughout.
 </div>
 
+<div markdown="block" class="alert alert-info">
+**:information_source: Field constraints:**<br>
+
+All fields in CLInic have specific validation rules to ensure data integrity. The following constraints apply to each field:
+
+* **NAME**: 
+  * Can contain alphanumeric characters, spaces, commas (`,`), at symbols (`@`), and hyphens (`-`)
+  * The only slash-based patterns allowed are `s/o` and `d/o` (lowercase only). No other slashes are permitted
+  * Cannot be blank
+  * Maximum length: 100 characters
+  * Cannot contain consecutive spaces
+  * Examples: `John Doe`, `Mary-Anne`, `O'Connor`, `Dr. Smith`, `John s/o James`, `Sarah d/o David`, `John@Smith`, `John, Smith`
+  * Invalid: `John/Jane` (slash not allowed except s/o or d/o), `John  Doe` (consecutive spaces), ` ` (blank)
+
+* **PHONE_NUMBER**:
+  * Must contain only digits (0-9)
+  * Minimum length: 3 digits
+  * Maximum length: 20 digits
+  * Examples: `98765432`, `123`, `12345678901234567890` (20 digits)
+  * Invalid: `12` (too short), `9876-5432` (contains hyphen), `+65 98765432` (contains plus and space), `123456789012345678901` (21 digits - exceeds maximum)
+
+* **EMAIL**:
+  * Must be of the format `local-part@domain`
+  * The local-part should only contain alphanumeric characters and the following special characters: `+`, `_`, `.`, `-` (excluding parentheses)
+  * The local-part may not start or end with any special characters
+  * The domain name is made up of domain labels separated by periods (`.`)
+  * The domain name must:
+    - End with a domain label at least 2 characters long
+    - Have each domain label start and end with alphanumeric characters
+    - Have each domain label consist of alphanumeric characters, separated only by hyphens, if any
+  * Maximum length: 100 characters
+  * Examples: `john@example.com`, `alice.bob@test.co.uk`, `user_name+tag@domain-name.com`
+  * Invalid: `@example.com` (missing local-part), `john@` (missing domain), `john@com` (domain label too short)
+
+* **ADDRESS**:
+  * Can take any values as long as it is not blank
+  * Maximum length: 100 characters
+  * Cannot contain consecutive spaces
+  * Examples: `123 Main Street`, `Block 123, #01-01`, `Newgate Prison`
+  * Invalid: ` ` (blank), `123  Main Street` (consecutive spaces)
+
+* **DOCTOR**:
+  * Can contain alphanumeric characters, spaces, commas (`,`), at symbols (`@`), and hyphens (`-`)
+  * The only slash-based patterns allowed are `s/o` and `d/o` (lowercase only). No other slashes are permitted
+  * Can be empty (optional field)
+  * Maximum length: 100 characters
+  * Examples: `Dr. Smith`, `Mary-Anne`, `John s/o James`, `Sarah d/o David`, `John@Smith`, `John, Smith`, ` ` (empty)
+  * Invalid: `Dr./Smith` (slash not allowed except s/o or d/o)
+
+* **MEDICINE**:
+  * Can take any values except forward slashes (`/`)
+  * Cannot be blank when adding a patient
+  * Can be blank when editing a patient (to clear medicines)
+  * Maximum length: 60 characters
+  * Examples: `Paracetamol`, `Co-codamol`, `Aspirin-100mg`, `Vitamin D3`, `Any@#$%^&*()characters`
+  * Invalid: `Paracetamol/500mg` (contains slash), ` ` (blank when adding)
+
+* **TAG**:
+  * Must contain only alphanumeric characters and hyphens (`-`)
+  * Cannot be blank
+  * Maximum length: 50 characters
+  * Examples: `friend`, `allergy-peanut`, `diabetes`, `owesMoney`
+  * Invalid: `friend_tag` (underscore not allowed), `friend tag` (space not allowed), ` ` (blank)
+
+* **Duplicate Names**: CLInic does not allow duplicate patient names. Duplicate detection is case-insensitive, meaning "John Doe" and "john doe" are considered the same name and cannot both be added.
+</div>
+
 ### Viewing help : `help`
 
 Shows a message explaining how to access the help page.
@@ -117,6 +185,10 @@ Adds a patient to CLInic.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [dr/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`
 
+<div markdown="span" class="alert alert-warning">:exclamation: **Important:**
+CLInic does not allow duplicate patient names. If you try to add a patient with a name that already exists in the address book, you will receive an error message. Duplicate detection is case-insensitive, meaning "John Doe" and "john doe" are considered the same name and cannot both be added.
+</div>
+
 <div markdown="span" class="alert alert-primary">:bulb: **Tip:**
 To create a red allergy tag, use `t/allergy` when adding a patient. Any tag containing the word "allergy" (case-insensitive) will appear red in the interface.
 
@@ -130,13 +202,13 @@ Examples:
 
 ### Listing all patients : `list`
 
-Shows a list of all patients in CLInic.
+Shows a list of all patients in CLInic. Each patient is displayed with an index number (1, 2, 3, ...) that can be used with other commands like `view`, `edit`, `delete`, `med`, `log`, and `display`.
 
 Format: `list`
 
 ### Viewing a patient : `view`
 
-Views the specified patient details from CLInic (includes name, phone, email, address, doctor, tags).
+Views the specified patient details from CLInic (includes name, phone, email, address, doctor, tags, and medicines).
 
 Format: `view INDEX`
 
@@ -161,6 +233,10 @@ Format: `med INDEX`
 Examples:
 * `list` followed by `med 3` views the medicines taken by the 3rd patient in CLInic.
 * `find Jackson` followed by `med 1` views the medicines taken by the 1st patient in the results of the `find` command.
+
+## Managing Visits
+
+CLInic allows you to track patient visits by logging visit dates. Each time a patient visits the clinic, you can record the visit date using the `log` command. You can also view all recorded visit dates for a patient using the `display` command. Visit dates are useful for tracking patient history and verifying visit frequency.
 
 ### Logging a visit for a patient : `log`
 
@@ -210,8 +286,8 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dr/DOCTOR] [med/ME
 When editing tags/medicines, the existing tags/medicines of the patient will be removed i.e adding of these fields is not cumulative.
 </div>
 
-* You can remove all the patient's tags/medicines by typing `t/` or `med/` without
-  specifying any tags after it.
+* You can remove all the patient's tags/medicines by typing `t/` or `med/` **alone** (without any other tags/medicines) and without specifying any value after it.
+* **Important:** To clear all tags, use only `t/` by itself. Do not mix `t/` with other tags (e.g., `t/tag1 t/` will cause an error). The same applies to medicines.
 
 Examples:
 *  `edit 1 p/91234567 e/johndoe@example.com` Edits the phone number and email address of the 1st patient to be `91234567` and `johndoe@example.com` respectively.
@@ -353,9 +429,12 @@ Furthermore, certain edits can cause CLInic to behave in unexpected ways (e.g., 
 
 ## Known issues
 
-1. **When using multiple screens**, if you move the application to a secondary screen, and later switch to using only the primary screen, the GUI will open off-screen. The remedy is to delete the `preferences.json` file created by the application before running the application again.
+1. **Multiple monitor setups**: CLInic may exhibit unpredictable behavior when used with multiple monitors, especially when monitors are disconnected or the display configuration changes. The window may appear off-screen or in an unexpected location. If this occurs, you can delete the `preferences.json` file in the CLInic installation folder to reset window settings.
+
 2. **If you minimize the Help Window** and then run the `help` command (or use the `Help` menu, or the keyboard shortcut `F1`) again, the original Help Window will remain minimized, and no new Help Window will appear. The remedy is to manually restore the minimized Help Window.
+
 3. **Do not edit the data file while the app is running**. If you directly edit the `addressbook.json` file (the data file) while CLInic is open, your changes may be overwritten when the app next saves. The app does not detect external edits during runtime, so modify the file only when the application is closed.
+
 4. **UI may appear cut off on some displays**. In some screen or resolution configurations the result display, command box or command hints may appear cut off. The workaround is to maximize the app or toggle full-screen so the UI elements can resize correctly.
 
 --------------------------------------------------------------------------------------------------------------------
