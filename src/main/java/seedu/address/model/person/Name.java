@@ -11,11 +11,15 @@ public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
         "Names cannot be blank and can contain alphanumeric characters, spaces, commas, "
-        + "the at symbol (@), and hyphens. The only slash-based patterns allowed are "
-        + "\"s/o\" and \"d/o\". No other slashes are permitted.";
+        + "the at symbol (@), and hyphens. The only allowed slash tokens are 'd/o' and "
+        + "'s/o', which must appear as standalone words (surrounded by spaces or at the "
+        + "start/end).";
 
-
-    public static final String VALIDATION_REGEX = "^(?!\\s*$)(?:[A-Za-z0-9 @,\\-]|s/o|d/o)+$";
+    // One-regex approach: sequence of tokens separated by spaces; each token is either
+    //  - alphanumerics with optional @ , - characters, or
+    //  - exactly "d/o" or "s/o".
+    public static final String VALIDATION_REGEX =
+            "^(?!\\s*$)\\s*(?:[A-Za-z0-9@,\\-]+|d/o|s/o)(?:\\s+(?:[A-Za-z0-9@,\\-]+|d/o|s/o))*\\s*$";
 
     public final String fullName;
 
@@ -34,6 +38,7 @@ public class Name {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidName(String test) {
+        requireNonNull(test);
         return test.matches(VALIDATION_REGEX);
     }
 
