@@ -10,11 +10,12 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names cannot be blank and may contain alphanumerics, spaces, comma, at, and hyphen. "
-                    + "A forward slash '/' is not allowed unless escaped as \\"/s or \\\"/d (i.e., use \\\//s or \\\//d).";
+        "Names cannot be blank and can contain alphanumeric characters, spaces, commas, "
+        + "the at symbol (@), and hyphens. The only slash-based patterns allowed are "
+        + "\"s/o\" and \"d/o\". No other slashes are permitted.";
 
-    // Allows letters, digits, spaces, hyphen, at, comma, and ONLY escaped slash followed by 's' or 'd' (i.e. \/s or \/d)
-    public static final String VALIDATION_REGEX = "^(?!\\\\s*$)(?:[a-zA-Z0-9\\\\s\\-@,]|\\\\/[sd])+$";
+
+    public static final String VALIDATION_REGEX = "^(?:[A-Za-z0-9 @,\\-]|s/o|d/o)+$";
 
     public final String fullName;
 
