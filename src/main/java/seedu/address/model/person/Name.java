@@ -15,8 +15,11 @@ public class Name {
         + "'s/o', which must appear as standalone words (surrounded by spaces or at the "
         + "start/end).";
 
-    // Base allowed characters. Slash is included but further restricted in isValidName.
-    public static final String VALIDATION_REGEX = "^(?!\\s*$)[A-Za-z0-9 @,\\-/]+$";
+    // One-regex approach: sequence of tokens separated by spaces; each token is either
+    //  - alphanumerics with optional @ , - characters, or
+    //  - exactly "d/o" or "s/o".
+    public static final String VALIDATION_REGEX =
+            "^(?!\\s*$)(?:[A-Za-z0-9@,\\-]+|d/o|s/o)(?:\\s+(?:[A-Za-z0-9@,\\-]+|d/o|s/o))*$";
 
     public final String fullName;
 
@@ -35,30 +38,7 @@ public class Name {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidName(String test) {
-        if (test == null) {
-            return false;
-        }
-
-        // Quick character-level validation (allows slash for subsequent token checks)
-        if (!test.matches(VALIDATION_REGEX)) {
-            return false;
-        }
-
-        // Enforce that any slash appears only in standalone tokens "d/o" or "s/o"
-        String trimmed = test.trim();
-        if (trimmed.isEmpty()) {
-            return false;
-        }
-
-        String[] tokens = trimmed.split("\\s+");
-        for (String token : tokens) {
-            if (token.indexOf('/') >= 0) {
-                if (!token.equals("d/o") && !token.equals("s/o")) {
-                    return false;
-                }
-            }
-        }
-        return true;
+        return test != null && test.matches(VALIDATION_REGEX);
     }
 
 
