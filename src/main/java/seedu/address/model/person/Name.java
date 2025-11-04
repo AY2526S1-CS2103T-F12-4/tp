@@ -11,9 +11,12 @@ public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
         "Names cannot be blank and can contain alphanumeric characters, spaces, commas, "
-        + "the at symbol (@), and hyphens. Slashes are not allowed.";
+        + "the at symbol (@), and hyphens. The only allowed slash tokens are 'd/o' and "
+        + "'s/o', which must appear as standalone words (surrounded by spaces or at the "
+        + "start/end).";
 
-    public static final String VALIDATION_REGEX = "^(?!\\s*$)[A-Za-z0-9 @,\\-]+$";
+    // Base allowed characters. Slash is included but further restricted in isValidName.
+    public static final String VALIDATION_REGEX = "^(?!\\s*$)[A-Za-z0-9 @,\\-/]+$";
 
     public final String fullName;
 
@@ -32,7 +35,30 @@ public class Name {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidName(String test) {
-        return test.matches(VALIDATION_REGEX);
+        if (test == null) {
+            return false;
+        }
+
+        // Quick character-level validation (allows slash for subsequent token checks)
+        if (!test.matches(VALIDATION_REGEX)) {
+            return false;
+        }
+
+        // Enforce that any slash appears only in standalone tokens "d/o" or "s/o"
+        String trimmed = test.trim();
+        if (trimmed.isEmpty()) {
+            return false;
+        }
+
+        String[] tokens = trimmed.split("\\s+");
+        for (String token : tokens) {
+            if (token.indexOf('/') >= 0) {
+                if (!token.equals("d/o") && !token.equals("s/o")) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 
