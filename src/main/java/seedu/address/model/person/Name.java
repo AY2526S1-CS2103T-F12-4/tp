@@ -19,7 +19,7 @@ public class Name {
     //  - alphanumerics with optional @ , - characters, or
     //  - exactly "d/o" or "s/o".
     public static final String VALIDATION_REGEX =
-            "^(?!\\s*$)(?:[A-Za-z0-9@,\\-]+|d/o|s/o)(?:\\s+(?:[A-Za-z0-9@,\\-]+|d/o|s/o))*$";
+            "^(?!\\s*$)\\s*(?:[A-Za-z0-9@,\\-]+|d/o|s/o)(?:\\s+(?:[A-Za-z0-9@,\\-]+|d/o|s/o))*\\s*$";
 
     public final String fullName;
 
@@ -38,7 +38,8 @@ public class Name {
      * Returns true if a given string is a valid name.
      */
     public static boolean isValidName(String test) {
-        return test != null && test.matches(VALIDATION_REGEX);
+        requireNonNull(test);
+        return test.matches(VALIDATION_REGEX);
     }
 
 
