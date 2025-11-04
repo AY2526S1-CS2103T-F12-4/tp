@@ -25,7 +25,7 @@
             <Region fx:constant="USE_PREF_SIZE" />
           </minWidth>
         </Label>
-        <Label fx:id="name" text="\$first" styleClass="cell_big_label" />
+        <Label fx:id="name" text="\$first" styleClass="cell_big_label" wrapText="true" />
       </HBox>
       <FlowPane fx:id="tags" />
 
@@ -35,13 +35,13 @@
           <ColumnConstraints hgrow="ALWAYS" />
         </columnConstraints>
         <Label text="Phone:" styleClass="contact_label" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-        <Label fx:id="phone" styleClass="contact_value" text="\$phone" GridPane.columnIndex="1" GridPane.rowIndex="0" />
+        <Label fx:id="phone" styleClass="contact_value" text="\$phone" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="0" />
         <Label text="Address:" styleClass="contact_label" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-        <Label fx:id="address" styleClass="contact_value" text="\$address" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <Label fx:id="address" styleClass="contact_value" text="\$address" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
         <Label text="Email:" styleClass="contact_label" GridPane.columnIndex="0" GridPane.rowIndex="2" />
-        <Label fx:id="email" styleClass="contact_value" text="\$email" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Label fx:id="email" styleClass="contact_value" text="\$email" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2" />
         <Label text="Doctor:" styleClass="contact_label" GridPane.columnIndex="0" GridPane.rowIndex="3" />
-        <Label fx:id="doctor" styleClass="contact_value" text="\$doctor" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <Label fx:id="doctor" styleClass="contact_value" text="\$doctor" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
       </GridPane>
 
       <FlowPane fx:id="medicines" />
