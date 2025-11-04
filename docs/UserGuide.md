@@ -185,6 +185,10 @@ Adds a patient to CLInic.
 
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [dr/DOCTOR] [t/TAG]…​ [med/MEDICINE]…​`
 
+<div markdown="span" class="alert alert-info">:information_source: **Note:**
+When a new patient is added, the current date is automatically logged as their first visit.
+</div>
+
 <div markdown="span" class="alert alert-warning">:exclamation: **Important:**
 CLInic does not allow duplicate patient names. If you try to add a patient with a name that already exists in the address book, you will receive an error message. Duplicate detection is case-insensitive, meaning "John Doe" and "john doe" are considered the same name and cannot both be added.
 </div>
@@ -248,9 +252,10 @@ When a new patient is added, the current date is automatically logged as their f
 
 Format: `log INDEX`
 
-* Logs a visit for the patient at the specified `INDEX`.
+* Logs today's date as a visit for the patient at the specified `INDEX`.
 * The index refers to the index number shown in the displayed patient list.
 * The index **must be a positive integer** 1, 2, 3, …​
+* The `log` command only logs today's date (the current date). It cannot be used to log visits for past or future dates.
 * If a visit has already been logged for today, the command will fail with a message indicating it has already been logged.
 
 Examples:
