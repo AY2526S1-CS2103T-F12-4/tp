@@ -10,10 +10,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Name {
 
     public static final String MESSAGE_CONSTRAINTS =
-            "Names cannot be blank and can take any alphanumeric characters, spaces and any "
-                    + "of these special characters: comma, at, hyphen, and slash";
+        "Names cannot be blank and can contain alphanumeric characters, spaces, commas, "
+        + "the at symbol (@), and hyphens. Slashes are not allowed.";
 
-    public static final String VALIDATION_REGEX = "^(?!\\s*$)[a-zA-Z0-9\\s\\/\\-@,]+$";
+    public static final String VALIDATION_REGEX = "^(?!\\s*$)[A-Za-z0-9 @,\\-]+$";
 
     public final String fullName;
 
