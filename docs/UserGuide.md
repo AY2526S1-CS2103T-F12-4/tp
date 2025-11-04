@@ -58,7 +58,7 @@ Search & retrieval: filter by name for rapid identification, even in large panel
 5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will open the help window.<br>
    Some example commands you can try:
 
-  * `list` : Lists all contacts.
+  * `list` : Lists all patients.
 
   * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : Adds a patient named `John Doe` to CLInic.
 
@@ -94,6 +94,8 @@ Search & retrieval: filter by name for rapid identification, even in large panel
   e.g. if the command specifies `help 123`, it will be interpreted as `help`.
 
 * If you are using a PDF version of this document, be careful when copying and pasting commands that span multiple lines as space characters surrounding line-breaks may be omitted when copied over to the application.
+
+* **Command hints**: As you type commands, CLInic displays helpful hints below the command box. When you type a complete command word (e.g., `find`), the hint shows the full command format with parameters and examples for that specific command. When you type a partial command word that matches multiple commands (e.g., `fin`), the hint shows suggestions like "Possible commands: find, finddoc, findmed" to help you discover and complete your command. The hints persist as you continue typing parameters, helping you see the correct command format throughout.
 </div>
 
 ### Viewing help : `help`
@@ -103,6 +105,10 @@ Shows a message explaining how to access the help page.
 ![help message](images/helpMessage.png)
 
 Format: `help`
+
+<div markdown="span" class="alert alert-info">:information_source: **Tip:**
+While typing commands, CLInic provides real-time command hints below the command box. These hints show the complete command format (including parameters and examples) when you type a complete command word, or suggest similar commands when you type a partial command word. This helps you discover commands and their correct syntax without needing to remember every detail.
+</div>
 
 
 ### Adding a patient: `add`
@@ -194,7 +200,7 @@ Examples:
 
 Edits an existing patient in CLInic.
 
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [d/DOCTOR] [med/MEDICINE]…​ [t/TAG]…​`
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dr/DOCTOR] [med/MEDICINE]…​ [t/TAG]…​`
 
 * Edits the patient at the specified `INDEX`. The index refers to the index number shown in the displayed patient list. The index **must be a positive integer** 1, 2, 3, …​
 * At least one of the optional fields must be provided.
@@ -239,6 +245,10 @@ Format: `find KEYWORD [MORE_KEYWORDS]`.
 Examples:
 * `find John` returns `john` and `John Doe`.
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
+
+<div markdown="span" class="alert alert-info">:information_source: **Note:**
+When typing partial command words that match multiple commands (e.g., typing `fin` matches `find`, `finddoc`, and `findmed`), the command hint will show suggestions like "Possible commands: find, finddoc, findmed" to help you discover related commands.
+</div>
 
 ### Locating patients by doctor: `finddoc`
 
@@ -335,6 +345,9 @@ Furthermore, certain edits can cause CLInic to behave in unexpected ways (e.g., 
 
 **Q**: Is there a way to update CLInic to a newer version?<br>
 **A**: Yes — download the newer `CLInic.jar` from the releases page [here](https://github.com/AY2526S1-CS2103T-F12-4/tp/releases), and replace the existing `CLInic.jar` in your CLInic folder. Your `data` folder will remain intact. Always close CLInic before replacing the `.jar` file.
+
+**Q**: How does the command hint system work?<br>
+**A**: The command hint system provides real-time assistance as you type. It works in three ways: (1) When you type a complete command word, it displays the full command format with all parameters and an example. (2) When you type a partial command word that matches multiple commands, it shows suggestions (e.g., typing `fin` shows "Possible commands: find, finddoc, findmed"). (3) The hints persist as you continue typing parameters, so you can always see the correct command format. This helps you discover commands and use them correctly without memorizing every detail.
 
 --------------------------------------------------------------------------------------------------------------------
 
