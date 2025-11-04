@@ -59,4 +59,6 @@
     -fx-text-fill: #888888;
     -fx-font-size: 9pt;
     -fx-font-style: italic;
+    -fx-wrap-text: true;
+    -fx-text-overrun: clip;
 }

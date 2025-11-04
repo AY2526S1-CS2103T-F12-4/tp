@@ -15,7 +15,7 @@
                  HBox.hgrow="ALWAYS"/>
     </HBox>
     <Label fx:id="commandHint" text="Type 'help' for available commands"
-           styleClass="command-hint"/>
+           styleClass="command-hint" wrapText="true" VBox.vgrow="NEVER"/>
   </VBox>
 </StackPane>
 
