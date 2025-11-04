@@ -224,7 +224,7 @@ Examples:
 
 <div markdown="span" class="alert alert-info">:information_source: **Note:**
 The `find`, `finddoc` and `findmed` commands search from the list of all patients recorded whenever used,
-e.g performing `find john` returns the list of all patients who have the word `john` in their name. If a `findmed` 
+e.g performing `find john` returns the list of all patients who have the word `john` in their name. If a `findmed`
 command or a `finddoc` command follows it, the result displayed is searched from the list of all patients and not from
 the patients whose names contain the word `john`
 </div>

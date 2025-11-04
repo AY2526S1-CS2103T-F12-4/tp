@@ -665,7 +665,7 @@ testers are expected to do more *exploratory* testing.
 
 ### Detailed offline help window
 
-1. When user performs a `help` operation, a window containing all command formats with example should pop up in 
+1. When user performs a `help` operation, a window containing all command formats with example should pop up in
 addition to the user guide link.
 
 ### Unique identification numbers for patients
@@ -676,5 +676,5 @@ addition to the user guide link.
 ### Confirmation for delete and clear commands
 
 1. Whenever user performs a `delete` or `clear` operation, a warning message is displayed as result.
-2. Subsequently, if the user wants to process with the action, he will enter `yes`, or `no` if he does not want to 
+2. Subsequently, if the user wants to process with the action, he will enter `yes`, or `no` if he does not want to
 proceed with the delete or clear command.

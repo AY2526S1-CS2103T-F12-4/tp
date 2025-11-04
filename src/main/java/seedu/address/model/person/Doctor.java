@@ -9,7 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 
 public class Doctor {
-    
+
     public static final String MESSAGE_CONSTRAINTS =
     "Doctor names can contain alphanumeric characters, spaces, commas, the at symbol (@), "
         + "and hyphens. The only valid slash sequences allowed are \"s/o\" and \"d/o\". "
@@ -17,7 +17,7 @@ public class Doctor {
 
 
     public static final String VALIDATION_REGEX = "^$|^(?=.*\\S)(?:[A-Za-z0-9 @,\\-]|s/o|d/o)+$";
-    
+
 
     public final String name;
 
