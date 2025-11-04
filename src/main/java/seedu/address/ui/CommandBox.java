@@ -46,6 +46,16 @@ public class CommandBox extends UiPart<Region> {
     public CommandBox(CommandExecutor commandExecutor) {
         super(FXML);
         this.commandExecutor = commandExecutor;
+        // Enable text wrapping for command hint to display multi-line format
+        commandHint.setWrapText(true);
+        // Allow the label to grow vertically to show multiple lines
+        commandHint.setMinHeight(Region.USE_PREF_SIZE);
+        commandHint.setPrefHeight(Region.USE_COMPUTED_SIZE);
+        commandHint.setMaxHeight(Double.MAX_VALUE);
+        // Set width constraints to match the text field width so wrapping works properly
+        commandHint.setMinWidth(Region.USE_PREF_SIZE);
+        commandHint.setMaxWidth(Double.MAX_VALUE);
+        commandHint.prefWidthProperty().bind(commandTextField.widthProperty());
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> {
             setStyleToDefault();
@@ -76,10 +86,22 @@ public class CommandBox extends UiPart<Region> {
      * Updates the command hint based on current input.
      */
     private void updateCommandHint() {
-        String text = commandTextField.getText().toLowerCase().trim();
+        String raw = commandTextField.getText().trim();
+        String text = raw.toLowerCase();
 
         if (text.isEmpty()) {
             commandHint.setText("Type 'help' for available commands");
+            return;
+        }
+
+        // Extract first token (command word) for matching
+        String firstToken = raw.split("\\s+")[0];
+        String commandWordTyped = firstToken.toLowerCase();
+
+        // If user typed uppercase in the command word, warn that commands are lowercase
+        boolean hasUppercaseInCommandWord = !firstToken.equals(firstToken.toLowerCase());
+        if (hasUppercaseInCommandWord) {
+            commandHint.setText("Commands are lowercase. Try '" + commandWordTyped + "'.");
             return;
         }
 
@@ -97,29 +119,35 @@ public class CommandBox extends UiPart<Region> {
                 {LogCommand.COMMAND_WORD, LogCommand.MESSAGE_USAGE},
                 {DisplayCommand.COMMAND_WORD, DisplayCommand.MESSAGE_USAGE},
                 {HelpCommand.COMMAND_WORD, HelpCommand.MESSAGE_USAGE},
-                {ListCommand.COMMAND_WORD, "List all patients: " + ListCommand.COMMAND_WORD},
-                {ClearCommand.COMMAND_WORD, "Clear all patients: " + ClearCommand.COMMAND_WORD},
-                {ExitCommand.COMMAND_WORD, "Exit the application: " + ExitCommand.COMMAND_WORD}
+                {ListCommand.COMMAND_WORD, ListCommand.MESSAGE_USAGE},
+                {ClearCommand.COMMAND_WORD, ClearCommand.MESSAGE_USAGE},
+                {ExitCommand.COMMAND_WORD, ExitCommand.MESSAGE_USAGE}
         };
 
         // 1) Exact match takes priority (handles find vs findmed conflict when full word typed)
+        // Match against first token only, so "add n/John" matches "add"
         for (String[] entry : commands) {
-            if (entry[0].equals(text)) {
-                commandHint.setText(entry[1]);
+            if (entry[0].equals(commandWordTyped)) {
+                // Replace \n with system line separator for proper multi-line display
+                String formattedText = entry[1].replace("\n", System.lineSeparator());
+                commandHint.setText(formattedText);
                 return;
             }
         }
 
-        // 2) Partial match: any command whose word starts with the typed text
+        // 2) Partial match: any command whose word starts with the typed command word
+        // Match against first token only
         java.util.List<String[]> matches = new java.util.ArrayList<>();
         for (String[] entry : commands) {
-            if (entry[0].startsWith(text)) {
+            if (entry[0].startsWith(commandWordTyped)) {
                 matches.add(entry);
             }
         }
 
         if (matches.size() == 1) {
-            commandHint.setText(matches.get(0)[1]);
+            // Replace \n with system line separator for proper multi-line display
+            String formattedText = matches.get(0)[1].replace("\n", System.lineSeparator());
+            commandHint.setText(formattedText);
             return;
         }
 
